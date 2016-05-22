@@ -1,35 +1,41 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+#include "resources.h"
+
 int main()
 {
 	// create the window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Happiness");
 
-	sf::Texture texture;
-	sf::Sprite sprite;
-	sf::SoundBuffer soundBuffer;
-	sf::Sound sound;
+	resource<sf::Texture> textures;
+	resource<sf::SoundBuffer> sounds;
 
 	sf::Clock clock;
+	sf::Sprite sprite;
 
-	if (!texture.loadFromFile("../Resources/Images/hue.png"))
+	const sf::Texture *huetex;// = *textures.load_resource("hue.png");
+	const sf::SoundBuffer *tootsound;// = *sounds.load_resource("toot.wav");
+
+
+	if ((huetex = textures.load_resource("hue.png")) == nullptr)
 	{
 		printf("Failed to load happiness :(\n");
 		return EXIT_FAILURE;
 	}
 
-	if (!soundBuffer.loadFromFile("../Resources/Sounds/toot.wav"))
+	if ((tootsound = sounds.load_resource("toot.wav")) == nullptr)
 	{
 		printf("Failed to load happiness audio :(\n");
 		return EXIT_FAILURE;
 	}
 
-	sprite.setTexture(texture);
+	sprite.setTexture(*huetex);
 	sprite.setOrigin(sf::Vector2f(285.5f, 308.0f));
 	sprite.setPosition(sf::Vector2f(285.0f, 308.0f));
 
-	sound.setBuffer(soundBuffer);
+	sf::Sound sound;
+	sound.setBuffer(*tootsound);
 	sound.setLoop(true);
 	sound.play();
 
