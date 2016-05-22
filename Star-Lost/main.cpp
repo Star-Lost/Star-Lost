@@ -1,9 +1,35 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 int main()
 {
 	// create the window
-	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Happiness");
+
+	sf::Texture texture;
+	sf::Sprite sprite;
+	sf::SoundBuffer soundBuffer;
+	sf::Sound sound;
+
+	sf::Clock clock;
+
+	if (!texture.loadFromFile("../Resources/Images/hue.png"))
+	{
+		printf("Failed to load happiness :(\n");
+		return EXIT_FAILURE;
+	}
+
+	if (!soundBuffer.loadFromFile("../Resources/Sounds/toot.wav"))
+	{
+		printf("Failed to load happiness audio :(\n");
+		return EXIT_FAILURE;
+	}
+
+	sprite.setTexture(texture);
+
+	sound.setBuffer(soundBuffer);
+	sound.setLoop(true);
+	sound.play();
 
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -23,9 +49,12 @@ int main()
 		// draw everything here...
 		// window.draw(...);
 
+		sprite.setRotation(sin(clock.getElapsedTime().asSeconds() * 5.0f) * 10.0f);
+		window.draw(sprite);
+
 		// end the current frame
 		window.display();
 	}
 
-	return 0;
+	return EXIT_SUCCESS;
 }
