@@ -3,10 +3,13 @@
 
 #include "resources.h"
 
+#define TOOT_DELAY 1.0f
+
 int main()
 {
 	// create the window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Happiness");
+	window.setFramerateLimit(30); // Limit the frame rate to achieve a cinematic feel
 
 	resource<sf::Texture> textures;
 	resource<sf::SoundBuffer> sounds;
@@ -17,6 +20,8 @@ int main()
 	const sf::Texture *huetex;// = *textures.load_resource("hue.png");
 	const sf::SoundBuffer *tootsound;// = *sounds.load_resource("toot.wav");
 
+	float nexttoot = 3.0f;
+	float angleoffset = 0.0f;
 
 	if ((huetex = textures.load_resource("hue.png")) == nullptr)
 	{
@@ -36,8 +41,6 @@ int main()
 
 	sf::Sound sound;
 	sound.setBuffer(*tootsound);
-	sound.setLoop(true);
-	sound.play();
 
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -57,11 +60,21 @@ int main()
 		// draw everything here...
 		// window.draw(...);
 
-		sprite.setRotation(sin(clock.getElapsedTime().asSeconds() * 5.0f) * 10.0f);
+		const float secs = clock.getElapsedTime().asSeconds();
+		sprite.setRotation(angleoffset);
 		window.draw(sprite);
 
 		// end the current frame
 		window.display();
+
+		if (secs > nexttoot)
+		{
+			sound.play();
+			angleoffset += 25.0f;
+			nexttoot = secs + TOOT_DELAY;
+		}
+
+		angleoffset = angleoffset * 0.9f;
 	}
 
 	return EXIT_SUCCESS;
