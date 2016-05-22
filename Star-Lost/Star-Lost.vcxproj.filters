@@ -5,10 +5,48 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Build Resources">
+      <UniqueIdentifier>{8f7b1cbf-0862-4fc4-a0a2-7a171033b285}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Third Party\SFML-2.3.2\bin\openal32.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-audio-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-audio-d-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-graphics-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-graphics-d-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-network-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-network-d-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-system-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-system-d-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-window-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
+    <None Include="..\Third Party\SFML-2.3.2\bin\sfml-window-d-2.dll">
+      <Filter>Build Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>
