@@ -30,11 +30,11 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	/*sprite.setTexture(*huetex);
+	sprite.setTexture(*huetex);
 	sprite.setOrigin(sf::Vector2f(285.5f, 308.0f));
 	sprite.setPosition(sf::Vector2f(285.0f, 308.0f));
 
-	sf::Sound sound;
+	/*sf::Sound sound;
 	sound.setBuffer(*tootsound);
 	sound.setLoop(true);
 	sound.play();*/
