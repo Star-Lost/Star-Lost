@@ -45,6 +45,7 @@ public:
 		if (newentry->second.loadFromFile(internal_resource_path + specific_path))
 			return &newentry->second;
 
+		// .. If that fails, try third party resources
 		if (newentry->second.loadFromFile(thirdparty_resource_path + specific_path))
 			return &newentry->second;
 
