@@ -26,6 +26,8 @@ int main()
 	}
 
 	sprite.setTexture(texture);
+	sprite.setOrigin(sf::Vector2f(285.5f, 308.0f));
+	sprite.setPosition(sf::Vector2f(285.0f, 308.0f));
 
 	sound.setBuffer(soundBuffer);
 	sound.setLoop(true);
