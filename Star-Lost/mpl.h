@@ -14,6 +14,38 @@ namespace mpl
 	template<typename ...Types>
 	struct type_list
 	{
+		static size_t size()
+		{
+			return sizeof...(Types);
+		}
+
+	private:
+		// Apply for each
+		template<typename ...>
+		struct apply_for_each;
+
+		template<typename Head, typename ...Rest>
+		struct apply_for_each<Head, Rest...>
+		{
+			template<typename Lambda>
+			static void run(const Lambda &lambda)
+			{
+				lambda(Head{});
+				apply_for_each<Rest...>::run(lambda);
+			}
+		};
+
+		template<>
+		struct apply_for_each<>
+		{
+			template<typename Lambda>
+			static void run(const Lambda &lambda)
+			{
+
+			}
+		};
+
+	public:
 		// Append
 		template<typename ...List>
 		struct append;
@@ -68,13 +100,13 @@ namespace mpl
 
 
 		// Get
-		template<unsigned int I>
+		template<size_t I>
 		struct get
 		{
-			template<unsigned int N, typename ...Rest>
+			template<size_t N, typename ...Rest>
 			struct search;
 
-			template<unsigned int N, typename Head, typename ...Rest>
+			template<size_t N, typename Head, typename ...Rest>
 			struct search<N, Head, Rest...>
 			{
 				using type = typename search<N - 1, Rest...>::type;
@@ -89,7 +121,7 @@ namespace mpl
 			using type = typename search<I, Types...>::type;
 		};
 
-		template<unsigned int I>
+		template<size_t I>
 		using get_t = typename get<I>::type;
 
 
@@ -166,8 +198,37 @@ namespace mpl
 		};
 
 		template<typename ...Needles>
-		using contains_v = typename contains<Needles...>::value;
+		static constexpr bool contains_v = typename contains<Needles...>::value;
 
+
+
+		// Index
+		template<typename T>
+		struct index
+		{
+			static_assert(contains_v<T>, "");
+
+			template<typename ...>
+			struct search;
+
+			template<typename Head, typename ...Rest>
+			struct search<Head, Rest...>
+			{
+				static constexpr size_t value = (std::is_same<Head, T>::value || search<Rest...>::value) - 1;
+			};
+
+			template<>
+			struct search<>
+			{
+				// Define our value as size() + 1 so we can check if it was found at all
+				static constexpr size_t value = size() + 1;
+			};
+
+			static constexpr size_t value = search<Types...>;
+		};
+
+		template<typename T>
+		static constexpr bool index_v = index<T>::value;
 
 
 		// To
@@ -179,11 +240,20 @@ namespace mpl
 
 		template<template<typename...> typename T>
 		using to_t = typename to<T>::type;
+
+
+
+		// For each
+		template<typename Lambda>
+		static void for_each(Lambda lambda)
+		{
+			apply_for_each<Types...>::run(lambda);
+		}
 	};	
 
 	namespace tests
 	{
-		using long_list = type_list<int, unsigned int, unsigned char, long, float, double>;
+		using long_list = type_list<int, size_t, unsigned char, long, float, double>;
 		using short_list = type_list<int, bool>;
 		
 		// Append
@@ -195,7 +265,7 @@ namespace mpl
 		static_assert(!std::is_same<short_list::prepend_t<char>, type_list<long, int, bool>>::value, "");
 
 		// Get
-		static_assert( std::is_same<long_list::get_t<1>, unsigned int>::value, "");
+		static_assert( std::is_same<long_list::get_t<1>, size_t>::value, "");
 		static_assert( std::is_same<long_list::get_t<3>, long>::value, "");
 		static_assert(!std::is_same<long_list::get_t<4>, long>::value, "");
 
