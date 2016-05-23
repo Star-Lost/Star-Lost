@@ -1,15 +1,64 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <iostream>
 
 #include "resources.h"
 #include "animation.h"
+#include "entity.h"
+#include "mpl.h"
 #include "scene.h"
+
+struct position_component : public sf::Vector2f 
+{
+	position_component() = default;
+	position_component(float x, float y) :
+		sf::Vector2f(x, y)
+	{}
+};
+
+struct velocity_component : public sf::Vector2f 
+{
+	velocity_component() = default;
+	velocity_component(float x, float y) :
+		sf::Vector2f(x, y)
+	{}
+};
+
+struct player_tag {};
+
+// These are just signatures
+struct physics_object_sig : mpl::type_list<position_component, velocity_component> {};
+struct static_object_sig : mpl::type_list<position_component> {};
+
+struct movement_system
+{
+	void update()
+	{
+
+	}
+};
+
+using game_context = ecs::context<ecs::settings<
+	// components
+	mpl::type_list<position_component, velocity_component>,
+	// tags
+	mpl::type_list<player_tag>,
+	// systems
+	mpl::type_list<movement_system>
+>>;
 
 int main()
 {
 	// create the window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Star Lost");
 	window.setFramerateLimit(60);
+
+	game_context ctx;
+
+	auto ent = ctx.create_entity();
+	ctx.add_tag<player_tag>(ent);
+	ctx.add_component<position_component>(ent, 1.0f, 2.0f);
+	ctx.add_component<velocity_component>(ent);
 
 	// Character animation stuff goes here
 	/*sf::Sprite character;

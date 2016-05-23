@@ -19,6 +19,9 @@
     <ClCompile Include="scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -26,6 +29,9 @@
     </ClInclude>
     <ClInclude Include="animation.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>Source Files\components</Filter>
     </ClInclude>
     <ClInclude Include="mpl.h">
       <Filter>Source Files</Filter>
