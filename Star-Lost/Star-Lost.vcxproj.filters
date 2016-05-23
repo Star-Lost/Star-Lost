@@ -5,6 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source Files\components">
+      <UniqueIdentifier>{03aca62a-539c-483b-a617-3962096ad6d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -19,6 +22,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="animation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mpl.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
