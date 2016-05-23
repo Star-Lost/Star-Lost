@@ -11,89 +11,19 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Star Lost");
 	window.setFramerateLimit(60);
 
-	resource<sf::Texture> textures;
-	resource<sf::SoundBuffer> sounds;
-
 	// Character animation stuff goes here
-	sf::Sprite character;
+	/*sf::Sprite character;
 	auto char_tex = textures.load_resource("character.png");
 	if (char_tex == nullptr)
 	{
 		printf("Failed to load character :(\n");
 		return EXIT_FAILURE;
-	}
-
-	model char_model{
-		// Standing still facing south animation
-		std::make_pair(std::string{ "stand_south" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(0, 0, 16, 16)}
-		}),
-
-		// Standing still facing north animation
-		std::make_pair(std::string{ "stand_north" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(16, 0, 16, 16)}
-		}),
-
-		// Standing still facing west animation
-		std::make_pair(std::string{ "stand_west" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(32, 0, 16, 16)}
-		}),
-
-		// Standing still facing east animation
-		std::make_pair(std::string{ "stand_east" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(48, 0, 16, 16)}
-		}),
-
-		// Walk south animation
-		std::make_pair(std::string{ "walk_south" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(0, 16, 16, 16) },
-			{ char_tex, sf::IntRect(0, 32, 16, 16) },
-			{ char_tex, sf::IntRect(0,  0, 16, 16) },
-			{ char_tex, sf::IntRect(0, 48, 16, 16) },
-			{ char_tex, sf::IntRect(0, 64, 16, 16) },
-			{ char_tex, sf::IntRect(0,  0, 16, 16)}
-		}),
-
-		// Walk north animation
-		std::make_pair(std::string{ "walk_north" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(16, 16, 16, 16) },
-			{ char_tex, sf::IntRect(16, 32, 16, 16) },
-			{ char_tex, sf::IntRect(16,  0, 16, 16) },
-			{ char_tex, sf::IntRect(16, 48, 16, 16) },
-			{ char_tex, sf::IntRect(16, 64, 16, 16) },
-			{ char_tex, sf::IntRect(16,  0, 16, 16) }
-		}),
-
-		// Walk west animation
-		std::make_pair(std::string{ "walk_west" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(32, 16, 16, 16) },
-			{ char_tex, sf::IntRect(32, 32, 16, 16) },
-			{ char_tex, sf::IntRect(32,  0, 16, 16) },
-			{ char_tex, sf::IntRect(32, 48, 16, 16) },
-			{ char_tex, sf::IntRect(32, 64, 16, 16) },
-			{ char_tex, sf::IntRect(32,  0, 16, 16) }
-		}),
-
-		// Walk east animation
-		std::make_pair(std::string{ "walk_east" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(48, 16, 16, 16) },
-			{ char_tex, sf::IntRect(48, 32, 16, 16) },
-			{ char_tex, sf::IntRect(48,  0, 16, 16) },
-			{ char_tex, sf::IntRect(48, 48, 16, 16) },
-			{ char_tex, sf::IntRect(48, 64, 16, 16) },
-			{ char_tex, sf::IntRect(48,  0, 16, 16) }
-		}),
-	};
-	// Character animation stuff ends here
+	}*/
 
 	sf::Clock clock;
 	double time = 0;
 	double delta_time;
-	// run the program as long as the window is open
-
-	// Draw the character
-	const model::animation *anim = char_model["stand_south"];
-
+	
 	// Set the scene
 	scene_director director;
 
@@ -105,7 +35,6 @@ int main()
 			delta_time = clock.getElapsedTime().asMilliseconds() - time;
 
 			director.update(delta_time);
-
 			director.render(&window);
 		}
 		
