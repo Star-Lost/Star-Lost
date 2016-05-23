@@ -4,9 +4,9 @@
 
 #include "resources.h"
 #include "animation.h"
-<<<<<<< HEAD
 #include "entity.h"
 #include "mpl.h"
+#include "scene.h"
 
 struct position_component : public sf::Vector2f 
 {
@@ -46,9 +46,6 @@ using game_context = ecs::context<ecs::settings<
 	// systems
 	mpl::type_list<movement_system>
 >>;
-=======
-#include "scene.h"
->>>>>>> origin/master
 
 int main()
 {
