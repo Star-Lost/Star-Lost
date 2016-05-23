@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics/Sprite.hpp>
 #include <vector>
+#include <map>
 
 class model
 {
@@ -11,20 +12,9 @@ public:
 		class frame
 		{
 		public:
-			frame(const sf::Texture *tex, const sf::IntRect &rect) :
-				texture(tex),
-				subtexture(rect)
-			{}
-
-			const sf::Texture *get_texture() const
-			{
-				return texture;
-			}
-
-			const sf::IntRect &get_subtexture() const
-			{
-				return subtexture;
-			}
+			frame(const sf::Texture *tex, const sf::IntRect &rect);
+			const sf::Texture *get_texture() const;
+			const sf::IntRect &get_subtexture() const;
 
 		private:
 			const sf::Texture *texture;
@@ -32,35 +22,16 @@ public:
 		};
 
 	public:
-		animation(const std::initializer_list<frame> &framelist) :
-			frames(framelist)
-		{
-		}
-
-		const frame &operator[](int index) const
-		{
-			return frames[index % frames.size()];
-		}
+		animation(const std::initializer_list<frame> &framelist);
+		const frame &operator[](int index) const;
 
 	private:
 		std::vector<frame> frames;
 	};
 
 public:
-	model(const std::initializer_list<std::pair<const std::string, animation>> &animlist) :
-		animations(animlist)
-	{
-
-	}
-
-	const animation *operator[](const std::string &name) const
-	{
-		auto lookup = animations.find(name);
-		if (lookup == animations.cend())
-			return nullptr;
-
-		return &lookup->second;
-	}
+	model(const std::initializer_list<std::pair<const std::string, animation>> &animlist);
+	const animation *operator[](const std::string &name) const;
 
 private:
 	std::map<std::string, animation> animations;
