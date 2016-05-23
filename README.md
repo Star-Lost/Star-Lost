@@ -1,7 +1,5 @@
 # Star Lost
 
-
-
 Thematic ideas
 -----
 * Firefly (space cowboy, colonization)
