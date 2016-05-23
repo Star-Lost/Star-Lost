@@ -5,17 +5,38 @@
 static const std::string thirdparty_resource_path = "..\\..\\Resources\\";
 static const std::string internal_resource_path = "..\\..\\..\\Resources\\";
 
-// Pre-declaration, check bottom of file for implementation
 template<typename ResourceType>
-struct get_resource_folder
+class resource;
+
+// This type is used for preprocessing certain resources
+// like for instance replacing magenta colors in textures
+// with transparency. The default implementation
+// does nothing at all, except basic loading
+template<typename ResourceType>
+class resource_loader
 {
-	static std::string path() { return ""; }
+	friend class resource<ResourceType>;
+	static const std::string path;
+
+	static bool load_internally(const std::string &name, ResourceType &out)
+	{
+		return out.loadFromFile(name);
+	}
 };
 
-// ResourceType is sf::Sound or an sf::Texture for instance
+// This class when instantiated becomes a cache of the ResourceType type
+// and can be used to look up or load resources of that type.
+// Internally it uses resource_loader to provide resource type specific
+// preprocessing.
+// ResourceType can be an sf::Sound or an sf::Texture for instance
 template<typename ResourceType>
 class resource
 {
+	bool load_internally(const std::string &name, ResourceType &out) const
+	{
+		return resource_loader<ResourceType>::load_internally(name, out);
+	}
+
 public:
 	const ResourceType *get_resource(const std::string &name) const
 	{
@@ -39,14 +60,14 @@ public:
 		auto newentry = resources.emplace(name, ResourceType{}).first;
 
 		// Prepend the type-specific resource path like Images\\ for sf::Textures
-		auto specific_path = get_resource_folder<ResourceType>::path() + name;
+		auto specific_path = resource_loader<ResourceType>::path + name;
 
-		// Try to load from our internal 
-		if (newentry->second.loadFromFile(internal_resource_path + specific_path))
+		// Try to load from our internal resources
+		if (load_internally(internal_resource_path + specific_path, newentry->second))
 			return &newentry->second;
 
 		// .. If that fails, try third party resources
-		if (newentry->second.loadFromFile(thirdparty_resource_path + specific_path))
+		if (load_internally(thirdparty_resource_path + specific_path, newentry->second))
 			return &newentry->second;
 
 		// Didn't find nothin
@@ -57,16 +78,27 @@ private:
 	std::map<std::string, ResourceType> resources;
 };
 
-// This structure lets us associate types
-// with sub-folders in the Resources folders
+// This is type-specific resource loading code.
+// It specifically replaces magenta colors with transparency
+// in all textures when loaded
 template<>
-struct get_resource_folder<sf::Texture>
+class resource_loader<sf::Texture>
 {
-	static std::string path() { return "Images\\"; }
-};
+	friend class resource<sf::Texture>;
 
-template<>
-struct get_resource_folder<sf::SoundBuffer>
-{
-	static std::string path() { return "Sounds\\"; }
+	static const std::string path;
+	static bool load_internally(const std::string &name, sf::Texture &out)
+	{
+		sf::Image img;
+		if (!img.loadFromFile(name))
+			return false;
+		// Replace magenta with transparency
+		img.createMaskFromColor(sf::Color{ 255, 0, 255, 255 });
+
+		return out.loadFromImage(img);
+	}
 };
+const std::string resource_loader<sf::Texture>::path = "Images\\";
+
+
+const std::string resource_loader<sf::SoundBuffer>::path = "Sounds\\";
