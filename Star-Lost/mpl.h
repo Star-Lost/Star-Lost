@@ -14,10 +14,7 @@ namespace mpl
 	template<typename ...Types>
 	struct type_list
 	{
-		static constexpr std::size_t size()
-		{
-			return sizeof...(Types);
-		}
+		static constexpr std::size_t size = sizeof...(Types);
 
 	private:
 		// Apply for each
@@ -224,7 +221,7 @@ namespace mpl
 			struct search<>
 			{
 				// Define our value as size() + 1 so we can check if it was found at all
-				static constexpr std::size_t value = size() + 1;
+				static constexpr std::size_t value = size + 1;
 			};
 
 			static constexpr std::size_t value = search<Types...>::value;
