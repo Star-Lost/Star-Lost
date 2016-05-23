@@ -57,18 +57,18 @@ public:
 		// Create our new entry and get the iterator to it
 		// so we can delete it later, if we have to, and also
 		// load resources directly into it
-		auto newentry = resources.emplace(name, ResourceType{}).first;
+		auto new_entry = resources.emplace(name, ResourceType{}).first;
 
 		// Prepend the type-specific resource path like Images\\ for sf::Textures
 		auto specific_path = resource_loader<ResourceType>::path + name;
 
 		// Try to load from our internal resources
-		if (load_internally(internal_resource_path + specific_path, newentry->second))
-			return &newentry->second;
+		if (load_internally(internal_resource_path + specific_path, new_entry->second))
+			return &new_entry->second;
 
 		// .. If that fails, try third party resources
-		if (load_internally(thirdparty_resource_path + specific_path, newentry->second))
-			return &newentry->second;
+		if (load_internally(thirdparty_resource_path + specific_path, new_entry->second))
+			return &new_entry->second;
 
 		// Didn't find nothin
 		return nullptr;

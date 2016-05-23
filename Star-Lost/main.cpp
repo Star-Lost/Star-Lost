@@ -45,8 +45,8 @@ int main()
 
 	// Character animation stuff goes here
 	sf::Sprite character;
-	auto chartex = textures.load_resource("character.png");
-	if (chartex == nullptr)
+	auto char_tex = textures.load_resource("character.png");
+	if (char_tex == nullptr)
 	{
 		printf("Failed to load character :(\n");
 		return EXIT_FAILURE;
@@ -55,16 +55,16 @@ int main()
 	model char_model{
 		// Standing still facing south animation
 		std::make_pair(std::string{ "still_south" }, std::initializer_list<model::animation::frame>{
-			{ chartex, sf::IntRect(0, 0, 16, 16)}
+			{ char_tex, sf::IntRect(0, 0, 16, 16)}
 		}),
 		// Walk south animation
 		std::make_pair(std::string{ "walk_south" }, std::initializer_list<model::animation::frame>{
-			{ chartex, sf::IntRect(0, 16, 16, 16) },
-			{ chartex, sf::IntRect(0, 32, 16, 16) },
-			{ chartex, sf::IntRect(0, 0, 16, 16) },
-			{ chartex, sf::IntRect(0, 48, 16, 16) },
-			{ chartex, sf::IntRect(0, 64, 16, 16) },
-			{ chartex, sf::IntRect(0, 0, 16, 16)}
+			{ char_tex, sf::IntRect(0, 16, 16, 16) },
+			{ char_tex, sf::IntRect(0, 32, 16, 16) },
+			{ char_tex, sf::IntRect(0, 0, 16, 16) },
+			{ char_tex, sf::IntRect(0, 48, 16, 16) },
+			{ char_tex, sf::IntRect(0, 64, 16, 16) },
+			{ char_tex, sf::IntRect(0, 0, 16, 16)}
 		}),
 	};
 	// Character animation stuff ends here
