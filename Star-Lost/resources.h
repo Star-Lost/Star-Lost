@@ -2,8 +2,8 @@
 #include <map>
 #include <string>
 
-static const std::string thirdparty_resource_path = "..\\..\\Resources\\";
-static const std::string internal_resource_path = "..\\..\\..\\Resources\\";
+extern const std::string thirdparty_resource_path;
+extern const std::string internal_resource_path;
 
 template<typename ResourceType>
 class resource;
@@ -98,7 +98,3 @@ class resource_loader<sf::Texture>
 		return out.loadFromImage(img);
 	}
 };
-const std::string resource_loader<sf::Texture>::path = "Images\\";
-
-
-const std::string resource_loader<sf::SoundBuffer>::path = "Sounds\\";

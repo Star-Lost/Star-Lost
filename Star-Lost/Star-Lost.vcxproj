@@ -171,6 +171,7 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="resources.cpp" />
     <ClCompile Include="scene.cpp" />
   </ItemGroup>
   <ItemGroup>
