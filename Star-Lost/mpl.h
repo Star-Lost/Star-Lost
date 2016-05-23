@@ -14,7 +14,7 @@ namespace mpl
 	template<typename ...Types>
 	struct type_list
 	{
-		static size_t size()
+		static std::size_t size()
 		{
 			return sizeof...(Types);
 		}
@@ -100,13 +100,13 @@ namespace mpl
 
 
 		// Get
-		template<size_t I>
+		template<std::size_t I>
 		struct get
 		{
-			template<size_t N, typename ...Rest>
+			template<std::size_t N, typename ...Rest>
 			struct search;
 
-			template<size_t N, typename Head, typename ...Rest>
+			template<std::size_t N, typename Head, typename ...Rest>
 			struct search<N, Head, Rest...>
 			{
 				using type = typename search<N - 1, Rest...>::type;
@@ -121,7 +121,7 @@ namespace mpl
 			using type = typename search<I, Types...>::type;
 		};
 
-		template<size_t I>
+		template<std::size_t I>
 		using get_t = typename get<I>::type;
 
 
@@ -214,17 +214,17 @@ namespace mpl
 			template<typename Head, typename ...Rest>
 			struct search<Head, Rest...>
 			{
-				static constexpr size_t value = (std::is_same<Head, T>::value || search<Rest...>::value) - 1;
+				static constexpr std::size_t value = (std::is_same<Head, T>::value || search<Rest...>::value) - 1;
 			};
 
 			template<>
 			struct search<>
 			{
 				// Define our value as size() + 1 so we can check if it was found at all
-				static constexpr size_t value = size() + 1;
+				static constexpr std::size_t value = size() + 1;
 			};
 
-			static constexpr size_t value = search<Types...>;
+			static constexpr std::size_t value = search<Types...>;
 		};
 
 		template<typename T>
@@ -253,7 +253,7 @@ namespace mpl
 
 	namespace tests
 	{
-		using long_list = type_list<int, size_t, unsigned char, long, float, double>;
+		using long_list = type_list<int, std::size_t, unsigned char, long, float, double>;
 		using short_list = type_list<int, bool>;
 		
 		// Append
@@ -265,7 +265,7 @@ namespace mpl
 		static_assert(!std::is_same<short_list::prepend_t<char>, type_list<long, int, bool>>::value, "");
 
 		// Get
-		static_assert( std::is_same<long_list::get_t<1>, size_t>::value, "");
+		static_assert( std::is_same<long_list::get_t<1>, std::size_t>::value, "");
 		static_assert( std::is_same<long_list::get_t<3>, long>::value, "");
 		static_assert(!std::is_same<long_list::get_t<4>, long>::value, "");
 
