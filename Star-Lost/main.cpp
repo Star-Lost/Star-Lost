@@ -4,6 +4,7 @@
 
 #include "resources.h"
 #include "animation.h"
+<<<<<<< HEAD
 #include "entity.h"
 #include "mpl.h"
 
@@ -45,12 +46,15 @@ using game_context = ecs::context<ecs::settings<
 	// systems
 	mpl::type_list<movement_system>
 >>;
+=======
+#include "scene.h"
+>>>>>>> origin/master
 
 int main()
 {
 	// create the window
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Happiness");
-	window.setFramerateLimit(60); // Limit the frame rate to achieve a cinematic feel
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Star Lost");
+	window.setFramerateLimit(60);
 
 	game_context ctx;
 
@@ -135,65 +139,80 @@ int main()
 	// Character animation stuff ends here
 
 	sf::Clock clock;
+	double time = 0;
+	double delta_time;
 	// run the program as long as the window is open
 
 	// Draw the character
 	const model::animation *anim = char_model["stand_south"];
 
-	while (window.isOpen())
+	// Set the scene
+	scene_director director;
+
+	while (director.status != 0)
 	{
-		// check all the window's events that were triggered since the last iteration of the loop
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			switch (event.type)
-			{
-			case sf::Event::Closed:	window.close(); break;
+			delta_time = clock.getElapsedTime().asMilliseconds() - time;
 
-			case sf::Event::KeyPressed:
-			{
-				switch(event.key.code)
-				{
-					case sf::Keyboard::W: anim = char_model["walk_north"]; break;
-					case sf::Keyboard::A: anim = char_model["walk_west"]; break;
-					case sf::Keyboard::S: anim = char_model["walk_south"]; break;
-					case sf::Keyboard::D: anim = char_model["walk_east"]; break;
-					default: break;
-				}
-				break;
-			}
+			director.update(delta_time);
 
-			case sf::Event::KeyReleased:
-			{
-				switch (event.key.code)
-				{
-				case sf::Keyboard::W: anim = char_model["stand_north"]; break;
-				case sf::Keyboard::A: anim = char_model["stand_west"]; break;
-				case sf::Keyboard::S: anim = char_model["stand_south"]; break;
-				case sf::Keyboard::D: anim = char_model["stand_east"]; break;
-				default: break;
-				}
-				break;
-			}
-
-			default: break;
-			}
+			director.render(&window);
 		}
-
-		// clear the window with black color
-		window.clear(sf::Color::Black);
-
-		// Then get the current frame of the animation
-		const model::animation::frame &curframe =
-			(*anim)[clock.getElapsedTime().asMilliseconds() / 100];
 		
-		character.setTexture(*curframe.get_texture());
-		character.setTextureRect(curframe.get_subtexture());
-		character.setPosition(sf::Vector2f(20.0f, 20.0f)); // +(clock.getElapsedTime().asMilliseconds() % 5000) / 50.0f));
-		window.draw(character);
+		// check all the window's events that were triggered since the last iteration of the loop
+		//sf::Event event;
+		//while (window.pollEvent(event))
+		//{
+		//	switch (event.type)
+		//	{
+		//	case sf::Event::Closed:	window.close(); break;
 
-		// end the current frame
-		window.display();
+		//	case sf::Event::KeyPressed:
+		//	{
+		//		switch(event.key.code)
+		//		{
+		//			case sf::Keyboard::W: anim = char_model["walk_north"]; break;
+		//			case sf::Keyboard::A: anim = char_model["walk_west"]; break;
+		//			case sf::Keyboard::S: anim = char_model["walk_south"]; break;
+		//			case sf::Keyboard::D: anim = char_model["walk_east"]; break;
+		//			default: break;
+		//		}
+		//		break;
+		//	}
+
+		//	case sf::Event::KeyReleased:
+		//	{
+		//		switch (event.key.code)
+		//		{
+		//		case sf::Keyboard::W: anim = char_model["stand_north"]; break;
+		//		case sf::Keyboard::A: anim = char_model["stand_west"]; break;
+		//		case sf::Keyboard::S: anim = char_model["stand_south"]; break;
+		//		case sf::Keyboard::D: anim = char_model["stand_east"]; break;
+		//		default: break;
+		//		}
+		//		break;
+		//	}
+
+		//	default: break;
+		//	}
+		//}
+
+		//// clear the window with black color
+		//window.clear(sf::Color::Black);
+
+		//// Then get the current frame of the animation
+		//const model::animation::frame &curframe =
+		//	(*anim)[clock.getElapsedTime().asMilliseconds() / 100];
+		//
+		//character.setTexture(*curframe.get_texture());
+		//character.setTextureRect(curframe.get_subtexture());
+		//character.setPosition(sf::Vector2f(20.0f, 20.0f)); // +(clock.getElapsedTime().asMilliseconds() % 5000) / 50.0f));
+		//window.draw(character);
+
+		//// end the current frame
+		//window.display();
 	}
 
 	return EXIT_SUCCESS;
