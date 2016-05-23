@@ -24,6 +24,9 @@
     <ClInclude Include="animation.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
     <ClInclude Include="mpl.h">
       <Filter>Source Files</Filter>
     </ClInclude>
