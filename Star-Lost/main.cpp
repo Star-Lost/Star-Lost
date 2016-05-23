@@ -10,7 +10,7 @@ int main()
 {
 	// create the window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Happiness");
-	window.setFramerateLimit(30); // Limit the frame rate to achieve a cinematic feel
+	window.setFramerateLimit(60); // Limit the frame rate to achieve a cinematic feel
 
 	resource<sf::Texture> textures;
 	resource<sf::SoundBuffer> sounds;
