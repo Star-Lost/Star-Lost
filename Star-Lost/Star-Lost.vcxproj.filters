@@ -15,5 +15,8 @@
     <ClInclude Include="resources.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 
 #include "resources.h"
+#include "animation.h"
 
 #define TOOT_DELAY 1.0f
 
@@ -42,6 +43,30 @@ int main()
 	sf::Sound sound;
 	sound.setBuffer(*tootsound);
 
+	// Character animation stuff goes here
+	sf::Sprite character;
+	auto chartex = textures.load_resource("character.png");
+	if (chartex == nullptr)
+	{
+		printf("Failed to load character :(\n");
+		return EXIT_FAILURE;
+	}
+
+	model char_model{
+		// Standing still facing south animation
+		std::make_pair(std::string{ "still_south" }, std::initializer_list<model::animation::frame>{
+			{chartex, sf::IntRect(0, 0, 16, 16)}
+		}),
+		// Walk south animation
+		std::make_pair(std::string{ "walk_south" }, std::initializer_list<model::animation::frame>{
+			{chartex, sf::IntRect(0, 16, 16, 16) },
+			{ chartex, sf::IntRect(0, 32, 16, 16) },
+			{ chartex, sf::IntRect(0, 48, 16, 16) },
+			{ chartex, sf::IntRect(0, 62, 16, 16) }
+		}),
+	};
+	// Character animation stuff ends here
+
 	// run the program as long as the window is open
 	while (window.isOpen())
 	{
@@ -63,6 +88,25 @@ int main()
 		const float secs = clock.getElapsedTime().asSeconds();
 		sprite.setRotation(angleoffset);
 		window.draw(sprite);
+
+
+		// Draw the character
+		const model::animation *anim = nullptr;
+
+		// We switch between standing still and walking south every 5 seconds
+		if (static_cast<int>(clock.getElapsedTime().asSeconds()) % 10 > 5)
+			anim = char_model["still_south"];
+		else
+			anim = char_model["walk_south"];
+
+		// Then get the current frame of the animation
+		const model::animation::frame &curframe =
+			(*anim)[clock.getElapsedTime().asMilliseconds() / 100];
+		
+		character.setTexture(*curframe.get_texture());
+		character.setTextureRect(curframe.get_subtexture());
+		character.setPosition(sf::Vector2f(700.0f, 200.0f + (clock.getElapsedTime().asMilliseconds() % 5000) / 50.0f));
+		window.draw(character);
 
 		// end the current frame
 		window.display();
