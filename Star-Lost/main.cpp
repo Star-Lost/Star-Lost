@@ -4,8 +4,6 @@
 #include "resources.h"
 #include "animation.h"
 
-#define TOOT_DELAY 1.0f
-
 int main()
 {
 	// create the window
@@ -14,34 +12,6 @@ int main()
 
 	resource<sf::Texture> textures;
 	resource<sf::SoundBuffer> sounds;
-
-	sf::Clock clock;
-	sf::Sprite sprite;
-
-	const sf::Texture *huetex;// = *textures.load_resource("hue.png");
-	const sf::SoundBuffer *tootsound;// = *sounds.load_resource("toot.wav");
-
-	float nexttoot = 3.0f;
-	float angleoffset = 0.0f;
-
-	if ((huetex = textures.load_resource("hue.png")) == nullptr)
-	{
-		printf("Failed to load happiness :(\n");
-		return EXIT_FAILURE;
-	}
-
-	if ((tootsound = sounds.load_resource("toot.wav")) == nullptr)
-	{
-		printf("Failed to load happiness audio :(\n");
-		return EXIT_FAILURE;
-	}
-
-	sprite.setTexture(*huetex);
-	sprite.setOrigin(sf::Vector2f(285.5f, 308.0f));
-	sprite.setPosition(sf::Vector2f(285.0f, 308.0f));
-
-	sf::Sound sound;
-	sound.setBuffer(*tootsound);
 
 	// Character animation stuff goes here
 	sf::Sprite character;
@@ -69,6 +39,7 @@ int main()
 	};
 	// Character animation stuff ends here
 
+	sf::Clock clock;
 	// run the program as long as the window is open
 	while (window.isOpen())
 	{
@@ -84,12 +55,7 @@ int main()
 		// clear the window with black color
 		window.clear(sf::Color::Black);
 
-		// draw everything here...
-		// window.draw(...);
 
-		const float secs = clock.getElapsedTime().asSeconds();
-		sprite.setRotation(angleoffset);
-		window.draw(sprite);
 
 
 		// Draw the character
@@ -112,15 +78,6 @@ int main()
 
 		// end the current frame
 		window.display();
-
-		if (secs > nexttoot)
-		{
-			sound.play();
-			angleoffset += 25.0f;
-			nexttoot = secs + TOOT_DELAY;
-		}
-
-		angleoffset = angleoffset * 0.9f;
 	}
 
 	return EXIT_SUCCESS;
