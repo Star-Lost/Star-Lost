@@ -55,14 +55,16 @@ int main()
 	model char_model{
 		// Standing still facing south animation
 		std::make_pair(std::string{ "still_south" }, std::initializer_list<model::animation::frame>{
-			{chartex, sf::IntRect(0, 0, 16, 16)}
+			{ chartex, sf::IntRect(0, 0, 16, 16)}
 		}),
 		// Walk south animation
 		std::make_pair(std::string{ "walk_south" }, std::initializer_list<model::animation::frame>{
-			{chartex, sf::IntRect(0, 16, 16, 16) },
+			{ chartex, sf::IntRect(0, 16, 16, 16) },
 			{ chartex, sf::IntRect(0, 32, 16, 16) },
+			{ chartex, sf::IntRect(0, 0, 16, 16) },
 			{ chartex, sf::IntRect(0, 48, 16, 16) },
-			{ chartex, sf::IntRect(0, 62, 16, 16) }
+			{ chartex, sf::IntRect(0, 64, 16, 16) },
+			{ chartex, sf::IntRect(0, 0, 16, 16)}
 		}),
 	};
 	// Character animation stuff ends here
