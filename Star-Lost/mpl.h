@@ -17,6 +17,9 @@ namespace mpl
 		static constexpr std::size_t size = sizeof...(Types);
 
 	private:
+		// This is just here so the type can be instantiated
+		int dummy_variable;
+
 		// Apply for each
 		template<typename ...>
 		struct apply_for_each;
@@ -67,6 +70,15 @@ namespace mpl
 
 		template<typename ...List>
 		using append_t = typename append<List...>::type;
+
+
+
+		// Concat - just an alias for append
+		template<typename ...List>
+		using concat = typename append<List...>;
+
+		template<typename ...List>
+		using concat_t = typename concat<List...>::type;
 
 
 
