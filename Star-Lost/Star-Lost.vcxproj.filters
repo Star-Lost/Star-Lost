@@ -37,6 +37,12 @@
     <ClCompile Include="components\velocity_component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
+    <ClCompile Include="components\animation_component.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="systems\animation_system.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -68,6 +74,12 @@
     </ClInclude>
     <ClInclude Include="components\velocity_component.h">
       <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\animation_component.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="systems\animation_system.h">
+      <Filter>Source Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
