@@ -96,5 +96,8 @@
     <ClInclude Include="systems\render_system.h">
       <Filter>Source Files\systems</Filter>
     </ClInclude>
+    <ClInclude Include="world.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
