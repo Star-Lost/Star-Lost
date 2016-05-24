@@ -267,6 +267,9 @@ namespace mpl
 	{
 		using long_list = type_list<int, unsigned int, unsigned char, long, float, double>;
 		using short_list = type_list<int, bool>;
+
+		template<typename ...T>
+		struct other_list_type {};
 		
 		// Append
 		static_assert(std::is_same<short_list::append_t<char>, type_list<int, bool, char>>::value, "");
@@ -294,7 +297,7 @@ namespace mpl
 		static_assert(long_list::index_v<long> == 3, "");
 
 		// To
-		static_assert( std::is_same<short_list::to_t<std::tuple>, std::tuple<int, bool>>::value, "");
-		static_assert(!std::is_same<short_list::to_t<std::tuple>, std::tuple<bool, int>>::value, "");
+		static_assert( std::is_same<short_list::to_t<other_list_type>, other_list_type<int, bool>>::value, "");
+		static_assert(!std::is_same<short_list::to_t<other_list_type>, other_list_type<bool, int>>::value, "");
 	}
 }
