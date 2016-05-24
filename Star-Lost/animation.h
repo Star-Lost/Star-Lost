@@ -3,6 +3,8 @@
 #include <vector>
 #include <map>
 
+#include "resources.h"
+
 class model
 {
 public:
@@ -35,4 +37,13 @@ public:
 
 private:
 	std::map<std::string, animation> animations;
+};
+
+template<>
+class resource_loader<model>
+{
+	friend class resource<model>;
+
+	static const std::string path;
+	static bool load(const std::string &name, model &out);
 };

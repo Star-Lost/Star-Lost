@@ -40,3 +40,11 @@ const model::animation *model::operator[](const std::string &name) const
 
 	return &lookup->second;
 }
+
+bool resource_loader<model>::load(const std::string &name, model &out)
+{
+	// You can't load models like this, they're defined programmatically
+	return false;
+}
+
+const std::string resource_loader<model>::path = "";
