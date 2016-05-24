@@ -17,7 +17,7 @@ struct game_context : public ecs::context<ecs::settings<
 	mpl::type_list<>,
 	// systems
 	mpl::type_list<
-		ecs::systems::velocity_system
+		ecs::systems::velocity
 	>
 	>>
 {

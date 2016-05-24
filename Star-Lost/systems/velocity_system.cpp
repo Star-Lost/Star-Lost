@@ -2,7 +2,7 @@
 
 using namespace ecs;
 
-void systems::velocity_system::update(
+void systems::velocity::update(
 	std::size_t entity_index, 
 	components::position &pos, 
 	components::velocity &vel

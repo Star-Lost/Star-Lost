@@ -4,7 +4,7 @@ namespace ecs
 {
 	namespace systems
 	{
-		struct velocity_system
+		struct velocity
 		{
 			using required = mpl::type_list<
 				components::position,
