@@ -170,7 +170,7 @@ namespace ecs
 		void update_systems(mpl::type_list<Head, Rest...>)
 		{
 			update_system<Head>();
-			update_systems<Rest...>();
+			update_systems(mpl::type_list<Rest...>{});
 		}
 		
 		template<typename Head>
