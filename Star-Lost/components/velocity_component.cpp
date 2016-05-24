@@ -1,4 +1,4 @@
-#include "velocity.h"
+#include "velocity_component.h"
 
 using namespace ecs::components;
 

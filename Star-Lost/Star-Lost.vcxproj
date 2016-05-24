@@ -170,8 +170,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
-    <ClCompile Include="components\position.cpp" />
-    <ClCompile Include="components\velocity.cpp" />
+    <ClCompile Include="components\position_component.cpp" />
+    <ClCompile Include="components\velocity_component.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="scene.cpp" />
@@ -180,8 +180,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
-    <ClInclude Include="components\position.h" />
-    <ClInclude Include="components\velocity.h" />
+    <ClInclude Include="components\position_component.h" />
+    <ClInclude Include="components\velocity_component.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game_context.h" />
     <ClInclude Include="mpl.h" />

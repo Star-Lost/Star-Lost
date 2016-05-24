@@ -1,4 +1,4 @@
-#include "position.h"
+#include "position_component.h"
 
 using namespace ecs::components;
 

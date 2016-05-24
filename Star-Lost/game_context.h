@@ -2,8 +2,8 @@
 
 #include "entity.h"
 
-#include "components/position.h"
-#include "components/velocity.h"
+#include "components/position_component.h"
+#include "components/velocity_component.h"
 
 #include "systems/velocity_system.h"
 

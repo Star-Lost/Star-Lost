@@ -25,17 +25,17 @@
     <ClCompile Include="resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="components\position.cpp">
-      <Filter>Source Files\components</Filter>
+    <ClCompile Include="systems\velocity_system.cpp">
+      <Filter>Source Files\systems</Filter>
     </ClCompile>
     <ClCompile Include="texture_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="components\velocity.cpp">
+    <ClCompile Include="components\position_component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
-    <ClCompile Include="systems\velocity_system.cpp">
-      <Filter>Source Files\systems</Filter>
+    <ClCompile Include="components\velocity_component.cpp">
+      <Filter>Source Files\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,12 +54,6 @@
     <ClInclude Include="entity.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="components\position.h">
-      <Filter>Source Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\velocity.h">
-      <Filter>Source Files\components</Filter>
-    </ClInclude>
     <ClInclude Include="game_context.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -68,6 +62,12 @@
     </ClInclude>
     <ClInclude Include="texture_loader.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="components\position_component.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\velocity_component.h">
+      <Filter>Source Files\components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
