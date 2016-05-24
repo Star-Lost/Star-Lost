@@ -144,10 +144,11 @@ namespace ecs
 		struct expand_call<mpl::type_list<Ts...>>
 		{
 			template<typename Sys>
-			static void call(context<Settings> &ctx, std::size_t entity_index)
+			static void call(context<Settings> &ctx, std::size_t entity_index, float dt)
 			{
 				ctx.get_system<Sys>().update(
 					entity_index, 
+					dt,
 					// Expand all the component references as arguments
 					ctx.get_component<Ts>(entity_index)...
 				);
@@ -155,28 +156,28 @@ namespace ecs
 		};
 		
 		template<typename Sys>
-		void update_system()
+		void update_system(float dt)
 		{
 			for (auto i = 0u; i < last_entity; ++i)
 			{
 				if (matches_signature<Sys::required>(i))
 				{
-					expand_call<Sys::required>::call<Sys>(*this, i);
+					expand_call<Sys::required>::call<Sys>(*this, i, dt);
 				}
 			}
 		}
 
 		template<typename Head, typename ...Rest>
-		void update_systems(mpl::type_list<Head, Rest...>)
+		void update_systems(mpl::type_list<Head, Rest...>, float dt)
 		{
-			update_system<Head>();
-			update_systems(mpl::type_list<Rest...>{});
+			update_system<Head>(dt);
+			update_systems(mpl::type_list<Rest...>{}, dt);
 		}
 		
 		template<typename Head>
-		void update_systems(mpl::type_list<Head>)
+		void update_systems(mpl::type_list<Head>, float dt)
 		{
-			update_system<Head>();
+			update_system<Head>(dt);
 		}
 
 	public:
@@ -186,7 +187,7 @@ namespace ecs
 
 		void update(float dt)
 		{
-			update_systems(settings::systems{});
+			update_systems(settings::systems{}, dt);
 		}
 
 		// Component-related functions
