@@ -18,8 +18,9 @@ class resource_loader
 	friend class resource<ResourceType>;
 	static const std::string path;
 
-	static bool load_internally(const std::string &name, ResourceType &out)
+	static bool load(const std::string &name, ResourceType &out)
 	{
+		// By default, assume the resource is an SFML object
 		return out.loadFromFile(name);
 	}
 };
@@ -34,7 +35,7 @@ class resource
 {
 	bool load_internally(const std::string &name, ResourceType &out) const
 	{
-		return resource_loader<ResourceType>::load_internally(name, out);
+		return resource_loader<ResourceType>::load(name, out);
 	}
 
 public:
@@ -45,6 +46,16 @@ public:
 			return nullptr;
 
 		return &(lookup->second);
+	}
+
+	template<typename ...Args>
+	const ResourceType *set_resource(const std::string &name, Args&&... args)
+	{
+		auto result = resources.emplace(name, std::forward<Args>(args)...);
+		if (!result.second)
+			return nullptr;
+
+		return &(*result.first).second;
 	}
 
 	const ResourceType *load_resource(const std::string &name)
@@ -76,25 +87,4 @@ public:
 
 private:
 	std::map<std::string, ResourceType> resources;
-};
-
-// This is type-specific resource loading code.
-// It specifically replaces magenta colors with transparency
-// in all textures when loaded
-template<>
-class resource_loader<sf::Texture>
-{
-	friend class resource<sf::Texture>;
-
-	static const std::string path;
-	static bool load_internally(const std::string &name, sf::Texture &out)
-	{
-		sf::Image img;
-		if (!img.loadFromFile(name))
-			return false;
-		// Replace magenta with transparency
-		img.createMaskFromColor(sf::Color{ 255, 0, 255, 255 });
-
-		return out.loadFromImage(img);
-	}
 };
