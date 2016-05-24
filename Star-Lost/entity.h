@@ -155,7 +155,7 @@ namespace ecs
 		};
 		
 		template<typename Sys>
-		void for_entities_matching()
+		void update_system()
 		{
 			for (auto i = 0u; i < last_entity; ++i)
 			{
@@ -169,14 +169,14 @@ namespace ecs
 		template<typename Head, typename ...Rest>
 		void update_systems(mpl::type_list<Head, Rest...>)
 		{
-			for_entities_matching<Head>();
+			update_system<Head>();
 			update_systems<Rest...>();
 		}
 		
 		template<typename Head>
 		void update_systems(mpl::type_list<Head>)
 		{
-			for_entities_matching<Head>();
+			update_system<Head>();
 		}
 
 	public:
