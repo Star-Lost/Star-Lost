@@ -7,8 +7,6 @@ namespace ecs
 	{
 		struct animation
 		{
-			std::string cur_model;
-			std::string cur_anim;
 		};
 	}
 }
