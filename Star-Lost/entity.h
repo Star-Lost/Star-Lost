@@ -66,7 +66,6 @@ namespace ecs
 		template<typename T>
 		static constexpr std::size_t signature_bit_v = signature_bit<T, is_component<T>>::value;
 
-
 		// Signature calculation code
 		template<typename ...>
 		struct signature;
@@ -122,6 +121,11 @@ namespace ecs
 			return std::get<std::array<T, settings::max_entities>>(components);
 		}
 
+		template<typename T>
+		auto &get_system() {
+			return std::get<T>(systems);
+		}
+
 		entity &get_entity(std::size_t entity_index)
 		{
 			return entities[entity_index];
@@ -131,12 +135,46 @@ namespace ecs
 		{
 			return entities[entity_index];
 		}
+		/*
+		template<typename Signature>
+		void for_matching_entities
 
+		template<typename ...Sys>
+		struct update_systems_helper;
+
+		template<typename Head, typename ...Sys>
+		struct update_systems_helper<mpl::type_list<Head, Sys...>>
+		{
+			template<typename Lambda>
+			static void update(const Lambda &lambda)
+			{
+				auto &sys = self.get_system<Head>();
+
+				for_matching_entities<decltype(sys)::required>
+				sys.process()
+
+				update_systems_helper<mpl::type_list<Sys...>>::update(self);
+			}
+		};
+
+		template<>
+		struct update_systems_helper<mpl::type_list<>>
+		{
+			static void update(context<settings> &self)
+			{
+
+			}
+		};
+		*/
 	public:
 		context() :
 			last_entity(0)
 		{}
 
+		void update(float dt)
+		{
+			//update_systems_helper<settings::systems>::update(*this);
+		}
 
 		// Component-related functions
 		template<typename T, typename ... Args>

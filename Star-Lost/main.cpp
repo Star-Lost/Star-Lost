@@ -32,7 +32,9 @@ struct static_object_sig : mpl::type_list<position_component> {};
 
 struct movement_system
 {
-	void update()
+	using required = physics_object_sig;
+
+	void update(position_component &pos, velocity_component &vel)
 	{
 
 	}
@@ -78,6 +80,8 @@ int main()
 
 	while (director.status != 0)
 	{
+		ctx.update(float(clock.getElapsedTime().asMilliseconds()) / 1000.0f);
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
