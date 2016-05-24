@@ -7,6 +7,9 @@ namespace ecs
 	{
 		struct animation
 		{
+			animation();
+
+			float runtime;
 			const model::animation *anim;
 		};
 	}

@@ -143,41 +143,41 @@ namespace ecs
 		template<typename ...Ts>
 		struct expand_call<mpl::type_list<Ts...>>
 		{
-			template<typename Sys>
-			static void call(context<Settings> &ctx, std::size_t entity_index, float dt)
+			template<typename Sys, typename ...Args>
+			static void call(context<Settings> &ctx, std::size_t entity_index, Args&& ...args)
 			{
 				ctx.get_system<Sys>().update(
 					entity_index, 
-					dt,
+					std::forward<Args>(args)...,
 					// Expand all the component references as arguments
 					ctx.get_component<Ts>(entity_index)...
 				);
 			}
 		};
 		
-		template<typename Sys>
-		void update_system(float dt)
+		template<typename Sys, typename ...Args>
+		void update_system(Args&& ...args)
 		{
 			for (auto i = 0u; i < last_entity; ++i)
 			{
 				if (matches_signature<Sys::required>(i))
 				{
-					expand_call<Sys::required>::call<Sys>(*this, i, dt);
+					expand_call<Sys::required>::call<Sys>(*this, i, std::forward<Args>(args)...);
 				}
 			}
 		}
 
-		template<typename Head, typename ...Rest>
-		void update_systems(mpl::type_list<Head, Rest...>, float dt)
+		template<typename Head, typename ...Rest, typename ...Args>
+		void update_systems(mpl::type_list<Head, Rest...>, Args&&... args)
 		{
-			update_system<Head>(dt);
-			update_systems(mpl::type_list<Rest...>{}, dt);
+			update_system<Head>(std::forward<Args>(args)...);
+			update_systems(mpl::type_list<Rest...>{}, std::forward<Args>(args)...);
 		}
 		
-		template<typename Head>
-		void update_systems(mpl::type_list<Head>, float dt)
+		template<typename Head, typename ...Args>
+		void update_systems(mpl::type_list<Head>, Args&&... args)
 		{
-			update_system<Head>(dt);
+			update_system<Head>(std::forward<Args>(args)...);
 		}
 
 	public:
@@ -185,9 +185,10 @@ namespace ecs
 			last_entity(0)
 		{}
 
-		void update(float dt)
+		template<typename ...Args>
+		void update(Args&&... args)
 		{
-			update_systems(settings::systems{}, dt);
+			update_systems(settings::systems{}, args...);
 		}
 
 		// Component-related functions

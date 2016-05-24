@@ -43,6 +43,15 @@
     <ClCompile Include="systems\animation_system.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
+    <ClCompile Include="components\sprite_component.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="systems\render_system.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="game_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -79,6 +88,12 @@
       <Filter>Source Files\components</Filter>
     </ClInclude>
     <ClInclude Include="systems\animation_system.h">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="components\sprite_component.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="systems\render_system.h">
       <Filter>Source Files\systems</Filter>
     </ClInclude>
   </ItemGroup>

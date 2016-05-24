@@ -172,11 +172,14 @@
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="components\animation_component.cpp" />
     <ClCompile Include="components\position_component.cpp" />
+    <ClCompile Include="components\sprite_component.cpp" />
     <ClCompile Include="components\velocity_component.cpp" />
+    <ClCompile Include="game_context.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="systems\animation_system.cpp" />
+    <ClCompile Include="systems\render_system.cpp" />
     <ClCompile Include="systems\velocity_system.cpp" />
     <ClCompile Include="texture_loader.cpp" />
   </ItemGroup>
@@ -184,6 +187,7 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="components\animation_component.h" />
     <ClInclude Include="components\position_component.h" />
+    <ClInclude Include="components\sprite_component.h" />
     <ClInclude Include="components\velocity_component.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game_context.h" />
@@ -191,6 +195,7 @@
     <ClInclude Include="resources.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="systems\animation_system.h" />
+    <ClInclude Include="systems\render_system.h" />
     <ClInclude Include="systems\velocity_system.h" />
     <ClInclude Include="texture_loader.h" />
   </ItemGroup>

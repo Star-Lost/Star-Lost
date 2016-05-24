@@ -4,10 +4,10 @@ using namespace ecs;
 
 void systems::velocity::update(
 	std::size_t entity_index, 
-	float dt,
+	game_context &ctx,
 	components::position &pos, 
 	components::velocity &vel
 ) const
 {
-	pos += vel * dt;
+	pos += vel * ctx.get_delta();
 }

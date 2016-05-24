@@ -7,10 +7,11 @@ namespace ecs
 		struct animation
 		{
 			using required = mpl::type_list<
-				components::animation
+				components::animation,
+				components::sprite
 			>;
 
-			void update(std::size_t entity_index, components::animation &anim);
+			void update(std::size_t entity_index, game_context &ctx, components::animation &anim, components::sprite &spr);
 		};
 	}
 }
