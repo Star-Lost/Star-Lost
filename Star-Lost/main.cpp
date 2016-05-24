@@ -17,18 +17,8 @@ int main()
 	game_context ctx;
 
 	auto ent = ctx.create_entity();
-	//ctx.add_tag<player_tag>(ent);
 	ctx.add_component<ecs::components::position>(ent, 1.0f, 2.0f);
 	ctx.add_component<ecs::components::velocity>(ent);
-
-	// Character animation stuff goes here
-	/*sf::Sprite character;
-	auto char_tex = textures.load_resource("character.png");
-	if (char_tex == nullptr)
-	{
-		printf("Failed to load character :(\n");
-		return EXIT_FAILURE;
-	}*/
 
 	sf::Clock clock;
 	double time = 0;
@@ -49,44 +39,6 @@ int main()
 			director.update(delta_time);
 			director.render(&window);
 		}
-		
-		// check all the window's events that were triggered since the last iteration of the loop
-		//sf::Event event;
-		//while (window.pollEvent(event))
-		//{
-		//	switch (event.type)
-		//	{
-		//	case sf::Event::Closed:	window.close(); break;
-
-		//	case sf::Event::KeyPressed:
-		//	{
-		//		switch(event.key.code)
-		//		{
-		//			case sf::Keyboard::W: anim = char_model["walk_north"]; break;
-		//			case sf::Keyboard::A: anim = char_model["walk_west"]; break;
-		//			case sf::Keyboard::S: anim = char_model["walk_south"]; break;
-		//			case sf::Keyboard::D: anim = char_model["walk_east"]; break;
-		//			default: break;
-		//		}
-		//		break;
-		//	}
-
-		//	case sf::Event::KeyReleased:
-		//	{
-		//		switch (event.key.code)
-		//		{
-		//		case sf::Keyboard::W: anim = char_model["stand_north"]; break;
-		//		case sf::Keyboard::A: anim = char_model["stand_west"]; break;
-		//		case sf::Keyboard::S: anim = char_model["stand_south"]; break;
-		//		case sf::Keyboard::D: anim = char_model["stand_east"]; break;
-		//		default: break;
-		//		}
-		//		break;
-		//	}
-
-		//	default: break;
-		//	}
-		//}
 
 		//// clear the window with black color
 		//window.clear(sf::Color::Black);
