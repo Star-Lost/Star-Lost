@@ -135,37 +135,48 @@ namespace ecs
 		{
 			return entities[entity_index];
 		}
-		/*
-		template<typename Signature>
-		void for_matching_entities
 
-		template<typename ...Sys>
-		struct update_systems_helper;
 
-		template<typename Head, typename ...Sys>
-		struct update_systems_helper<mpl::type_list<Head, Sys...>>
+		template<typename ...Ts>
+		struct expand_call;
+
+		template<typename ...Ts>
+		struct expand_call<mpl::type_list<Ts...>>
 		{
-			template<typename Lambda>
-			static void update(const Lambda &lambda)
+			template<typename Sys>
+			static void call(context<Settings> &ctx, Sys &sys, std::size_t entity_index)
 			{
-				auto &sys = self.get_system<Head>();
-
-				for_matching_entities<decltype(sys)::required>
-				sys.process()
-
-				update_systems_helper<mpl::type_list<Sys...>>::update(self);
+				sys.update(entity_index, ctx.get_component<Ts>(entity_index)...);
 			}
 		};
-
-		template<>
-		struct update_systems_helper<mpl::type_list<>>
+		
+		template<typename Sys>
+		void for_entities_matching()
 		{
-			static void update(context<settings> &self)
-			{
+			auto &sys = get_system<Sys>();
 
+			for (auto i = 0u; i < last_entity; ++i)
+			{
+				if (matches_signature<Sys::required>(i))
+				{
+					expand_call<Sys::required>::call(*this, sys, i);
+				}
 			}
-		};
-		*/
+		}
+
+		template<typename Head, typename ...Rest>
+		void update_systems(mpl::type_list<Head, Rest...>)
+		{
+			for_entities_matching<Head>();
+			update_systems<Rest...>();
+		}
+		
+		template<typename Head>
+		void update_systems(mpl::type_list<Head>)
+		{
+			for_entities_matching<Head>();
+		}
+
 	public:
 		context() :
 			last_entity(0)
@@ -173,7 +184,7 @@ namespace ecs
 
 		void update(float dt)
 		{
-			//update_systems_helper<settings::systems>::update(*this);
+			update_systems(settings::systems{});
 		}
 
 		// Component-related functions
@@ -209,9 +220,9 @@ namespace ecs
 		}
 
 		template<typename T>
-		auto &get_component(size_t entity_index) const
+		auto &get_component(size_t entity_index)
 		{
-			return std::get<T>(get_entity(entity_index).data_index);
+			return get_storage<T>().at(get_entity(entity_index).data_index);
 		}
 
 
@@ -255,7 +266,7 @@ namespace ecs
 		template<typename Signature>
 		bool matches_signature(std::size_t entity_index) const
 		{
-			return (get_entity(entity_index).signature & Settings::signature_v<T>) == Settings::signature_v<T>;
+			return (get_entity(entity_index).signature & Settings::signature_v<Signature>) == Settings::signature_v<Signature>;
 		}
 	};
 }

@@ -27,16 +27,16 @@ struct velocity_component : public sf::Vector2f
 struct player_tag {};
 
 // These are just signatures
-struct physics_object_sig : mpl::type_list<position_component, velocity_component> {};
-struct static_object_sig : mpl::type_list<position_component> {};
+using physics_object_sig = mpl::type_list<position_component, velocity_component>;
+using static_object_sig = mpl::type_list<position_component>;
 
 struct movement_system
 {
 	using required = physics_object_sig;
 
-	void update(position_component &pos, velocity_component &vel)
+	void update(std::size_t entity_index, position_component &pos, velocity_component &vel)
 	{
-
+		pos += vel;
 	}
 };
 
