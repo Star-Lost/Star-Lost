@@ -4,50 +4,9 @@
 
 #include "resources.h"
 #include "animation.h"
-#include "entity.h"
-#include "mpl.h"
 #include "scene.h"
 
-struct position_component : public sf::Vector2f 
-{
-	position_component() = default;
-	position_component(float x, float y) :
-		sf::Vector2f(x, y)
-	{}
-};
-
-struct velocity_component : public sf::Vector2f 
-{
-	velocity_component() = default;
-	velocity_component(float x, float y) :
-		sf::Vector2f(x, y)
-	{}
-};
-
-struct player_tag {};
-
-// These are just signatures
-using physics_object_sig = mpl::type_list<position_component, velocity_component>;
-using static_object_sig = mpl::type_list<position_component>;
-
-struct movement_system
-{
-	using required = physics_object_sig;
-
-	void update(std::size_t entity_index, position_component &pos, velocity_component &vel)
-	{
-		pos += vel;
-	}
-};
-
-using game_context = ecs::context<ecs::settings<
-	// components
-	mpl::type_list<position_component, velocity_component>,
-	// tags
-	mpl::type_list<player_tag>,
-	// systems
-	mpl::type_list<movement_system>
->>;
+#include "game_context.h"
 
 int main()
 {
@@ -58,9 +17,9 @@ int main()
 	game_context ctx;
 
 	auto ent = ctx.create_entity();
-	ctx.add_tag<player_tag>(ent);
-	ctx.add_component<position_component>(ent, 1.0f, 2.0f);
-	ctx.add_component<velocity_component>(ent);
+	//ctx.add_tag<player_tag>(ent);
+	ctx.add_component<ecs::components::position>(ent, 1.0f, 2.0f);
+	ctx.add_component<ecs::components::velocity>(ent);
 
 	// Character animation stuff goes here
 	/*sf::Sprite character;

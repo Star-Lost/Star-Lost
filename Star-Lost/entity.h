@@ -144,22 +144,24 @@ namespace ecs
 		struct expand_call<mpl::type_list<Ts...>>
 		{
 			template<typename Sys>
-			static void call(context<Settings> &ctx, Sys &sys, std::size_t entity_index)
+			static void call(context<Settings> &ctx, std::size_t entity_index)
 			{
-				sys.update(entity_index, ctx.get_component<Ts>(entity_index)...);
+				ctx.get_system<Sys>().update(
+					entity_index, 
+					// Expand all the component references as arguments
+					ctx.get_component<Ts>(entity_index)...
+				);
 			}
 		};
 		
 		template<typename Sys>
 		void for_entities_matching()
 		{
-			auto &sys = get_system<Sys>();
-
 			for (auto i = 0u; i < last_entity; ++i)
 			{
 				if (matches_signature<Sys::required>(i))
 				{
-					expand_call<Sys::required>::call(*this, sys, i);
+					expand_call<Sys::required>::call<Sys>(*this, i);
 				}
 			}
 		}

@@ -170,16 +170,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="components\position.cpp" />
+    <ClCompile Include="components\velocity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="systems\velocity_system.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="components\position.h" />
+    <ClInclude Include="components\velocity.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="game_context.h" />
     <ClInclude Include="mpl.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="systems\velocity_system.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

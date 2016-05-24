@@ -8,6 +8,9 @@
     <Filter Include="Source Files\components">
       <UniqueIdentifier>{03aca62a-539c-483b-a617-3962096ad6d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\systems">
+      <UniqueIdentifier>{2fd80c5a-4a92-427b-ad5f-c6b59d3487ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -22,6 +25,15 @@
     <ClCompile Include="resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="components\position.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\velocity.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="systems\velocity_system.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -30,14 +42,26 @@
     <ClInclude Include="animation.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="entity.h">
-      <Filter>Source Files\components</Filter>
-    </ClInclude>
     <ClInclude Include="mpl.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="scene.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="components\position.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\velocity.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="game_context.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="systems\velocity_system.h">
+      <Filter>Source Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
