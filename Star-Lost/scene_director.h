@@ -37,6 +37,6 @@ private:
 class scene
 {
 public:
-	virtual void handle_event(const sf::Event &evt) = 0;
+	virtual void handle_event(scene_director &director, const sf::Event &evt) = 0;
 	virtual void update(scene_director &director) = 0;
 };

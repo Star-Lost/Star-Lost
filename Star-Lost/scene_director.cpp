@@ -14,7 +14,7 @@ void scene_director::update()
 	sf::Event evt;
 	while (window.pollEvent(evt))
 	{
-		scenes.back()->handle_event(evt);
+		scenes.back()->handle_event(*this, evt);
 	}
 
 	scenes.back()->update(*this);

@@ -23,7 +23,7 @@ game_scene::game_scene(scene_director &director) :
 	anim = char_model["stand_south"];
 }
 
-void game_scene::handle_event(const sf::Event &evt)
+void game_scene::handle_event(scene_director &director, const sf::Event &evt)
 {
 
 }
