@@ -37,13 +37,6 @@ game_scene::game_scene(scene_director *director) : scene(director)
 {
 	colour = sf::Color::Red;
 
-	sf::Sprite character;
-	auto char_tex = director->textures.load_resource("character.png");
-	if (char_tex == nullptr)
-	{
-		printf("Failed to load character :(\n");
-		(*director).status = -1;
-	}
 
 	game_context ctx(*(*director).window);
 
