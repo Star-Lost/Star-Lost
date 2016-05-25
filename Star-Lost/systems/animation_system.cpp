@@ -1,5 +1,4 @@
 #include "../game_context.h"
-#include <iostream>
 
 using namespace ecs;
 

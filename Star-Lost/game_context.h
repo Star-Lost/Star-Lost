@@ -6,15 +6,6 @@ struct game_context;
 
 #include "entity.h"
 
-#include "components/position_component.h"
-#include "components/velocity_component.h"
-#include "components/sprite_component.h"
-#include "components/animation_component.h"
-
-#include "systems/velocity_system.h"
-#include "systems/animation_system.h"
-#include "systems/render_system.h"
-
 namespace ecs
 {
 	namespace tags
@@ -23,6 +14,15 @@ namespace ecs
 	}
 }
 
+#include "components/position_component.h"
+#include "components/velocity_component.h"
+#include "components/sprite_component.h"
+#include "components/animation_component.h"
+
+#include "systems/velocity_system.h"
+#include "systems/animation_system.h"
+#include "systems/render_system.h"
+#include "systems/control_system.h"
 
 struct game_context : public ecs::context<ecs::settings<
 	// components
@@ -42,7 +42,8 @@ struct game_context : public ecs::context<ecs::settings<
 	mpl::type_list<
 		ecs::systems::velocity,
 		ecs::systems::animation,
-		ecs::systems::render
+		ecs::systems::render,
+		ecs::systems::control
 	>
 	>>
 {

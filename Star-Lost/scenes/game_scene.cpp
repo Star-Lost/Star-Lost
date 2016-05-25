@@ -35,41 +35,11 @@ void game_scene::handle_event(scene_director &director, const sf::Event &evt)
 	{
 	case sf::Event::Closed: director.get_window().close(); break;
 	case sf::Event::KeyPressed:
-	{
-		switch (evt.key.code)
-		{
-			case sf::Keyboard::W: curanim = mdl["walk_north"]; break;
-			case sf::Keyboard::A: curanim = mdl["walk_west"]; break;
-			case sf::Keyboard::S: curanim = mdl["walk_south"]; break;
-			case sf::Keyboard::D: curanim = mdl["walk_east"]; break;
-			default: break;
-		}
-		break;
-	}
-
 	case sf::Event::KeyReleased:
-	{
-		switch (evt.key.code)
-		{
-			case sf::Keyboard::W: curanim = mdl["stand_north"]; break;
-			case sf::Keyboard::A: curanim = mdl["stand_west"]; break;
-			case sf::Keyboard::S: curanim = mdl["stand_south"]; break;
-			case sf::Keyboard::D: curanim = mdl["stand_east"]; break;
-			default: break;
-		}
-
+		ctx.get_system<ecs::systems::control>().handle_event(director, evt);
 		break;
 	}
 
-	default: break;
-	}
-
-	ctx.for_entities<ecs::tags::player>([this, curanim](ecs::entity_index eid) {
-		auto &anim = this->ctx.get_component<ecs::components::animation>(eid);
-
-		anim.anim = curanim;
-		anim.runtime = 0;
-	});
 }
 
 void game_scene::update(scene_director &director)

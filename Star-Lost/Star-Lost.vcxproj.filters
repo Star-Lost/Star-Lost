@@ -61,6 +61,9 @@
     <ClCompile Include="scene_director.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="systems\control_system.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -116,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="resource_loader.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="systems\control_system.h">
+      <Filter>Source Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
