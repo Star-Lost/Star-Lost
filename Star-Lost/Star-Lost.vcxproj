@@ -195,6 +195,7 @@
     <ClInclude Include="game_context.h" />
     <ClInclude Include="mpl.h" />
     <ClInclude Include="resources.h" />
+    <ClInclude Include="resource_loader.h" />
     <ClInclude Include="scenes\game_scene.h" />
     <ClInclude Include="scenes\pause_scene.h" />
     <ClInclude Include="scene_director.h" />

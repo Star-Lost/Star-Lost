@@ -1,5 +1,5 @@
 #pragma once
-#include "resources.h"
+#include "resource_loader.h"
 
 namespace sf { class Texture; }
 

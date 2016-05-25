@@ -2,28 +2,11 @@
 #include <map>
 #include <string>
 
+#include "resource_loader.h"
+#include "texture_loader.h"
+
 extern const std::string thirdparty_resource_path;
 extern const std::string internal_resource_path;
-
-template<typename ResourceType>
-class resource;
-
-// This type is used for preprocessing certain resources
-// like for instance replacing magenta colors in textures
-// with transparency. The default implementation
-// does nothing at all, except basic loading
-template<typename ResourceType>
-class resource_loader
-{
-	friend class resource<ResourceType>;
-	static const std::string path;
-
-	static bool load(const std::string &name, ResourceType &out)
-	{
-		// By default, assume the resource is an SFML object
-		return out.loadFromFile(name);
-	}
-};
 
 // This class when instantiated becomes a cache of the ResourceType type
 // and can be used to look up or load resources of that type.
@@ -48,6 +31,8 @@ public:
 		return &(lookup->second);
 	}
 
+	// Explicitly register a resource within the cache
+	// that has been loaded by other means
 	template<typename ...Args>
 	const ResourceType *set_resource(const std::string &name, Args&&... args)
 	{

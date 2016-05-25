@@ -114,5 +114,8 @@
     <ClInclude Include="scene_director.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource_loader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
