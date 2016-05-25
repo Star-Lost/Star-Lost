@@ -263,9 +263,9 @@ namespace ecs
 			return get_entity(eid).alive;
 		}
 
-		const std::vector<entity_index> &get_entities() const
+		void kill(entity_index eid) const
 		{
-			return entities;
+			get_entity(eid).alive = false;
 		}
 
 		template<typename Lambda>
