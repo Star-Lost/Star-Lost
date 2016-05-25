@@ -1,7 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <iostream>
-
 #include "scenes/game_scene.h"
 
 int main()
@@ -15,7 +11,7 @@ int main()
 	// Set the scene
 	scene_director director(window);
 
-	//director.add_scene(new game_scene());
+	director.add_scene(std::make_unique<game_scene>(director));
 	
 	while (director.status != 0)
 	{

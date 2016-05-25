@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <memory>
 
 #include "resources.h"
 #include "animation.h"
@@ -11,8 +12,14 @@ class scene_director
 {
 public:
 	scene_director(sf::RenderWindow &window);
+	
 	void update();
 
+	void add_scene(std::unique_ptr<scene> &&new_scene);
+
+	// All of this should probably be private, and use accessor functions.
+	// You don't want, for instance, a system to change the delta time
+	// halfway through a cycle.
 	sf::Clock clock;
 	resource<model> models;
 	resource<sf::Texture> textures;
@@ -23,7 +30,9 @@ public:
 	float delta_time; // What time it was last time
 
 	sf::RenderWindow &window;
-	std::vector<scene*> scenes;
+
+private:
+	std::vector<std::unique_ptr<scene>> scenes;
 };
 
 class scene
