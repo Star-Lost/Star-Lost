@@ -283,6 +283,14 @@ namespace ecs
 					lambda(eid);
 		}
 
+		template<typename Lambda>
+		void for_entities(const Lambda &lambda, signature_type signature)
+		{
+			for (entity_index eid = 0; eid < last_entity; ++eid)
+				if (matches_signature(eid, signature))
+					lambda(eid);
+		}
+
 		std::size_t create_entity()
 		{
 			entity &ent = entities[last_entity];
@@ -300,6 +308,11 @@ namespace ecs
 		bool matches_signature(entity_index eid) const
 		{
 			return (get_entity(eid).signature & signature::get_v<Signature>) == signature::get_v<Signature>;
+		}
+
+		bool matches_signature(entity_index eid, signature_type signature) const
+		{
+			return (get_entity(eid).signature & signature) == signature;
 		}
 	};
 }

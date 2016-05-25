@@ -10,7 +10,6 @@ game_scene::game_scene(scene_director &director) :
 	create_character_model(director.get_textures(), director.get_models());
 	auto &char_model = *director.get_models().get_resource("char_model");
 
-
 	// Set up the character entity
 	auto ply = ctx.create_entity();
 	ctx.add_component<ecs::components::position>(ply, 50.0f, 50.0f);
