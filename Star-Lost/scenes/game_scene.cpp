@@ -22,6 +22,11 @@ game_scene::game_scene(scene_director &director) :
 	anim = char_model["stand_south"];
 }
 
+void game_scene::handle_event(const sf::Event &evt)
+{
+
+}
+
 void game_scene::update(scene_director &director)
 {
 	director.window.clear(sf::Color(100, 149, 237));

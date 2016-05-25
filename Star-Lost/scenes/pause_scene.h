@@ -4,5 +4,6 @@
 class pause_scene : public scene
 {
 public:
-	void virtual update(scene_director &director) override;
+	virtual void handle_event(const sf::Event &evt) override;
+	virtual void update(scene_director &director) override;
 };

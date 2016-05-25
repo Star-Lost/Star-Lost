@@ -6,7 +6,9 @@ class game_scene : public scene
 {
 public:
 	game_scene(scene_director &director);
-	void virtual update(scene_director &director) override;
+
+	virtual void handle_event(const sf::Event &evt) override;
+	virtual void update(scene_director &director) override;
 
 	game_context ctx;
 };
