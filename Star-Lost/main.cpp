@@ -58,7 +58,7 @@ int main()
 		}
 
 		director.update();
-		director.render();
+		//director.render();
 	}
 
 	return EXIT_SUCCESS;
