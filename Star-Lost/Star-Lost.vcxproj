@@ -177,9 +177,9 @@
     <ClCompile Include="game_context.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resources.cpp" />
-    <ClCompile Include="scene.cpp" />
     <ClCompile Include="scenes\game_scene.cpp" />
     <ClCompile Include="scenes\pause_scene.cpp" />
+    <ClCompile Include="scene_director.cpp" />
     <ClCompile Include="systems\animation_system.cpp" />
     <ClCompile Include="systems\render_system.cpp" />
     <ClCompile Include="systems\velocity_system.cpp" />
@@ -195,9 +195,9 @@
     <ClInclude Include="game_context.h" />
     <ClInclude Include="mpl.h" />
     <ClInclude Include="resources.h" />
-    <ClInclude Include="scene.h" />
     <ClInclude Include="scenes\game_scene.h" />
     <ClInclude Include="scenes\pause_scene.h" />
+    <ClInclude Include="scene_director.h" />
     <ClInclude Include="systems\animation_system.h" />
     <ClInclude Include="systems\render_system.h" />
     <ClInclude Include="systems\velocity_system.h" />

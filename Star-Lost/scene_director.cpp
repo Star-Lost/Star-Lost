@@ -1,5 +1,5 @@
 #pragma once
-#include "scene.h"
+#include "scene_director.h"
 
 scene_director::scene_director(sf::RenderWindow &win) :
 	status(1),

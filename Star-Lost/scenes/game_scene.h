@@ -1,5 +1,5 @@
 #pragma once
-#include "../scene.h"
+#include "../scene_director.h"
 #include "../game_context.h"
 
 class game_scene : public scene

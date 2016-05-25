@@ -1,5 +1,5 @@
 #pragma once
-#include "../scene.h"
+#include "../scene_director.h"
 
 class pause_scene : public scene
 {

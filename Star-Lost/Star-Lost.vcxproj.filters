@@ -22,9 +22,6 @@
     <ClCompile Include="animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,6 +58,9 @@
     <ClCompile Include="scenes\game_scene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
+    <ClCompile Include="scene_director.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -70,9 +70,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="mpl.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="scene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="entity.h">
@@ -113,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="scenes\game_scene.h">
       <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="scene_director.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
