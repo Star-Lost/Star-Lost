@@ -12,14 +12,14 @@
 void create_character_model(resource<sf::Texture> &textures, resource<model> &models);
 
 scene::scene(scene_director *director) :
-	ctx(*(*director).window)
+	ctx(*director->window)
 {
 	colour = sf::Color::Black;
 }
 
 void scene::update(scene_director *director)
 {
-	(*director).status = 1; // Everything is a-okay!
+	director->status = 1; // Everything is a-okay!
 }
 
 void scene::render(scene_director *director)
@@ -37,24 +37,27 @@ game_scene::game_scene(scene_director *director) : scene(director)
 {
 	colour = sf::Color::Red;
 
+	game_context ctx(*director->window);
 
-	game_context ctx(*(*director).window);
+	create_character_model(director->textures, director->models);
+	auto &char_model = *director->models.get_resource("char_model");
 
-	create_character_model((*director).textures, (*director).models);
-	auto &char_model = *(*director).models.get_resource("char_model");
+
+	// Set up the character entity
 	auto ply = ctx.create_entity();
-
 	ctx.add_component<ecs::components::position>(ply, 50.0f, 50.0f);
 	ctx.add_component<ecs::components::velocity>(ply);
-	ctx.add_component<ecs::components::sprite>(ply).setTexture(*(*director).textures.get_resource("character.png"));
+	auto &sprt = ctx.add_component<ecs::components::sprite>(ply);
 	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
+
+	sprt.setTexture(*director->textures.get_resource("character.png"));
 	anim = char_model["stand_south"];
 }
 
 void game_scene::update(scene_director *director)
 {
-	ctx.update(float((*director).clock.getElapsedTime().asMilliseconds()) / 1000.0f);
-	(*director).status = 1;
+	ctx.update(float(director->clock.getElapsedTime().asMilliseconds()) / 1000.0f);
+	director->status = 1;
 }
 
 void game_scene::render(scene_director *director)
@@ -63,7 +66,7 @@ void game_scene::render(scene_director *director)
 
 	window->clear(colour);
 
-	ctx.update(float((*director).clock.getElapsedTime().asMilliseconds()) / 1000.0f);
+	ctx.update(float(director->clock.getElapsedTime().asMilliseconds()) / 1000.0f);
 	// Draw the scene here
 
 	window->display();
@@ -76,7 +79,7 @@ pause_scene::pause_scene(scene_director *director) : scene(director)
 
 void pause_scene::update(scene_director *director)
 {
-	(*director).status = -1;
+	director->status = -1;
 }
 
 void pause_scene::render(scene_director *director)
