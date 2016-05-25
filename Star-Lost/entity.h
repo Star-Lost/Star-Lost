@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
 #include <utility>
+#include <vector>
 #include <array>
 
 #include "mpl.h"
@@ -260,6 +261,26 @@ namespace ecs
 		bool is_alive(entity_index eid) const
 		{
 			return get_entity(eid).alive;
+		}
+
+		const std::vector<entity_index> &get_entities() const
+		{
+			return entities;
+		}
+
+		template<typename Lambda>
+		void for_entities(const Lambda &lambda) const
+		{
+			for (entity_index eid = 0; eid < last_entity; ++eid)
+				lambda(eid);
+		}
+
+		template<typename Signature, typename Lambda>
+		void for_entities(const Lambda &lambda) const
+		{
+			for (entity_index eid = 0; eid < last_entity; ++eid)
+				if (matches_signature<Signature>(eid))
+					lambda(eid);
 		}
 
 		std::size_t create_entity()
