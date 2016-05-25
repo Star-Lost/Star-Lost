@@ -30,22 +30,5 @@ public:
 class scene
 {
 public:
-	scene(scene_director *director);
 	void virtual update(scene_director *director) = 0;
-};
-
-class game_scene : public scene
-{
-public:
-	game_scene(scene_director *director);
-	void virtual update(scene_director *director) override;
-
-	game_context ctx;
-};
-
-class pause_scene : public scene
-{
-public:
-	pause_scene(scene_director *director);
-	void virtual update(scene_director *director) override;
 };

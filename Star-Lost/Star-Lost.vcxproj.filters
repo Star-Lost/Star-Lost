@@ -11,6 +11,9 @@
     <Filter Include="Source Files\systems">
       <UniqueIdentifier>{2fd80c5a-4a92-427b-ad5f-c6b59d3487ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\scenes">
+      <UniqueIdentifier>{4801f818-4c23-4701-b460-903aa51e7fc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +54,12 @@
     </ClCompile>
     <ClCompile Include="game_context.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scenes\pause_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="scenes\game_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +107,12 @@
     </ClInclude>
     <ClInclude Include="world.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scenes\pause_scene.h">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="scenes\game_scene.h">
+      <Filter>Source Files\scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

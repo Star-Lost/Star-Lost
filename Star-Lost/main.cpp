@@ -2,12 +2,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
-#include "resources.h"
-#include "animation.h"
-#include "scene.h"
-
-#include "game_context.h"
-
+#include "scenes/game_scene.h"
 
 int main()
 {
@@ -19,6 +14,8 @@ int main()
 	
 	// Set the scene
 	scene_director director(&window);
+
+	//director.add_scene(new game_scene());
 	
 	while (director.status != 0)
 	{
