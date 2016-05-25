@@ -130,7 +130,7 @@ void scene_director::render()
 
 void create_character_model(resource<sf::Texture> &textures, resource<model> &models)
 {
-	auto char_tex = textures.get_resource("character.png");
+	auto char_tex = textures.load_resource("character.png");
 
 	models.set_resource("char_model", model{
 			// Standing still facing south animation
