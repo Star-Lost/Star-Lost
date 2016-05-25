@@ -24,3 +24,33 @@ void scene_director::add_scene(std::unique_ptr<scene> &&new_scene)
 {
 	scenes.emplace_back(std::move(new_scene));
 }
+
+sf::Clock scene_director::get_clock()
+{
+	return clock;
+}
+
+sf::RenderWindow& scene_director::get_window()
+{
+	return window;
+}
+
+resource<model>& scene_director::get_models()
+{
+	return models;
+}
+
+resource<sf::Texture>& scene_director::get_textures()
+{
+	return textures;
+}
+
+resource<sf::SoundBuffer>& scene_director::get_soundbuffer()
+{
+	return sounds;
+}
+
+bool scene_director::get_is_alive()
+{
+	return is_alive;
+}

@@ -5,10 +5,10 @@ void create_character_model(resource<sf::Texture> &textures, resource<model> &mo
 
 
 game_scene::game_scene(scene_director &director) :
-	ctx(director.window)
+	ctx(director.get_window())
 {
-	create_character_model(director.textures, director.models);
-	auto &char_model = *director.models.get_resource("char_model");
+	create_character_model(director.get_textures(), director.get_models());
+	auto &char_model = *director.get_models().get_resource("char_model");
 
 
 	// Set up the character entity
@@ -20,7 +20,7 @@ game_scene::game_scene(scene_director &director) :
 
 	ctx.add_tag<ecs::tags::player>(ply);
 
-	sprt.setTexture(*director.textures.get_resource("character.png"));
+	sprt.setTexture(*director.get_textures().get_resource("character.png"));
 	anim = char_model["stand_south"];
 }
 
@@ -31,11 +31,11 @@ void game_scene::handle_event(const sf::Event &evt)
 
 void game_scene::update(scene_director &director)
 {
-	director.window.clear(sf::Color(100, 149, 237));
+	director.get_window().clear(sf::Color(100, 149, 237));
 
-	ctx.update(float(director.clock.getElapsedTime().asMilliseconds()) / 1000.0f);
+	ctx.update(float(director.get_clock().getElapsedTime().asMilliseconds()) / 1000.0f);
 
-	director.window.display();
+	director.get_window().display();
 }
 
 
