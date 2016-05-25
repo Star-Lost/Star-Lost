@@ -143,11 +143,6 @@ namespace ecs
 			return std::get<std::array<T, settings::max_entities>>(components);
 		}
 
-		template<typename T>
-		auto &get_system() {
-			return std::get<T>(systems);
-		}
-
 		entity &get_entity(entity_index eid)
 		{
 			return entities[eid];
@@ -211,6 +206,11 @@ namespace ecs
 		void update(Args&&... args)
 		{
 			update_systems(settings::systems{}, args...);
+		}
+
+		template<typename T>
+		auto &get_system() {
+			return std::get<T>(systems);
 		}
 
 		// Component-related functions
