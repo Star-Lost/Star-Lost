@@ -4,7 +4,7 @@
 using namespace ecs;
 
 void systems::animation::update(
-	std::size_t entity_index, 
+	entity_index eid, 
 	game_context &ctx,
 	components::animation &anim, 
 	components::sprite &spr

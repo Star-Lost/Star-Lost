@@ -11,7 +11,12 @@ namespace ecs
 				components::sprite
 			>;
 
-			void update(std::size_t entity_index, game_context &ctx, components::animation &anim, components::sprite &spr);
+			void update(
+				entity_index eid, 
+				game_context &ctx, 
+				components::animation &anim, 
+				components::sprite &spr
+			);
 		};
 	}
 }

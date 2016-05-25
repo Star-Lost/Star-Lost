@@ -7,6 +7,9 @@
 
 namespace ecs
 {
+	using entity_index = std::size_t;
+	using data_index = std::size_t;
+
 	using bitset_type = unsigned long long;
 
 	template<
@@ -97,8 +100,8 @@ namespace ecs
 
 	struct entity
 	{
-		size_t id;
-		size_t data_index;
+		data_index id;
+		data_index data;
 		bitset_type signature;
 		bool alive;
 	};
@@ -126,14 +129,14 @@ namespace ecs
 			return std::get<T>(systems);
 		}
 
-		entity &get_entity(std::size_t entity_index)
+		entity &get_entity(entity_index eid)
 		{
-			return entities[entity_index];
+			return entities[eid];
 		}
 
-		const entity &get_entity(std::size_t entity_index) const
+		const entity &get_entity(entity_index eid) const
 		{
-			return entities[entity_index];
+			return entities[eid];
 		}
 
 
@@ -144,13 +147,13 @@ namespace ecs
 		struct expand_call<mpl::type_list<Ts...>>
 		{
 			template<typename Sys, typename ...Args>
-			static void call(context<Settings> &ctx, std::size_t entity_index, Args&& ...args)
+			static void call(context<Settings> &ctx, entity_index eid, Args&& ...args)
 			{
 				ctx.get_system<Sys>().update(
-					entity_index, 
+					eid, 
 					std::forward<Args>(args)...,
 					// Expand all the component references as arguments
-					ctx.get_component<Ts>(entity_index)...
+					ctx.get_component<Ts>(eid)...
 				);
 			}
 		};
@@ -193,71 +196,71 @@ namespace ecs
 
 		// Component-related functions
 		template<typename T, typename ... Args>
-		auto &add_component(std::size_t entity_index, Args&&... args)
+		auto &add_component(entity_index eid, Args&&... args)
 		{
-			auto &ent = get_entity(entity_index);
+			auto &ent = get_entity(eid);
 			
 			// Add the signature to the entities signatures
 			ent.signature |= settings::signature_v<T>;
 
 			// Construct in place
-			return *new (&get_storage<T>()[ent.data_index]) T(std::forward<Args>(args)...);
+			return *new (&get_storage<T>()[ent.data]) T(std::forward<Args>(args)...);
 		}
 
 		template<typename T>
-		auto &add_component(std::size_t entity_index)
+		auto &add_component(entity_index eid)
 		{
-			auto &ent = get_entity(entity_index);
+			auto &ent = get_entity(eid);
 
 			// Add the signature to the entities signatures
 			ent.signature |= settings::signature_v<T>;
 
 			// Construct in place
-			return *new (&get_storage<T>()[ent.data_index]) T{};
+			return *new (&get_storage<T>()[ent.data]) T{};
 		}
 
 		template<typename T>
-		auto &delete_component(std::size_t entity_index)
+		auto &delete_component(entity_index eid)
 		{
 			// Just remove the signature from the entity
-			ent.signature &= ~settings::signature_v<T>;
+			eid.signature &= ~settings::signature_v<T>;
 		}
 
 		template<typename T>
-		auto &get_component(size_t entity_index)
+		auto &get_component(entity_index eid)
 		{
-			return get_storage<T>().at(get_entity(entity_index).data_index);
+			return get_storage<T>().at(get_entity(eid).data);
 		}
 
 
 		// Tag-related functionality
 		template<typename T>
-		void add_tag(std::size_t entity_index)
+		void add_tag(entity_index eid)
 		{
-			auto &ent = get_entity(entity_index);
+			auto &ent = get_entity(eid);
 
 			// Add the signature to the entities signatures
 			ent.signature |= settings::signature_v<T>;
 		}
 
 		template<typename T>
-		auto &delete_tag(std::size_t entity_index)
+		auto &delete_tag(entity_index eid)
 		{
 			// Just remove the signature from the entity
-			ent.signature &= ~settings::signature_v<T>;
+			eid.signature &= ~settings::signature_v<T>;
 		}
 
 		// Entity related functionality
-		bool is_alive(std::size_t entity_index) const
+		bool is_alive(entity_index eid) const
 		{
-			return get_entity(entity_index).alive;
+			return get_entity(eid).alive;
 		}
 
 		std::size_t create_entity()
 		{
 			entity &ent = entities[last_entity];
 			ent.id = last_entity;
-			ent.data_index = last_entity;
+			ent.data = last_entity;
 			ent.alive = true;
 			ent.signature = 0;
 
@@ -265,12 +268,11 @@ namespace ecs
 			return ent.id;
 		}
 
-
 		// Other stuff
 		template<typename Signature>
-		bool matches_signature(std::size_t entity_index) const
+		bool matches_signature(entity_index eid) const
 		{
-			return (get_entity(entity_index).signature & Settings::signature_v<Signature>) == Settings::signature_v<Signature>;
+			return (get_entity(eid).signature & Settings::signature_v<Signature>) == Settings::signature_v<Signature>;
 		}
 	};
 }

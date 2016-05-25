@@ -3,7 +3,7 @@
 using namespace ecs;
 
 void systems::render::update(
-	std::size_t entity_index,
+	entity_index eid,
 	game_context &ctx,
 	components::position &pos,
 	components::sprite &spr

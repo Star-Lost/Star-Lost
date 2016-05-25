@@ -3,7 +3,7 @@
 using namespace ecs;
 
 void systems::velocity::update(
-	std::size_t entity_index, 
+	entity_index eid,
 	game_context &ctx,
 	components::position &pos, 
 	components::velocity &vel

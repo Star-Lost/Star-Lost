@@ -11,7 +11,12 @@ namespace ecs
 				components::velocity
 			>;
 
-			void update(std::size_t entity_index, game_context &ctx, components::position &pos, components::velocity &vel) const;
+			void update(
+				entity_index eid, 
+				game_context &ctx, 
+				components::position &pos, 
+				components::velocity &vel
+			) const;
 		};
 	}
 }
