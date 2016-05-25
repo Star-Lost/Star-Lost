@@ -25,12 +25,6 @@ game_scene::game_scene(scene_director &director) :
 
 void game_scene::handle_event(scene_director &director, const sf::Event &evt)
 {
-	if (evt.type != sf::Event::KeyPressed && evt.type != sf::Event::KeyReleased)
-		return;
-
-	const model &mdl = *director.get_models().get_resource("char_model");
-	const model::animation *curanim = nullptr;
-
 	switch (evt.type)
 	{
 	case sf::Event::Closed: director.get_window().close(); break;
