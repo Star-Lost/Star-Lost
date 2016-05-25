@@ -11,11 +11,13 @@ void scene_director::update()
 	delta_time = float(clock.getElapsedTime().asMicroseconds()) / 1000.0f;
 	clock.restart();
 
-	std::vector<std::unique_ptr<scene>>::iterator it = scenes.begin();
-	for (it; it != scenes.end(); it++)
+	sf::Event evt;
+	while (window.pollEvent(evt))
 	{
-		(*it)->update(*this);
+		scenes.back()->handle_event(evt);
 	}
+
+	scenes.back()->update(*this);
 }
 
 void scene_director::add_scene(std::unique_ptr<scene> &&new_scene)
