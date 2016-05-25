@@ -1,8 +1,8 @@
 #include "pause_scene.h"
 
-void pause_scene::update(scene_director *director)
+void pause_scene::update(scene_director &director)
 {
-	director->window->clear(sf::Color(100, 149, 237));
-	director->status = -1;
-	director->window->display();
+	director.window.clear(sf::Color(100, 149, 237));
+	director.status = -1;
+	director.window.display();
 }

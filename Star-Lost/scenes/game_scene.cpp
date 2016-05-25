@@ -4,11 +4,11 @@
 void create_character_model(resource<sf::Texture> &textures, resource<model> &models);
 
 
-game_scene::game_scene(scene_director *director) :
-	ctx(*director->window)
+game_scene::game_scene(scene_director &director) :
+	ctx(director.window)
 {
-	create_character_model(director->textures, director->models);
-	auto &char_model = *director->models.get_resource("char_model");
+	create_character_model(director.textures, director.models);
+	auto &char_model = *director.models.get_resource("char_model");
 
 
 	// Set up the character entity
@@ -18,18 +18,18 @@ game_scene::game_scene(scene_director *director) :
 	auto &sprt = ctx.add_component<ecs::components::sprite>(ply);
 	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
 
-	sprt.setTexture(*director->textures.get_resource("character.png"));
+	sprt.setTexture(*director.textures.get_resource("character.png"));
 	anim = char_model["stand_south"];
 }
 
-void game_scene::update(scene_director *director)
+void game_scene::update(scene_director &director)
 {
-	director->window->clear(sf::Color(100, 149, 237));
+	director.window.clear(sf::Color(100, 149, 237));
 
-	ctx.update(float(director->clock.getElapsedTime().asMilliseconds()) / 1000.0f);
-	director->status = 1;
+	ctx.update(float(director.clock.getElapsedTime().asMilliseconds()) / 1000.0f);
+	director.status = 1;
 
-	director->window->display();
+	director.window.display();
 }
 
 

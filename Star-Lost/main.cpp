@@ -13,7 +13,7 @@ int main()
 	sf::Clock clock;
 	
 	// Set the scene
-	scene_director director(&window);
+	scene_director director(window);
 
 	//director.add_scene(new game_scene());
 	
