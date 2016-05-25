@@ -15,7 +15,14 @@ struct game_context;
 #include "systems/animation_system.h"
 #include "systems/render_system.h"
 
-struct player_tag {};
+namespace ecs
+{
+	namespace tags
+	{
+		struct player {};
+	}
+}
+
 
 struct game_context : public ecs::context<ecs::settings<
 	// components
@@ -28,7 +35,7 @@ struct game_context : public ecs::context<ecs::settings<
 
 	// tags
 	mpl::type_list<
-		player_tag
+		ecs::tags::player
 	>,
 
 	// systems

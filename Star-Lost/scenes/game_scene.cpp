@@ -18,6 +18,8 @@ game_scene::game_scene(scene_director &director) :
 	auto &sprt = ctx.add_component<ecs::components::sprite>(ply);
 	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
 
+	ctx.add_tag<ecs::tags::player>(ply);
+
 	sprt.setTexture(*director.textures.get_resource("character.png"));
 	anim = char_model["stand_south"];
 }
