@@ -301,6 +301,11 @@ namespace ecs
 		{
 			return (get_entity(eid).signature & signature::get_v<Signature>) == signature::get_v<Signature>;
 		}
+
+		bool matches_signature(entity_index eid, signature_type signature) const
+		{
+			return (get_entity(eid).signature & signature) == signature;
+		}
 	};
 }
 
