@@ -102,6 +102,18 @@ namespace ecs
 		//	=>  tuple<array<position_component, max>, array<velocity_component, max>>
 		using component_storage = typename components::template to_t<component_arrays>;
 		using system_storage = typename Systems::template to_t<std::tuple>;
+
+		template<typename Item>
+		struct is_component
+		{
+			static constexpr bool value = settings::components::contains_v<Item>;
+		};
+
+		template<typename Item>
+		struct is_tag
+		{
+			static constexpr bool value = settings::tags::contains_v<Item>;
+		};
 	};
 
 	struct entity
