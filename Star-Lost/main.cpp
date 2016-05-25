@@ -13,7 +13,7 @@ int main()
 
 	director.add_scene(std::make_unique<game_scene>(director));
 	
-	while (director.status != 0)
+	while (director.is_alive)
 	{
 		director.update();
 	}

@@ -27,7 +27,6 @@ void game_scene::update(scene_director &director)
 	director.window.clear(sf::Color(100, 149, 237));
 
 	ctx.update(float(director.clock.getElapsedTime().asMilliseconds()) / 1000.0f);
-	director.status = 1;
 
 	director.window.display();
 }

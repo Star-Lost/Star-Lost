@@ -25,9 +25,8 @@ public:
 	resource<sf::Texture> textures;
 	resource<sf::SoundBuffer> sounds;
 
-	int status; // If this is less than zero then we exit the game
-	float time; // Right now
-	float delta_time; // What time it was last time
+	float delta_time;
+	bool is_alive;
 
 	sf::RenderWindow &window;
 
