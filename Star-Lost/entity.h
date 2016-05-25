@@ -175,11 +175,13 @@ namespace ecs
 		template<typename Sys, typename ...Args>
 		void update_system(Args&& ...args)
 		{
+			using components_only = Sys::required::filter_t<settings::is_component>;
+
 			for (auto i = 0u; i < last_entity; ++i)
 			{
 				if (matches_signature<Sys::required>(i))
 				{
-					expand_call<Sys::required>::call<Sys>(*this, i, std::forward<Args>(args)...);
+					expand_call<components_only>::call<Sys>(*this, i, std::forward<Args>(args)...);
 				}
 			}
 		}
