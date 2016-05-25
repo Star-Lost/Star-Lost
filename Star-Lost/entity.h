@@ -10,7 +10,74 @@ namespace ecs
 	using entity_index = std::size_t;
 	using data_index = std::size_t;
 
-	using bitset_type = unsigned long long;
+	// Type signatures are stored in, they have to have a size
+	// with more or equal bits to the sum of all tags and components
+	using signature_type = unsigned long long;
+
+	template<
+		typename Settings
+	>
+	struct signatures
+	{
+		using components = typename Settings::components;
+		using tags = typename Settings::tags;
+
+		static constexpr std::size_t required_bits = components::size + tags::size;
+		static_assert(required_bits < sizeof(signature_type) * 8, "signature bitset can no longer hold all these components and tags");
+
+		template<
+			typename T, 
+			bool IsComponent = components::contains<T>::value,
+			bool IsTag = tags::contains<T>::value
+		>
+		struct get_bit
+		{
+			static_assert(!IsComponent && !IsTag, "signatures::get called with type that was neither component nor tag");
+			static constexpr signature_type value = 0;
+		};
+
+		// If it's a component...
+		template<typename T>
+		struct get_bit<T, true, false>
+		{	
+			static constexpr signature_type value = components::index_v<T>;
+		};
+
+		// If it's a tag...
+		template<typename T>
+		struct get_bit<T, false, true>
+		{
+			static constexpr signature_type value = tags::index_v<T>;
+		};
+
+		template<typename T>
+		static constexpr signature_type get_bit_v = get_bit<T>::value;
+
+		// Signature calculation code
+		template<typename ...>
+		struct get;
+
+		template<typename Head, typename ...Rest>
+		struct get<mpl::type_list<Head, Rest...>>
+		{
+			static constexpr signature_type value = get<mpl::type_list<Rest...>>::value | (1 << get_bit_v<Head>);
+		};
+
+		template<typename Head>
+		struct get<mpl::type_list<Head>>
+		{
+			static constexpr signature_type value = 1 << get_bit_v<Head>;
+		};
+
+		template<typename Head>
+		struct get<Head>
+		{
+			static constexpr signature_type value = 1 << get_bit_v<Head>;
+		};
+
+		template<typename List>
+		static constexpr signature_type get_v = get<List>::value;
+	};
 
 	template<
 		typename Components = mpl::type_list<>, 
@@ -24,10 +91,8 @@ namespace ecs
 		using systems = Systems;
 
 		static constexpr std::size_t max_entities = 100;
-		static constexpr std::size_t signature_bits = components::size + Tags::size;
 
-		static_assert(components::size < sizeof(bitset_type) * 8, "signature bitset can no longer hold all these components and tags");
-
+		// This is the type used for storing all the component arrays
 		template<typename ...Args>
 		using component_arrays = typename std::tuple<std::array<Args, max_entities>...>;
 
@@ -36,73 +101,13 @@ namespace ecs
 		//	=>  tuple<array<position_component, max>, array<velocity_component, max>>
 		using component_storage = typename components::template to_t<component_arrays>;
 		using system_storage = typename Systems::template to_t<std::tuple>;
-
-		template<typename T>
-		static constexpr bool is_component = typename components::contains<T>::value;
-
-		template<typename T>
-		static constexpr bool is_tag = typename tags::contains<T>::value;
-
-		// Get the component-specific bit
-		template<typename T>
-		static constexpr std::size_t component_bit = typename components::index_v<T>;
-
-		// Get the tag-specific bit
-		template<typename T>
-		static constexpr std::size_t tag_bit = components::size + tags::index_v<T>;
-
-		template<typename T, bool Test>
-		struct signature_bit;
-
-		template<typename T>
-		struct signature_bit<T, true>
-		{
-			static constexpr std::size_t value = component_bit<T>;
-		};
-
-		template<typename T>
-		struct signature_bit<T, false>
-		{
-			static constexpr std::size_t value = tag_bit<T>;
-		};
-
-		template<typename T>
-		static constexpr std::size_t signature_bit_v = signature_bit<T, is_component<T>>::value;
-
-		// Signature calculation code
-		template<typename ...>
-		struct signature;
-
-		template<typename Head, typename ...Rest>
-		struct signature<Head, Rest...>
-		{
-			static constexpr bitset_type value = signature<Rest...>::value | (1 << signature_bit_v<Head>);
-		};
-
-		template<typename Head, typename ...Rest>
-		struct signature<mpl::type_list<Head, Rest...>>
-		{
-			static constexpr bitset_type value = signature<Head, Rest...>::value;
-		};
-
-		template<>
-		struct signature<>
-		{
-			static constexpr bitset_type value = 0;
-		};
-
-		template<typename List>
-		static constexpr bitset_type signature_v = signature<List>::value;
 	};
-
-	template<typename ...Components>
-	using signature = mpl::type_list<Components...>;
 
 	struct entity
 	{
 		data_index id;
 		data_index data;
-		bitset_type signature;
+		signature_type signature;
 		bool alive;
 	};
 
@@ -110,6 +115,7 @@ namespace ecs
 	struct context
 	{
 		using settings = Settings;
+		using signature = signatures<settings>;
 
 	private:
 		typename settings::component_storage components;
@@ -201,7 +207,7 @@ namespace ecs
 			auto &ent = get_entity(eid);
 			
 			// Add the signature to the entities signatures
-			ent.signature |= settings::signature_v<T>;
+			ent.signature |= signature::get_v<T>;
 
 			// Construct in place
 			return *new (&get_storage<T>()[ent.data]) T(std::forward<Args>(args)...);
@@ -213,7 +219,7 @@ namespace ecs
 			auto &ent = get_entity(eid);
 
 			// Add the signature to the entities signatures
-			ent.signature |= settings::signature_v<T>;
+			ent.signature |= signature::get_v<T>;
 
 			// Construct in place
 			return *new (&get_storage<T>()[ent.data]) T{};
@@ -223,7 +229,7 @@ namespace ecs
 		auto &delete_component(entity_index eid)
 		{
 			// Just remove the signature from the entity
-			eid.signature &= ~settings::signature_v<T>;
+			eid.signature &= ~signature::get_v<T>;
 		}
 
 		template<typename T>
@@ -240,14 +246,14 @@ namespace ecs
 			auto &ent = get_entity(eid);
 
 			// Add the signature to the entities signatures
-			ent.signature |= settings::signature_v<T>;
+			ent.signature |= signature::get_v<T>;
 		}
 
 		template<typename T>
 		auto &delete_tag(entity_index eid)
 		{
 			// Just remove the signature from the entity
-			eid.signature &= ~settings::signature_v<T>;
+			eid.signature &= ~signature::get_v<T>;
 		}
 
 		// Entity related functionality
@@ -272,7 +278,7 @@ namespace ecs
 		template<typename Signature>
 		bool matches_signature(entity_index eid) const
 		{
-			return (get_entity(eid).signature & Settings::signature_v<Signature>) == Settings::signature_v<Signature>;
+			return (get_entity(eid).signature & signature::get_v<Signature>) == signature::get_v<Signature>;
 		}
 	};
 }
