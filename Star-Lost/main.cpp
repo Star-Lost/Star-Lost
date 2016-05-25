@@ -22,43 +22,7 @@ int main()
 	
 	while (director.status != 0)
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			switch (event.type)
-			{
-			case sf::Event::Closed:	window.close(); break;
-
-			/*case sf::Event::KeyPressed:
-			{
-				switch (event.key.code)
-				{
-				case sf::Keyboard::W: anim = char_model["walk_north"]; break;
-				case sf::Keyboard::A: anim = char_model["walk_west"]; break;
-				case sf::Keyboard::S: anim = char_model["walk_south"]; break;
-				case sf::Keyboard::D: anim = char_model["walk_east"]; break;
-				default: break;
-				}
-				break;
-			}
-
-			case sf::Event::KeyReleased:
-			{
-				switch (event.key.code)
-				{
-				case sf::Keyboard::W: anim = char_model["stand_north"]; break;
-				case sf::Keyboard::A: anim = char_model["stand_west"]; break;
-				case sf::Keyboard::S: anim = char_model["stand_south"]; break;
-				case sf::Keyboard::D: anim = char_model["stand_east"]; break;
-				default: break;
-				}
-				break;
-			}*/
-			}
-		}
-
 		director.update();
-		//director.render();
 	}
 
 	return EXIT_SUCCESS;
