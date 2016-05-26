@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 struct game_context;
 
@@ -14,11 +15,13 @@ namespace ecs
 	}
 }
 
+#include "components/collision_component.h"
 #include "components/position_component.h"
 #include "components/velocity_component.h"
 #include "components/drawable_component.h"
 #include "components/animation_component.h"
 
+#include "systems/collision_system.h"
 #include "systems/velocity_system.h"
 #include "systems/animation_system.h"
 #include "systems/render_system.h"
@@ -27,6 +30,7 @@ namespace ecs
 struct game_context : public ecs::context<ecs::settings<
 	// components
 	mpl::type_list<
+		ecs::components::collision,
 		ecs::components::position,
 		ecs::components::velocity,
 		ecs::components::drawable,
@@ -41,6 +45,7 @@ struct game_context : public ecs::context<ecs::settings<
 	// systems
 	mpl::type_list<
 		ecs::systems::control,
+		//ecs::systems::collision,
 		ecs::systems::velocity,
 		ecs::systems::animation,
 		ecs::systems::render
