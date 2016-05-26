@@ -14,6 +14,7 @@ namespace ecs
 		struct control
 		{
 			using required = mpl::type_list<
+				components::velocity,
 				components::animation,
 				ecs::tags::player
 			>;
@@ -27,6 +28,7 @@ namespace ecs
 			void update(
 				entity_index eid,
 				game_context &ctx,
+				components::velocity &vel,
 				components::animation &anim
 			);
 

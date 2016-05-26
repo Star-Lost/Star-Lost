@@ -14,6 +14,7 @@ systems::control::control() :
 void systems::control::update(
 	entity_index eid,
 	game_context &ctx,
+	components::velocity &vel,
 	components::animation &anim
 ) {
 	// If we have a new animation lined up, apply it.
