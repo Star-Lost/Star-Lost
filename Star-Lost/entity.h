@@ -222,7 +222,7 @@ namespace ecs
 			auto &ent = get_entity(eid);
 			
 			// Add the signature to the entities signatures
-			ent.signature |= signature::get_v<T>;
+			ent.signature |= signature::get<T>::value;
 
 			// Construct in place
 			return *new (&get_storage<T>()[ent.data]) T(std::forward<Args>(args)...);
@@ -234,7 +234,7 @@ namespace ecs
 			auto &ent = get_entity(eid);
 
 			// Add the signature to the entities signatures
-			ent.signature |= signature::get_v<T>;
+			ent.signature |= signature::get<T>::value;
 
 			// Construct in place
 			return *new (&get_storage<T>()[ent.data]) T{};
@@ -244,7 +244,7 @@ namespace ecs
 		auto &delete_component(entity_index eid)
 		{
 			// Just remove the signature from the entity
-			eid.signature &= ~signature::get_v<T>;
+			eid.signature &= ~signature::get<T>::value;
 		}
 
 		template<typename T>
@@ -261,14 +261,14 @@ namespace ecs
 			auto &ent = get_entity(eid);
 
 			// Add the signature to the entities signatures
-			ent.signature |= signature::get_v<T>;
+			ent.signature |= signature::get<T>::value;
 		}
 
 		template<typename T>
 		auto &delete_tag(entity_index eid)
 		{
 			// Just remove the signature from the entity
-			eid.signature &= ~signature::get_v<T>;
+			eid.signature &= ~signature::get<T>::value;
 		}
 
 		// Entity related functionality
@@ -321,7 +321,7 @@ namespace ecs
 		template<typename Signature>
 		bool matches_signature(entity_index eid) const
 		{
-			return (get_entity(eid).signature & signature::get_v<Signature>) == signature::get_v<Signature>;
+			return (get_entity(eid).signature & signature::get<Signature>::value) == signature::get<Signature>::value;
 		}
 
 		bool matches_signature(entity_index eid, signature_type signature) const
