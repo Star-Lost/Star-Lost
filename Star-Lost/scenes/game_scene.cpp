@@ -21,6 +21,27 @@ game_scene::game_scene(scene_director &director) :
 
 	sprt.setTexture(*director.get_textures().get_resource("character.png"));
 	anim = char_model["stand_south"];
+
+	// Create a tent entity
+	const sf::Texture *tex = director.get_textures().load_resource("Spritesheet/roguelikeSheet_magenta.png");
+
+	// Build a tent from our spritesheet
+	sf::Image sheet = tex->copyToImage();
+	sf::Image tent;
+	tent.create(32, 32);
+	tent.copy(sheet,  0,  0, sf::IntRect{ 783, 170, 16, 16 });
+	tent.copy(sheet, 16,  0, sf::IntRect{ 800, 170, 16, 16 });
+	tent.copy(sheet,  0, 16, sf::IntRect{ 783, 187, 16, 16 });
+	tent.copy(sheet, 16, 16, sf::IntRect{ 800, 187, 16, 16 });
+
+	sf::Texture tent_tex;
+	tent_tex.loadFromImage(tent);
+	const sf::Texture *tent_final = director.get_textures().set_resource("green_tent", tent_tex);
+
+	auto tnt = ctx.create_entity();
+	ctx.add_component<ecs::components::position>(tnt, 100.0f, 80.0f);
+	auto &tspr = ctx.add_component<ecs::components::sprite>(tnt);
+	tspr.setTexture(*tent_final);
 }
 
 void game_scene::handle_event(scene_director &director, const sf::Event &evt)
