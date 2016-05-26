@@ -8,7 +8,6 @@ void systems::animation::update(
 	components::animation &anim,
 	components::drawable &frame
 ) {
-	
 	if (anim.anim == nullptr)
 		return;
 

@@ -46,7 +46,6 @@ void systems::control::handle_event(scene_director &director, const sf::Event &e
 	switch (evt.type)
 	{
 	case sf::Event::KeyPressed:
-	{
 		switch (evt.key.code)
 		{
 		case sf::Keyboard::W: change_anim = mdl["walk_north"]; target_vel = { 		  0.0f,  -player_speed	}; break;
@@ -56,20 +55,16 @@ void systems::control::handle_event(scene_director &director, const sf::Event &e
 		default: break;
 		}
 		break;
-	}
 
 	case sf::Event::KeyReleased:
-	{
 		switch (evt.key.code)
 		{
-		case sf::Keyboard::W: change_anim = mdl["stand_north"]; target_vel = { 0.0f, 0.0f };  break;
-		case sf::Keyboard::A: change_anim = mdl["stand_west"];  target_vel = { 0.0f, 0.0f };  break;
-		case sf::Keyboard::S: change_anim = mdl["stand_south"]; target_vel = { 0.0f, 0.0f };  break;
-		case sf::Keyboard::D: change_anim = mdl["stand_east"];  target_vel = { 0.0f, 0.0f }; break;
+		case sf::Keyboard::W: change_anim = mdl["idle_north"]; target_vel = { 0.0f, 0.0f };  break;
+		case sf::Keyboard::A: change_anim = mdl["idle_west"];  target_vel = { 0.0f, 0.0f };  break;
+		case sf::Keyboard::S: change_anim = mdl["idle_south"]; target_vel = { 0.0f, 0.0f };  break;
+		case sf::Keyboard::D: change_anim = mdl["idle_east"];  target_vel = { 0.0f, 0.0f }; break;
 		default: break;
 		}
-
 		break;
-	}
 	}
 }

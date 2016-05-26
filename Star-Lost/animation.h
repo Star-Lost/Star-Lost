@@ -16,15 +16,26 @@ namespace rendering
 	};
 
 
-
-	class layer
+	class row
 	{
 	public:
-		layer(const std::initializer_list<tile> &tiles);
+		row(const std::initializer_list<tile> &tiles);
 		const std::vector<tile> &get_tiles() const;
 
 	private:
 		std::vector<tile> tiles;
+	};
+
+
+
+	class layer
+	{
+	public:
+		layer(const std::initializer_list<row> &rows);
+		const std::vector<row> &get_rows() const;
+
+	private:
+		std::vector<row> rows;
 	};
 
 

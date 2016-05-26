@@ -11,16 +11,31 @@ tile::tile(const sf::IntRect &rect) :
 }
 
 
-// Layer
-layer::layer(const std::initializer_list<tile> &tiles) :
+
+// Row
+row::row(const std::initializer_list<tile> &tiles) :
 	tiles(tiles)
 {
 
 }
 
-auto layer::get_tiles() const -> const std::vector<tile>&
+auto row::get_tiles() const -> const std::vector<tile>&
 {
 	return tiles;
+}
+
+
+
+// Layer
+layer::layer(const std::initializer_list<row> &rows) :
+	rows(rows)
+{
+
+}
+
+auto layer::get_rows() const -> const std::vector<row>&
+{
+	return rows;
 }
 
 

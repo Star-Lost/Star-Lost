@@ -68,45 +68,45 @@ void create_character_model(resource<sf::Texture> &textures, resource<rendering:
 	auto char_tex = textures.load_resource("character.png");
 
 	auto char_model = rendering::model{ char_tex, {
-		model::named_animation{std::string{"idle_south"},	animation{ frame{ layer{ sf::IntRect{  0,  0, 16, 16 } } } }},
-		model::named_animation{std::string{"idle_north"},	animation{ frame{ layer{ sf::IntRect{ 16,  0, 16, 16 } } } }},
-		model::named_animation{std::string{"idle_west"},	animation{ frame{ layer{ sf::IntRect{ 32,  0, 16, 16 } } } }},
-		model::named_animation{std::string{"idle_east"},	animation{ frame{ layer{ sf::IntRect{ 48,  0, 16, 16 } } } }},
+		model::named_animation{std::string{"idle_south"},	animation{ frame{ layer{ row{ sf::IntRect{  0,  0, 16, 16 } } } } }},
+		model::named_animation{std::string{"idle_north"},	animation{ frame{ layer{ row{ sf::IntRect{ 16,  0, 16, 16 } } } } }},
+		model::named_animation{std::string{"idle_west"},	animation{ frame{ layer{ row{ sf::IntRect{ 32,  0, 16, 16 } } } } }},
+		model::named_animation{std::string{"idle_east"},	animation{ frame{ layer{ row{ sf::IntRect{ 48,  0, 16, 16 } } } } }},
 
 		model::named_animation{std::string{"walk_south"}, animation{
-			frame{ layer{ sf::IntRect{0, 16, 16, 16} } },
-			frame{ layer{ sf::IntRect{0, 32, 16, 16} } },
-			frame{ layer{ sf::IntRect{0,  0, 16, 16} } },
-			frame{ layer{ sf::IntRect{0, 48, 16, 16} } },
-			frame{ layer{ sf::IntRect{0, 64, 16, 16} } },
-			frame{ layer{ sf::IntRect{0,  0, 16, 16} } }
+			frame{ layer{ row{ sf::IntRect{0, 16, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{0, 32, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{0,  0, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{0, 48, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{0, 64, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{0,  0, 16, 16} } } }
 		} },
 
 		model::named_animation{ std::string{ "walk_north" }, animation{
-			frame{ layer{ sf::IntRect{16, 16, 16, 16} } },
-			frame{ layer{ sf::IntRect{16, 32, 16, 16} } },
-			frame{ layer{ sf::IntRect{16,  0, 16, 16} } },
-			frame{ layer{ sf::IntRect{16, 48, 16, 16} } },
-			frame{ layer{ sf::IntRect{16, 64, 16, 16} } },
-			frame{ layer{ sf::IntRect{16,  0, 16, 16} } }
+			frame{ layer{ row{ sf::IntRect{16, 16, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{16, 32, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{16,  0, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{16, 48, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{16, 64, 16, 16} } } },
+			frame{ layer{ row{ sf::IntRect{16,  0, 16, 16} } } }
 		} },
 
 		model::named_animation{ std::string{ "walk_west" }, animation{
-			frame{ layer{ sf::IntRect{ 32, 16, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 32, 32, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 32,  0, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 32, 48, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 32, 64, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 32,  0, 16, 16 } } }
+			frame{ layer{ row{ sf::IntRect{ 32, 16, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 32, 32, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 32,  0, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 32, 48, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 32, 64, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 32,  0, 16, 16 } } } }
 		} },
 
 		model::named_animation{ std::string{ "walk_east" }, animation{
-			frame{ layer{ sf::IntRect{ 48, 16, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 48, 32, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 48,  0, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 48, 48, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 48, 64, 16, 16 } } },
-			frame{ layer{ sf::IntRect{ 48,  0, 16, 16 } } }
+			frame{ layer{ row{ sf::IntRect{ 48, 16, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 48, 32, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 48,  0, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 48, 48, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 48, 64, 16, 16 } } } },
+			frame{ layer{ row{ sf::IntRect{ 48,  0, 16, 16 } } } }
 		} }
 	} };
 
@@ -123,17 +123,22 @@ void create_tent_model(resource<sf::Texture> &textures, resource<rendering::mode
 		model::named_animation{
 			std::string{"idle"},
 			animation{ 
-				// Frame 0, only one frame
+				// Frame 0 - only one frame
 				frame{
-					// Layer 0 (bottom of the tent)
+					// Layer 0 - bottom of the tent
 					layer{
-						sf::IntRect{ 783, 187, 16, 16 },
-						sf::IntRect{ 799, 187, 16, 16 }
+						// Row 0 - front row
+						row{
+							sf::IntRect{ 783, 187, 16, 16 },
+							sf::IntRect{ 799, 187, 16, 16 }
+						}
 					},
-					// Layer 1 (top of the tent)
+					// Layer 1 - top of the tent 
 					layer{
-						sf::IntRect{ 783, 170, 16, 16 },
-						sf::IntRect{ 799, 170, 16, 16 }
+						row{
+							sf::IntRect{ 783, 170, 16, 16 },
+							sf::IntRect{ 799, 170, 16, 16 }
+						}
 					}
 				} 
 			}
