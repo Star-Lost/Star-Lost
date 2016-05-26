@@ -28,11 +28,11 @@ game_scene::game_scene(scene_director &director) :
 	// Build a tent from our spritesheet
 	sf::Image sheet = tex->copyToImage();
 	sf::Image tent;
-	tent.create(32, 32);
+	tent.create(31, 32);
 	tent.copy(sheet,  0,  0, sf::IntRect{ 783, 170, 16, 16 });
-	tent.copy(sheet, 16,  0, sf::IntRect{ 800, 170, 16, 16 });
+	tent.copy(sheet, 15,  0, sf::IntRect{ 799, 170, 16, 16 });
 	tent.copy(sheet,  0, 16, sf::IntRect{ 783, 187, 16, 16 });
-	tent.copy(sheet, 16, 16, sf::IntRect{ 800, 187, 16, 16 });
+	tent.copy(sheet, 15, 16, sf::IntRect{ 799, 187, 16, 16 });
 
 	sf::Texture tent_tex;
 	tent_tex.loadFromImage(tent);
