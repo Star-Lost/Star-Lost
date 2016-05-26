@@ -8,6 +8,11 @@ using collideable = mpl::type_list<
 	components::collision
 >;
 
+sf::FloatRect operator+(const sf::FloatRect &rect, const sf::Vector2f &vec)
+{
+	return sf::FloatRect{ rect.left + vec.x, rect.top + vec.y, rect.width, rect.height };
+}
+
 void systems::collision::update(
 	entity_index eid,
 	game_context &ctx,
@@ -16,21 +21,29 @@ void systems::collision::update(
 	components::collision &bbx
 ) const
 {
+	
 	auto newpos = pos + vel * ctx.get_delta();
 
 	// Where our bounding box is gonna be, 
 	// should we continue along our current trajectory
-	auto newbox = sf::FloatRect{ bbx.bbox.left + pos.x, bbx.bbox.top + pos.y, bbx.bbox.width, bbx.bbox.height };
+	auto newbox = bbx.bbox + newpos;
 
 	// Check if our boxes will intersect
-	ctx.for_entities<collideable>([&pos, &vel, &bbx, &ctx, newbox](entity_index otherid)
+	ctx.for_entities<collideable>([&pos, &vel, &bbx, &ctx, eid, newbox](entity_index otherid)
 	{
-		auto obox = ctx.get_component<components::collision>(otherid).bbox;
+		if (otherid == eid)
+			return;
+
+		auto obox =
+			ctx.get_component<components::collision>(otherid).bbox
+			+ ctx.get_component<components::position>(otherid);
 
 		if (newbox.intersects(obox))
 		{
 			// Time to resolve!
-			vel = {};
+			vel.x = 0;
+			vel.y = 0;
 		}
 	});	
+
 }

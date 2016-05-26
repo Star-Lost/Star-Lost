@@ -17,6 +17,7 @@ game_scene::game_scene(scene_director &director) :
 
 	ctx.add_component<ecs::components::position>(ply, 50.0f, 50.0f);
 	ctx.add_component<ecs::components::velocity>(ply);
+	ctx.add_component<ecs::components::collision>(ply, sf::FloatRect{ 2, 8, 12, 8 });
 	auto &draw = ctx.add_component<ecs::components::drawable>(ply);
 	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
 	draw.texture = director.get_textures().get_resource("character.png");
@@ -25,6 +26,7 @@ game_scene::game_scene(scene_director &director) :
 	// Create a tent entity
 	auto tnt = ctx.create_entity();
 	ctx.add_component<ecs::components::position>(tnt, 100.0f, 80.0f);
+	ctx.add_component<ecs::components::collision>(tnt, sf::FloatRect{ 0, 0, 31, 16 });
 	auto &tdrw = ctx.add_component<ecs::components::drawable>(tnt);
 	tdrw.texture = director.get_textures().get_resource("Spritesheet/roguelikeSheet_magenta.png");
 	tdrw.frame = &(*tent_model["idle"])[0];

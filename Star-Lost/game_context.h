@@ -45,7 +45,7 @@ struct game_context : public ecs::context<ecs::settings<
 	// systems
 	mpl::type_list<
 		ecs::systems::control,
-		//ecs::systems::collision,
+		ecs::systems::collision,
 		ecs::systems::velocity,
 		ecs::systems::animation,
 		ecs::systems::render
