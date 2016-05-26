@@ -5,8 +5,11 @@
 
 using namespace ecs;
 
+static const float player_speed = 0.05f;
+
 systems::control::control() :
-	change_anim(nullptr)
+	change_anim(nullptr),
+	target_vel(0, 0)
 {
 
 }
@@ -17,12 +20,19 @@ void systems::control::update(
 	components::velocity &vel,
 	components::animation &anim
 ) {
+	// Slowly approach the target velocity
+	vel += (target_vel - vel) * 0.1f;
+
 	// If we have a new animation lined up, apply it.
 	if (change_anim == nullptr)
 		return;
 	
-	anim.anim = change_anim;
-	anim.runtime = 0;
+	// If we're already using this animation, don't restart it
+	if (anim.anim != change_anim)
+	{
+		anim.anim = change_anim;
+		anim.runtime = 0;
+	}
 	change_anim = nullptr;
 }
 
@@ -39,10 +49,10 @@ void systems::control::handle_event(scene_director &director, const sf::Event &e
 	{
 		switch (evt.key.code)
 		{
-		case sf::Keyboard::W: change_anim = mdl["walk_north"]; break;
-		case sf::Keyboard::A: change_anim = mdl["walk_west"]; break;
-		case sf::Keyboard::S: change_anim = mdl["walk_south"]; break;
-		case sf::Keyboard::D: change_anim = mdl["walk_east"]; break;
+		case sf::Keyboard::W: change_anim = mdl["walk_north"]; target_vel = { 		  0.0f,  -player_speed	}; break;
+		case sf::Keyboard::A: change_anim = mdl["walk_west"];  target_vel = { -player_speed,  0.0f			}; break;
+		case sf::Keyboard::S: change_anim = mdl["walk_south"]; target_vel = {		   0.0f,  player_speed	}; break;
+		case sf::Keyboard::D: change_anim = mdl["walk_east"];  target_vel = {  player_speed,  0.0f			}; break;
 		default: break;
 		}
 		break;
@@ -52,10 +62,10 @@ void systems::control::handle_event(scene_director &director, const sf::Event &e
 	{
 		switch (evt.key.code)
 		{
-		case sf::Keyboard::W: change_anim = mdl["stand_north"]; break;
-		case sf::Keyboard::A: change_anim = mdl["stand_west"]; break;
-		case sf::Keyboard::S: change_anim = mdl["stand_south"]; break;
-		case sf::Keyboard::D: change_anim = mdl["stand_east"]; break;
+		case sf::Keyboard::W: change_anim = mdl["stand_north"]; target_vel = { 0.0f, 0.0f };  break;
+		case sf::Keyboard::A: change_anim = mdl["stand_west"];  target_vel = { 0.0f, 0.0f };  break;
+		case sf::Keyboard::S: change_anim = mdl["stand_south"]; target_vel = { 0.0f, 0.0f };  break;
+		case sf::Keyboard::D: change_anim = mdl["stand_east"];  target_vel = { 0.0f, 0.0f }; break;
 		default: break;
 		}
 
