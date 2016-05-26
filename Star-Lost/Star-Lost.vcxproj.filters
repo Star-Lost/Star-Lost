@@ -14,6 +14,9 @@
     <Filter Include="Source Files\scenes">
       <UniqueIdentifier>{4801f818-4c23-4701-b460-903aa51e7fc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Build Files">
+      <UniqueIdentifier>{164310b6-7fde-4636-a539-c5a9da31ba74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -123,5 +126,10 @@
     <ClInclude Include="systems\control_system.h">
       <Filter>Source Files\systems</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\post-build.bat">
+      <Filter>Build Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

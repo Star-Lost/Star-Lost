@@ -1,9 +1,10 @@
 @echo off
-set buildTarget=%1
-set outputPath=%2
-set sfmlBinPath=..\Third Party\SFML-2.3.2\bin
+set configuration=%1
+set platform=%2
+set outputPath=%3
+set sfmlBinPath=..\Third Party\%platform%\SFML-2.3.2\bin
 
-if %buildTarget% == "Debug" (
+if %configuration% == "Debug" (
 	xcopy /D "%sfmlBinPath%\sfml-audio-d-2.dll" %outputPath%
 	xcopy /D "%sfmlBinPath%\sfml-graphics-d-2.dll" %outputPath%
 	xcopy /D "%sfmlBinPath%\sfml-network-d-2.dll" %outputPath%
