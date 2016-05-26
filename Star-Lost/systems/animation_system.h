@@ -8,14 +8,14 @@ namespace ecs
 		{
 			using required = mpl::type_list<
 				components::animation,
-				components::sprite
+				components::drawable
 			>;
 
 			void update(
 				entity_index eid, 
 				game_context &ctx, 
-				components::animation &anim, 
-				components::sprite &spr
+				components::animation &anim,
+				components::drawable &spr
 			);
 		};
 	}

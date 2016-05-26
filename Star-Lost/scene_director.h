@@ -18,7 +18,7 @@ public:
 	// Accessors
 	sf::Clock get_clock();
 	sf::RenderWindow &get_window();
-	resource<model> &get_models();
+	resource<rendering::model> &get_models();
 	resource<sf::Texture> &get_textures();
 	resource<sf::SoundBuffer> &get_soundbuffer();
 	bool get_is_alive();
@@ -26,7 +26,7 @@ private:
 	std::vector<std::unique_ptr<scene>> scenes;
 	sf::Clock clock;
 	sf::RenderWindow &window;
-	resource<model> models;
+	resource<rendering::model> models;
 	resource<sf::Texture> textures;
 	resource<sf::SoundBuffer> sounds;
 

@@ -35,7 +35,7 @@ sf::RenderWindow& scene_director::get_window()
 	return window;
 }
 
-resource<model>& scene_director::get_models()
+resource<rendering::model>& scene_director::get_models()
 {
 	return models;
 }

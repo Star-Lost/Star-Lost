@@ -6,8 +6,24 @@ void systems::render::update(
 	entity_index eid,
 	game_context &ctx,
 	components::position &pos,
-	components::sprite &spr
+	components::drawable &drw
 ) const {
-	spr.setPosition(pos);
-	ctx.get_render_target().draw(spr);
+	sf::Sprite temp;
+	temp.setTexture(*drw.texture);
+
+	sf::Vector2f offset{ 0, 0 };
+	for (auto &layer : drw.frame->get_layers())
+	{
+		for (auto &tile : layer.get_tiles())
+		{
+			temp.setTextureRect(tile.rect);
+
+			temp.setPosition(offset + sf::Vector2f(pos.x, pos.y));
+			ctx.get_render_target().draw(temp);
+
+			offset.x += tile.rect.width;
+		}
+		offset.x = 0;
+		offset.y -= layer.get_tiles()[0].rect.height;
+	}
 }

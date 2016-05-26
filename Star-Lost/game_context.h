@@ -16,7 +16,7 @@ namespace ecs
 
 #include "components/position_component.h"
 #include "components/velocity_component.h"
-#include "components/sprite_component.h"
+#include "components/drawable_component.h"
 #include "components/animation_component.h"
 
 #include "systems/velocity_system.h"
@@ -29,8 +29,8 @@ struct game_context : public ecs::context<ecs::settings<
 	mpl::type_list<
 		ecs::components::position,
 		ecs::components::velocity,
-		ecs::components::animation,
-		ecs::components::sprite
+		ecs::components::drawable,
+		ecs::components::animation
 	>,
 
 	// tags
@@ -40,10 +40,10 @@ struct game_context : public ecs::context<ecs::settings<
 
 	// systems
 	mpl::type_list<
+		ecs::systems::control,
 		ecs::systems::velocity,
 		ecs::systems::animation,
-		ecs::systems::render,
-		ecs::systems::control
+		ecs::systems::render
 	>
 	>>
 {

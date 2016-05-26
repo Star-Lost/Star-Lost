@@ -21,7 +21,7 @@ namespace ecs
 
 			// This is the variable we store the chosen animation in
 			// until we can apply it during the next update()
-			const model::animation *change_anim;
+			const rendering::animation *change_anim;
 			sf::Vector2f target_vel;
 
 			control();

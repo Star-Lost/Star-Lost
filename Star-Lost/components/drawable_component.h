@@ -5,12 +5,10 @@ namespace ecs
 {
 	namespace components
 	{
-		struct animation
+		struct drawable
 		{
-			animation();
-
-			float runtime;
-			const rendering::animation *anim;
+			const rendering::frame *frame;
+			const sf::Texture *texture;
 		};
 	}
 }

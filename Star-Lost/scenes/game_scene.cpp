@@ -1,47 +1,33 @@
 #include "game_scene.h"
 
 // Prototypes
-void create_character_model(resource<sf::Texture> &textures, resource<model> &models);
-
+void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models);
 
 game_scene::game_scene(scene_director &director) :
 	ctx(director.get_window())
 {
-	create_character_model(director.get_textures(), director.get_models());
+	create_models(director.get_textures(), director.get_models());
+
 	auto &char_model = *director.get_models().get_resource("char_model");
+	auto &tent_model = *director.get_models().get_resource("green_tent");
 
 	// Set up the character entity
 	auto ply = ctx.create_entity();
-	ctx.add_component<ecs::components::position>(ply, 50.0f, 50.0f);
-	ctx.add_component<ecs::components::velocity>(ply);
-	auto &sprt = ctx.add_component<ecs::components::sprite>(ply);
-	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
-
 	ctx.add_tag<ecs::tags::player>(ply);
 
-	sprt.setTexture(*director.get_textures().get_resource("character.png"));
-	anim = char_model["stand_south"];
+	ctx.add_component<ecs::components::position>(ply, 50.0f, 50.0f);
+	ctx.add_component<ecs::components::velocity>(ply);
+	auto &draw = ctx.add_component<ecs::components::drawable>(ply);
+	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
+	draw.texture = director.get_textures().get_resource("character.png");
+	anim = char_model["idle_south"];
 
 	// Create a tent entity
-	const sf::Texture *tex = director.get_textures().load_resource("Spritesheet/roguelikeSheet_magenta.png");
-
-	// Build a tent from our spritesheet
-	sf::Image sheet = tex->copyToImage();
-	sf::Image tent;
-	tent.create(31, 32);
-	tent.copy(sheet,  0,  0, sf::IntRect{ 783, 170, 16, 16 });
-	tent.copy(sheet, 15,  0, sf::IntRect{ 799, 170, 16, 16 });
-	tent.copy(sheet,  0, 16, sf::IntRect{ 783, 187, 16, 16 });
-	tent.copy(sheet, 15, 16, sf::IntRect{ 799, 187, 16, 16 });
-
-	sf::Texture tent_tex;
-	tent_tex.loadFromImage(tent);
-	const sf::Texture *tent_final = director.get_textures().set_resource("green_tent", tent_tex);
-
 	auto tnt = ctx.create_entity();
 	ctx.add_component<ecs::components::position>(tnt, 100.0f, 80.0f);
-	auto &tspr = ctx.add_component<ecs::components::sprite>(tnt);
-	tspr.setTexture(*tent_final);
+	auto &tdrw = ctx.add_component<ecs::components::drawable>(tnt);
+	tdrw.texture = director.get_textures().get_resource("Spritesheet/roguelikeSheet_magenta.png");
+	tdrw.frame = &(*tent_model["idle"])[0];
 }
 
 void game_scene::handle_event(scene_director &director, const sf::Event &evt)
@@ -66,70 +52,93 @@ void game_scene::update(scene_director &director, float dt)
 	director.get_window().display();
 }
 
+void create_character_model(resource<sf::Texture> &textures, resource<rendering::model> &models);
+void create_tent_model(resource<sf::Texture> &textures, resource<rendering::model> &models);
 
-void create_character_model(resource<sf::Texture> &textures, resource<model> &models)
+void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models)
 {
+	create_character_model(textures, models);
+	create_tent_model(textures, models);
+}
+
+void create_character_model(resource<sf::Texture> &textures, resource<rendering::model> &models)
+{
+	using namespace rendering;
+
 	auto char_tex = textures.load_resource("character.png");
 
-	models.set_resource("char_model", model{
-		// Standing still facing south animation
-		std::make_pair(std::string{ "stand_south" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(0, 0, 16, 16)}
-		}),
+	auto char_model = rendering::model{ char_tex, {
+		model::named_animation{std::string{"idle_south"},	animation{ frame{ layer{ sf::IntRect{  0,  0, 16, 16 } } } }},
+		model::named_animation{std::string{"idle_north"},	animation{ frame{ layer{ sf::IntRect{ 16,  0, 16, 16 } } } }},
+		model::named_animation{std::string{"idle_west"},	animation{ frame{ layer{ sf::IntRect{ 32,  0, 16, 16 } } } }},
+		model::named_animation{std::string{"idle_east"},	animation{ frame{ layer{ sf::IntRect{ 48,  0, 16, 16 } } } }},
 
-		// Standing still facing north animation
-		std::make_pair(std::string{ "stand_north" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(16, 0, 16, 16)}
-		}),
+		model::named_animation{std::string{"walk_south"}, animation{
+			frame{ layer{ sf::IntRect{0, 16, 16, 16} } },
+			frame{ layer{ sf::IntRect{0, 32, 16, 16} } },
+			frame{ layer{ sf::IntRect{0,  0, 16, 16} } },
+			frame{ layer{ sf::IntRect{0, 48, 16, 16} } },
+			frame{ layer{ sf::IntRect{0, 64, 16, 16} } },
+			frame{ layer{ sf::IntRect{0,  0, 16, 16} } }
+		} },
 
-		// Standing still facing west animation
-		std::make_pair(std::string{ "stand_west" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(32, 0, 16, 16)}
-		}),
+		model::named_animation{ std::string{ "walk_north" }, animation{
+			frame{ layer{ sf::IntRect{16, 16, 16, 16} } },
+			frame{ layer{ sf::IntRect{16, 32, 16, 16} } },
+			frame{ layer{ sf::IntRect{16,  0, 16, 16} } },
+			frame{ layer{ sf::IntRect{16, 48, 16, 16} } },
+			frame{ layer{ sf::IntRect{16, 64, 16, 16} } },
+			frame{ layer{ sf::IntRect{16,  0, 16, 16} } }
+		} },
 
-		// Standing still facing east animation
-		std::make_pair(std::string{ "stand_east" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(48, 0, 16, 16)}
-		}),
+		model::named_animation{ std::string{ "walk_west" }, animation{
+			frame{ layer{ sf::IntRect{ 32, 16, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 32, 32, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 32,  0, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 32, 48, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 32, 64, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 32,  0, 16, 16 } } }
+		} },
 
-		// Walk south animation
-		std::make_pair(std::string{ "walk_south" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(0, 16, 16, 16) },
-			{ char_tex, sf::IntRect(0, 32, 16, 16) },
-			{ char_tex, sf::IntRect(0,  0, 16, 16) },
-			{ char_tex, sf::IntRect(0, 48, 16, 16) },
-			{ char_tex, sf::IntRect(0, 64, 16, 16) },
-			{ char_tex, sf::IntRect(0,  0, 16, 16) }
-		}),
+		model::named_animation{ std::string{ "walk_east" }, animation{
+			frame{ layer{ sf::IntRect{ 48, 16, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 48, 32, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 48,  0, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 48, 48, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 48, 64, 16, 16 } } },
+			frame{ layer{ sf::IntRect{ 48,  0, 16, 16 } } }
+		} }
+	} };
 
-		// Walk north animation
-		std::make_pair(std::string{ "walk_north" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(16, 16, 16, 16) },
-			{ char_tex, sf::IntRect(16, 32, 16, 16) },
-			{ char_tex, sf::IntRect(16,  0, 16, 16) },
-			{ char_tex, sf::IntRect(16, 48, 16, 16) },
-			{ char_tex, sf::IntRect(16, 64, 16, 16) },
-			{ char_tex, sf::IntRect(16,  0, 16, 16) }
-		}),
+	models.set_resource("char_model", char_model);
+}
 
-		// Walk west animation
-		std::make_pair(std::string{ "walk_west" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(32, 16, 16, 16) },
-			{ char_tex, sf::IntRect(32, 32, 16, 16) },
-			{ char_tex, sf::IntRect(32,  0, 16, 16) },
-			{ char_tex, sf::IntRect(32, 48, 16, 16) },
-			{ char_tex, sf::IntRect(32, 64, 16, 16) },
-			{ char_tex, sf::IntRect(32,  0, 16, 16) }
-		}),
+void create_tent_model(resource<sf::Texture> &textures, resource<rendering::model> &models)
+{
+	using namespace rendering;
 
-		// Walk east animation
-		std::make_pair(std::string{ "walk_east" }, std::initializer_list<model::animation::frame>{
-			{ char_tex, sf::IntRect(48, 16, 16, 16) },
-			{ char_tex, sf::IntRect(48, 32, 16, 16) },
-			{ char_tex, sf::IntRect(48,  0, 16, 16) },
-			{ char_tex, sf::IntRect(48, 48, 16, 16) },
-			{ char_tex, sf::IntRect(48, 64, 16, 16) },
-			{ char_tex, sf::IntRect(48,  0, 16, 16) }
-		})
-	});
+	auto tent_tex = textures.load_resource("Spritesheet/roguelikeSheet_magenta.png");
+
+	auto tent_model = rendering::model{ tent_tex,{
+		std::make_pair(
+			std::string("idle"),
+			animation{ 
+				// Frame 0, only one frame
+				frame{
+					// Layer 0 (bottom of the tent)
+					layer{
+						sf::IntRect{ 783, 187, 16, 16 },
+						sf::IntRect{ 799, 187, 16, 16 }
+					},
+					// Layer 1 (top of the tent)
+					layer{
+						sf::IntRect{ 783, 170, 16, 16 },
+						sf::IntRect{ 799, 170, 16, 16 }
+					}
+				} 
+			}
+		),
+	} };
+
+	models.set_resource("green_tent", tent_model);
 }

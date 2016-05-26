@@ -1,29 +1,79 @@
 #pragma once
 #include "animation.h"
 
-model::animation::frame::frame(const sf::Texture *tex, const sf::IntRect &rect) :
+using namespace rendering;
+
+// Tile
+tile::tile(const sf::IntRect &rect) :
+	rect(rect)
+{
+
+}
+
+
+// Layer
+layer::layer(const std::initializer_list<tile> &tiles) :
+	tiles(tiles)
+{
+
+}
+
+auto layer::get_tiles() const -> const std::vector<tile>&
+{
+	return tiles;
+}
+
+
+
+// Frame
+frame::frame(const std::initializer_list<layer> &layers) :
+	layers(layers)
+{
+
+}
+
+frame::frame(const sf::Texture *tex, const sf::IntRect &rect) :
 	texture(tex),
 	subtexture(rect)
 {}
 
-const sf::Texture *model::animation::frame::get_texture() const
+const sf::Texture *frame::get_texture() const
 {
 	return texture;
 }
 
-const sf::IntRect &model::animation::frame::get_subtexture() const
+const sf::IntRect &frame::get_subtexture() const
 {
 	return subtexture;
 }
 
-model::animation::animation(const std::initializer_list<model::animation::frame> &framelist) :
+auto frame::get_layers() const -> const std::vector<layer> &
+{
+	return layers;
+}
+
+
+// Animation
+animation::animation(const std::initializer_list<frame> &framelist) :
 	frames(framelist)
 {
 }
 
-const model::animation::frame &model::animation::operator[](int index) const
+const frame &animation::operator[](int index) const
 {
 	return frames[index % frames.size()];
+}
+
+
+
+
+// Model
+model::model(const sf::Texture *sheet, const std::initializer_list<named_animation> &animlist) :
+	sheet(sheet),
+	animations(animlist)
+{
+	for (auto &anim : animations)
+		anim.second.mdl = this;
 }
 
 model::model(const std::initializer_list<std::pair<const std::string, animation>> &animlist) :
@@ -32,7 +82,7 @@ model::model(const std::initializer_list<std::pair<const std::string, animation>
 
 }
 
-const model::animation *model::operator[](const std::string &name) const
+const animation *model::operator[](const std::string &name) const
 {
 	auto lookup = animations.find(name);
 	if (lookup == animations.cend())

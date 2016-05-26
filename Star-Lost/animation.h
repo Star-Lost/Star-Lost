@@ -5,45 +5,78 @@
 
 #include "resources.h"
 
-class model
+namespace rendering
 {
-public:
-	class animation
+	struct tile
+	{
+		tile() = default;
+		tile(const sf::IntRect &rect);
+
+		sf::IntRect rect;
+	};
+
+
+
+	class layer
 	{
 	public:
-		class frame
-		{
-		public:
-			frame(const sf::Texture *tex, const sf::IntRect &rect);
-			const sf::Texture *get_texture() const;
-			const sf::IntRect &get_subtexture() const;
+		layer(const std::initializer_list<tile> &tiles);
+		const std::vector<tile> &get_tiles() const;
 
-		private:
-			const sf::Texture *texture;
-			sf::IntRect subtexture;
-		};
+	private:
+		std::vector<tile> tiles;
+	};
 
+
+
+	class frame
+	{
+	public:
+		frame(const std::initializer_list<layer> &layers);
+
+		frame(const sf::Texture *tex, const sf::IntRect &rect);
+		const sf::Texture *get_texture() const;
+		const sf::IntRect &get_subtexture() const;
+		const std::vector<layer> &get_layers() const;
+
+	private:
+		std::vector<layer> layers;
+		const sf::Texture *texture;
+		sf::IntRect subtexture;
+	};
+
+	class animation
+	{
+		friend class model;
 	public:
 		animation(const std::initializer_list<frame> &framelist);
 		const frame &operator[](int index) const;
 
 	private:
+		model *mdl;
 		std::vector<frame> frames;
 	};
 
-public:
-	model(const std::initializer_list<std::pair<const std::string, animation>> &animlist);
-	const animation *operator[](const std::string &name) const;
+	class model
+	{
+	public:
+		using named_animation = std::pair<const std::string, animation>;
 
-private:
-	std::map<std::string, animation> animations;
-};
+		model(const sf::Texture *sheet, const std::initializer_list<named_animation> &animlist);
+		model(const std::initializer_list<named_animation> &animlist);
+		const animation *operator[](const std::string &name) const;
+
+	private:
+		const sf::Texture *sheet;
+		std::map<std::string, animation> animations;
+	};
+}
 
 template<>
-class resource_loader<model>
+class resource_loader<rendering::model>
 {
-	friend class resource<model>;
+	friend class resource<rendering::model>;
 
 	static const std::string path;
-	static bool load(const std::string &name, model &out);
+	static bool load(const std::string &name, rendering::model &out);
 };

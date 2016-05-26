@@ -41,7 +41,7 @@ void systems::control::handle_event(scene_director &director, const sf::Event &e
 	if (evt.type != sf::Event::KeyPressed && evt.type != sf::Event::KeyReleased)
 		return;
 
-	const model &mdl = *director.get_models().get_resource("char_model");
+	auto &mdl = *director.get_models().get_resource("char_model");
 
 	switch (evt.type)
 	{
