@@ -57,11 +57,11 @@ void game_scene::handle_event(scene_director &director, const sf::Event &evt)
 
 }
 
-void game_scene::update(scene_director &director)
+void game_scene::update(scene_director &director, float dt)
 {
 	director.get_window().clear(sf::Color(100, 149, 237));
 
-	ctx.update(float(director.get_clock().getElapsedTime().asMilliseconds()) / 1000.0f);
+	ctx.update(dt);
 
 	director.get_window().display();
 }

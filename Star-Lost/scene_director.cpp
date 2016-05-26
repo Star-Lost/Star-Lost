@@ -17,7 +17,7 @@ void scene_director::update()
 		scenes.back()->handle_event(*this, evt);
 	}
 
-	scenes.back()->update(*this);
+	scenes.back()->update(*this, delta_time);
 }
 
 void scene_director::add_scene(std::unique_ptr<scene> &&new_scene)
