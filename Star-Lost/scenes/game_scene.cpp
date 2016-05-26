@@ -120,8 +120,8 @@ void create_tent_model(resource<sf::Texture> &textures, resource<rendering::mode
 	auto tent_tex = textures.load_resource("Spritesheet/roguelikeSheet_magenta.png");
 
 	auto tent_model = rendering::model{ tent_tex,{
-		std::make_pair(
-			std::string("idle"),
+		model::named_animation{
+			std::string{"idle"},
 			animation{ 
 				// Frame 0, only one frame
 				frame{
@@ -137,7 +137,7 @@ void create_tent_model(resource<sf::Texture> &textures, resource<rendering::mode
 					}
 				} 
 			}
-		),
+		},
 	} };
 
 	models.set_resource("green_tent", tent_model);
