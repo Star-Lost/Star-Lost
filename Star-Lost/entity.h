@@ -225,7 +225,7 @@ namespace ecs
 			ent.signature |= signature::get<T>::value;
 
 			// Construct in place
-			return *new (&get_storage<T>()[ent.data]) T(std::forward<Args>(args)...);
+			return *new (&get_storage<T>()[ent.data]) T{ std::forward<Args>(args)... };
 		}
 
 		template<typename T>
