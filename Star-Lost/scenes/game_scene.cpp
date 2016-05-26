@@ -48,6 +48,7 @@ void game_scene::update(scene_director &director, float dt)
 	director.get_window().clear(sf::Color(100, 149, 237));
 
 	ctx.update(dt);
+	ctx.get_system<ecs::systems::render>().draw(director, director.get_window());
 
 	director.get_window().display();
 }
@@ -129,14 +130,14 @@ void create_tent_model(resource<sf::Texture> &textures, resource<rendering::mode
 					layer{
 						// Row 0 - front row
 						row{
-							sf::IntRect{ 783, 187, 16, 16 },
+							sf::IntRect{ 783, 187, 15, 16 },
 							sf::IntRect{ 799, 187, 16, 16 }
 						}
 					},
 					// Layer 1 - top of the tent 
 					layer{
 						row{
-							sf::IntRect{ 783, 170, 16, 16 },
+							sf::IntRect{ 783, 170, 15, 16 },
 							sf::IntRect{ 799, 170, 16, 16 }
 						}
 					}

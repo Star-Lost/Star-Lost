@@ -1,5 +1,7 @@
 #pragma once
 
+class scene_director;
+
 namespace ecs
 {
 	namespace systems
@@ -11,12 +13,29 @@ namespace ecs
 				components::drawable
 			>;
 
+			struct draw_order
+			{
+				draw_order() = default;
+				draw_order(float depth, sf::Vector2f position, const sf::Texture *texture, sf::IntRect subtexture);
+
+				float depth;
+				sf::Vector2f position;
+				const sf::Texture *texture;
+				sf::IntRect subtexture;
+
+				bool operator<(const draw_order &other) const;
+			};
+
 			void update(
 				entity_index eid, 
 				game_context &ctx, 
 				components::position &pos, 
 				components::drawable &drw
-			) const;
+			);
+
+			void draw(scene_director &director, sf::RenderTarget &target);
+
+			std::vector<draw_order> draw_orders;
 		};
 	}
 }
