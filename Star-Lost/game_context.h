@@ -22,6 +22,7 @@ namespace ecs
 #include "components/velocity_component.h"
 #include "components/drawable_component.h"
 #include "components/animation_component.h"
+#include "components/camera_component.h"
 
 #include "systems/collision_system.h"
 #include "systems/velocity_system.h"
