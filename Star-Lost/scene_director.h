@@ -20,7 +20,8 @@ public:
 	sf::RenderWindow &get_window();
 	resource<rendering::model> &get_models();
 	resource<sf::Texture> &get_textures();
-	resource<sf::SoundBuffer> &get_soundbuffer();
+	resource<sf::SoundBuffer> &get_soundbuffers();
+	resource<sf::Font> &get_fonts();
 	bool get_is_alive();
 private:
 	std::vector<std::unique_ptr<scene>> scenes;
@@ -29,6 +30,7 @@ private:
 	resource<rendering::model> models;
 	resource<sf::Texture> textures;
 	resource<sf::SoundBuffer> sounds;
+	resource<sf::Font> fonts;
 
 	float delta_time;
 	bool is_alive;

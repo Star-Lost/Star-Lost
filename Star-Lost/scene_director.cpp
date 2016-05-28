@@ -35,19 +35,24 @@ sf::RenderWindow& scene_director::get_window()
 	return window;
 }
 
-resource<rendering::model>& scene_director::get_models()
+resource<rendering::model> &scene_director::get_models()
 {
 	return models;
 }
 
-resource<sf::Texture>& scene_director::get_textures()
+resource<sf::Texture> &scene_director::get_textures()
 {
 	return textures;
 }
 
-resource<sf::SoundBuffer>& scene_director::get_soundbuffer()
+resource<sf::SoundBuffer> &scene_director::get_soundbuffers()
 {
 	return sounds;
+}
+
+resource<sf::Font> &scene_director::get_fonts()
+{
+	return fonts;
 }
 
 bool scene_director::get_is_alive()
