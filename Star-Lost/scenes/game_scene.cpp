@@ -2,35 +2,16 @@
 
 // Prototypes
 void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models);
+void create_player(game_context &ctx, scene_director &director);
+void create_tent(game_context &ctx, scene_director &director);
 
 game_scene::game_scene(scene_director &director) :
 	ctx(director)
 {
 	create_models(director.get_textures(), director.get_models());
 
-	auto &char_model = *director.get_models().get_resource("char_model");
-	auto &tent_model = *director.get_models().get_resource("green_tent");
-
-	// Set up the character entity
-	auto ply = ctx.create_entity();
-	ctx.add_tag<ecs::tags::player>(ply);
-
-	ctx.add_component<ecs::components::position>(ply, 50.0f, 50.0f);
-	ctx.add_component<ecs::components::velocity>(ply);
-	ctx.add_component<ecs::components::collision>(ply, sf::FloatRect{ 2, 8, 12, 8 });
-	auto &draw = ctx.add_component<ecs::components::drawable>(ply);
-	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
-	//draw.texture = director.get_textures().get_resource("character.png");
-	draw.texture = director.get_textures().get_resource("character.png");
-	anim = char_model["idle_south"];
-
-	// Create a tent entity
-	auto tnt = ctx.create_entity();
-	ctx.add_component<ecs::components::position>(tnt, 100.0f, 80.0f);
-	ctx.add_component<ecs::components::collision>(tnt, sf::FloatRect{ 0, 0, 31, 16 });
-	auto &tdrw = ctx.add_component<ecs::components::drawable>(tnt);
-	tdrw.texture = director.get_textures().get_resource("Spritesheet/roguelikeSheet_magenta.png");
-	tdrw.frame = &(*tent_model["idle"])[0];
+	create_player(ctx, director);
+	create_tent(ctx, director);
 
 	// Create a view
 	//camera.setCenter(ctx.get_entity(ply));
@@ -61,6 +42,38 @@ void game_scene::update(scene_director &director, float dt)
 	ctx.get_system<ecs::systems::render>().draw(director, director.get_window());
 
 	director.get_window().display();
+}
+
+void create_player(game_context &ctx, scene_director &director)
+{
+	auto &char_model = *director.get_models().get_resource("char_model");
+
+	// Set up the character entity
+	auto ply = ctx.create_entity();
+	ctx.add_tag<ecs::tags::player>(ply);
+
+	ctx.add_component<ecs::components::position>(ply, 50.0f, 50.0f);
+	ctx.add_component<ecs::components::velocity>(ply);
+	ctx.add_component<ecs::components::collision>(ply, sf::FloatRect{ 2, 8, 12, 8 });
+	auto &draw = ctx.add_component<ecs::components::drawable>(ply);
+	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
+	//draw.texture = director.get_textures().get_resource("character.png");
+	draw.texture = director.get_textures().get_resource("character.png");
+	anim = char_model["idle_south"];
+}
+
+void create_tent(game_context &ctx, scene_director &director)
+{
+	auto &tent_model = *director.get_models().get_resource("green_tent");
+
+	// Create a tent entity
+	auto tnt = ctx.create_entity();
+	ctx.add_component<ecs::components::position>(tnt, 100.0f, 80.0f);
+	ctx.add_component<ecs::components::collision>(tnt, sf::FloatRect{ 0, 0, 31, 16 });
+	auto &tdrw = ctx.add_component<ecs::components::drawable>(tnt);
+	tdrw.texture = director.get_textures().get_resource("Spritesheet/roguelikeSheet_magenta.png");
+	tdrw.frame = &(*tent_model["idle"])[0];
+
 }
 
 void create_character_model(resource<sf::Texture> &textures, resource<rendering::model> &models);
