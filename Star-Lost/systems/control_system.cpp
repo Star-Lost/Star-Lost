@@ -64,10 +64,6 @@ void systems::control::update(
 	std::string stance = (magnitude > std::numeric_limits<float>::epsilon()) ? "walk_" : "idle_";
 
 	change_anim = mdl[stance + direction];
-
-	// If we have a new animation lined up, apply it.
-	if (change_anim == nullptr)
-		return;
 	
 	// If we're already using this animation, don't restart it
 	if (anim.anim != change_anim)
