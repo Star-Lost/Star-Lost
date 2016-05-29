@@ -6,7 +6,7 @@
 
 using namespace ecs;
 
-static const float player_speed = 0.2f;
+static const float player_speed = 0.1f;
 
 systems::control::control() :
 	change_anim(nullptr),
