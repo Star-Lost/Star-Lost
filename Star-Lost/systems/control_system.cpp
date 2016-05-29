@@ -7,6 +7,7 @@
 using namespace ecs;
 
 static const float player_speed = 0.1f;
+static const float pi = 3.14159265358979323846f;
 
 systems::control::control() :
 	change_anim(nullptr),
@@ -39,29 +40,30 @@ void systems::control::update(
 
 	// Update the direction we're facing based on velocity
 	auto &mdl = *ctx.get_director().get_models().get_resource("char_model");
-	std::string stance = "idle";
-	std::string direction = "south";
 
+	float angle = std::atan2f(vel.y, vel.x);
+	// Get a range of [0..1] instead of [-pi..pi]
+	float range = (angle + pi) / (2 * pi);
+	// Offset it by 1/16th so it corresponds to our animations:
+	float offset = range + (1.0f / 16.0f);
+	// Calculate the index in our array:
+	int index = static_cast<int>(std::floor(offset * 8.0f)) % 8;
 
-	if (abs(vel.x) > abs(vel.y))
-	{
-		direction = vel.x <= 0.0f ? "west" : "east";
-	}
-	else
-	{
-		direction = vel.y <= 0.0f ? "north" : "south";
-	}
+	std::string directions[] = {
+		"west",
+		"nw",
+		"north",
+		"ne",
+		"east",
+		"se",
+		"south",
+		"sw"
+	};
 
-	if (abs(vel.x) + abs(vel.y) > player_speed / 5.0f)
-	{
-		stance = "walk";
-	}
-	else
-	{
-		stance = "idle";
-	}
+	std::string direction = directions[index];
+	std::string stance = (magnitude > std::numeric_limits<float>::epsilon()) ? "walk_" : "idle_";
 
-	change_anim = mdl[stance + "_" + direction];
+	change_anim = mdl[stance + direction];
 
 	// If we have a new animation lined up, apply it.
 	if (change_anim == nullptr)
