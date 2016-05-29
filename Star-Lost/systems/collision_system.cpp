@@ -61,10 +61,16 @@ void systems::collision::update(
 			float signx = std::abs(oc.x - nc.x) / (oc.x - nc.x);
 			float signy = std::abs(oc.y - nc.y) / (oc.y - nc.y);
 
-			if(overlap.width > overlap.height)
+			if (overlap.width > overlap.height)
+			{
 				pos.y = newpos.y - overlap.height*signy;
+				vel.y = 0;
+			}
 			else
+			{
 				pos.x = newpos.x - overlap.width*signx;
+				vel.x = 0;
+			}
 		}
 	});	
 
