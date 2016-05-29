@@ -13,6 +13,11 @@ sf::FloatRect operator+(const sf::FloatRect &rect, const sf::Vector2f &vec)
 	return sf::FloatRect{ rect.left + vec.x, rect.top + vec.y, rect.width, rect.height };
 }
 
+sf::Vector2f center(const sf::FloatRect &rect)
+{
+	return{ rect.left + rect.width / 2, rect.top + rect.height / 2 };
+}
+
 void systems::collision::update(
 	entity_index eid,
 	game_context &ctx,
@@ -50,8 +55,11 @@ void systems::collision::update(
 				std::min(newbox.top + newbox.height, obox.top + obox.height) - y
 			};
 
-			float signx = std::abs(vel.x)/vel.x;
-			float signy = std::abs(vel.y)/vel.y;
+			auto oc = center(obox);
+			auto nc = center(newbox);
+
+			float signx = std::abs(oc.x - nc.x) / (oc.x - nc.x);
+			float signy = std::abs(oc.y - nc.y) / (oc.y - nc.y);
 
 			if(overlap.width > overlap.height)
 				pos.y = newpos.y - overlap.height*signy;
