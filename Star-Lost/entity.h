@@ -143,16 +143,10 @@ namespace ecs
 			return std::get<std::array<T, settings::max_entities>>(components);
 		}
 
-		entity &get_entity(entity_index eid)
-		{
-			return entities[eid];
-		}
-
 		const entity &get_entity(entity_index eid) const
 		{
 			return entities[eid];
 		}
-
 
 		template<typename ...Ts>
 		struct expand_call;
@@ -203,6 +197,11 @@ namespace ecs
 		context() :
 			last_entity(0)
 		{}
+
+		entity &get_entity(entity_index eid)
+		{
+			return entities[eid];
+		}
 
 		template<typename ...Args>
 		void update(Args&&... args)

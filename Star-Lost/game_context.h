@@ -2,10 +2,12 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 struct game_context;
 
 #include "entity.h"
+#include "scene_director.h"
 
 namespace ecs
 {
@@ -54,13 +56,12 @@ struct game_context : public ecs::context<ecs::settings<
 {
 private:
 	float delta_time;
-	sf::RenderTarget &render_target;
+	scene_director &director;
 
 public:
-	game_context(sf::RenderTarget &target);
+	game_context(scene_director &dir);
 
 	void update(float dt);
-
+	scene_director &get_director();
 	float get_delta() const;
-	sf::RenderTarget &get_render_target();
 };

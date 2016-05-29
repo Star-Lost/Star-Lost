@@ -1,7 +1,7 @@
 #include "game_context.h"
 
-game_context::game_context(sf::RenderTarget &target) :
-	render_target(target)
+game_context::game_context(scene_director &dir) :
+	director(dir)
 {
 
 }
@@ -12,9 +12,9 @@ void game_context::update(float dt)
 	context::update(*this);
 }
 
-sf::RenderTarget &game_context::get_render_target()
+scene_director &game_context::get_director()
 {
-	return render_target;
+	return director;
 }
 
 float game_context::get_delta() const

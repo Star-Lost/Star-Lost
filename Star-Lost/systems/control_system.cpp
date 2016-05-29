@@ -2,6 +2,7 @@
 #include "../game_context.h"
 
 #include <SFML/Window/Event.hpp>
+#include <math.h>
 
 using namespace ecs;
 
@@ -20,8 +21,38 @@ void systems::control::update(
 	components::velocity &vel,
 	components::animation &anim
 ) {
+	// Handle controls
+	target_vel.x = (keyboard.isKeyPressed(keyboard.D) ? player_speed : 0.0f) - (keyboard.isKeyPressed(keyboard.A) ? player_speed : 0.0f);
+	target_vel.y = (keyboard.isKeyPressed(keyboard.S) ? player_speed : 0.0f) - (keyboard.isKeyPressed(keyboard.W) ? player_speed : 0.0f);
+
 	// Slowly approach the target velocity
 	vel += (target_vel - vel) * 0.1f;
+
+	// Update the direction we're facing based on velocity
+	auto &mdl = *ctx.get_director().get_models().get_resource("char_model");
+	std::string stance = "idle";
+	std::string direction = "south";
+
+
+	if (abs(vel.x) > abs(vel.y))
+	{
+		direction = vel.x <= 0.0f ? "west" : "east";
+	}
+	else
+	{
+		direction = vel.y <= 0.0f ? "north" : "south";
+	}
+
+	if (abs(vel.x) + abs(vel.y) > player_speed / 5.0f)
+	{
+		stance = "walk";
+	}
+	else
+	{
+		stance = "idle";
+	}
+
+	change_anim = mdl[stance + "_" + direction];
 
 	// If we have a new animation lined up, apply it.
 	if (change_anim == nullptr)
@@ -33,38 +64,14 @@ void systems::control::update(
 		anim.anim = change_anim;
 		anim.runtime = 0;
 	}
+
 	change_anim = nullptr;
 }
 
-void systems::control::handle_event(scene_director &director, const sf::Event &evt)
+void systems::control::handle_event(
+	scene_director &director, 
+	const sf::Event &evt)
 {
 	if (evt.type != sf::Event::KeyPressed && evt.type != sf::Event::KeyReleased)
 		return;
-
-	auto &mdl = *director.get_models().get_resource("char_model");
-
-	switch (evt.type)
-	{
-	case sf::Event::KeyPressed:
-		switch (evt.key.code)
-		{
-		case sf::Keyboard::W: change_anim = mdl["walk_north"]; target_vel = { 		  0.0f,  -player_speed	}; break;
-		case sf::Keyboard::A: change_anim = mdl["walk_west"];  target_vel = { -player_speed,  0.0f			}; break;
-		case sf::Keyboard::S: change_anim = mdl["walk_south"]; target_vel = {		   0.0f,  player_speed	}; break;
-		case sf::Keyboard::D: change_anim = mdl["walk_east"];  target_vel = {  player_speed,  0.0f			}; break;
-		default: break;
-		}
-		break;
-
-	case sf::Event::KeyReleased:
-		switch (evt.key.code)
-		{
-		case sf::Keyboard::W: change_anim = mdl["idle_north"]; target_vel = { 0.0f, 0.0f };  break;
-		case sf::Keyboard::A: change_anim = mdl["idle_west"];  target_vel = { 0.0f, 0.0f };  break;
-		case sf::Keyboard::S: change_anim = mdl["idle_south"]; target_vel = { 0.0f, 0.0f };  break;
-		case sf::Keyboard::D: change_anim = mdl["idle_east"];  target_vel = { 0.0f, 0.0f }; break;
-		default: break;
-		}
-		break;
-	}
 }

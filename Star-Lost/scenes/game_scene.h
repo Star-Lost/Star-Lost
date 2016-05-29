@@ -11,4 +11,5 @@ public:
 	virtual void update(scene_director &director, float dt) override;
 
 	game_context ctx;
+	sf::View camera;
 };

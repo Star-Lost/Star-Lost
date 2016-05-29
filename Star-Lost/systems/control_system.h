@@ -1,3 +1,4 @@
+#include <SFML/Window/Keyboard.hpp>
 #pragma once
 
 namespace sf
@@ -23,6 +24,7 @@ namespace ecs
 			// until we can apply it during the next update()
 			const rendering::animation *change_anim;
 			sf::Vector2f target_vel;
+			sf::Keyboard keyboard;
 
 			control();
 
@@ -33,7 +35,10 @@ namespace ecs
 				components::animation &anim
 			);
 
-			void handle_event(scene_director &director, const sf::Event &evt);
+			void handle_event(
+				scene_director &director, 
+				const sf::Event &evt
+			);
 		};
 	}
 }

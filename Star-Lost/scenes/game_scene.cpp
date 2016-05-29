@@ -4,7 +4,7 @@
 void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models);
 
 game_scene::game_scene(scene_director &director) :
-	ctx(director.get_window())
+	ctx(director)
 {
 	create_models(director.get_textures(), director.get_models());
 
@@ -30,6 +30,12 @@ game_scene::game_scene(scene_director &director) :
 	auto &tdrw = ctx.add_component<ecs::components::drawable>(tnt);
 	tdrw.texture = director.get_textures().get_resource("Spritesheet/roguelikeSheet_magenta.png");
 	tdrw.frame = &(*tent_model["idle"])[0];
+
+	// Create a view
+	//camera.setCenter(ctx.get_entity(ply));
+	camera.setSize(
+		director.get_window().getSize().x,
+		director.get_window().getSize().y);
 }
 
 void game_scene::handle_event(scene_director &director, const sf::Event &evt)
