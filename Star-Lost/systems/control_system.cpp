@@ -25,6 +25,15 @@ void systems::control::update(
 	target_vel.x = (keyboard.isKeyPressed(keyboard.D) ? player_speed : 0.0f) - (keyboard.isKeyPressed(keyboard.A) ? player_speed : 0.0f);
 	target_vel.y = (keyboard.isKeyPressed(keyboard.S) ? player_speed : 0.0f) - (keyboard.isKeyPressed(keyboard.W) ? player_speed : 0.0f);
 
+	// By adding epsilon here (the smallest value a float can have),
+	// we make sure that magnitude is never 0, 
+	// which would make player_speed/magnitude = inf
+	// and send the guy to the fucking moon.
+	// We *could* check if magnitude is zero with an if, 
+	// but this way we can achieve the same effect without branching
+	float magnitude = (std::pow(target_vel.x, 2) + std::pow(target_vel.y, 2)) + std::numeric_limits<float>::epsilon();
+	target_vel *= std::pow(player_speed, 2) / magnitude;
+
 	// Slowly approach the target velocity
 	vel += (target_vel - vel) * 0.1f;
 
