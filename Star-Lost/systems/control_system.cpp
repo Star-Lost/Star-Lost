@@ -28,6 +28,32 @@ void systems::control::update(
 	// Slowly approach the target velocity
 	vel += (target_vel - vel) * 0.1f;
 
+	// Update the direction we're facing based on velocity
+	auto &mdl = *ctx.get_director().get_models().get_resource("char_model");
+	std::string stance = "idle";
+	std::string direction = "south";
+
+
+	if (abs(vel.x) > abs(vel.y))
+	{
+		direction = vel.x <= 0.0f ? "west" : "east";
+	}
+	else
+	{
+		direction = vel.y <= 0.0f ? "north" : "south";
+	}
+
+	if (abs(vel.x) + abs(vel.y) > player_speed / 5.0f)
+	{
+		stance = "walk";
+	}
+	else
+	{
+		stance = "idle";
+	}
+
+	change_anim = mdl[stance + "_" + direction];
+
 	// If we have a new animation lined up, apply it.
 	if (change_anim == nullptr)
 		return;
@@ -48,31 +74,4 @@ void systems::control::handle_event(
 {
 	if (evt.type != sf::Event::KeyPressed && evt.type != sf::Event::KeyReleased)
 		return;
-
-	// Update the direction we're facing based on velocity
-	auto &mdl = *director.get_models().get_resource("char_model");
-	std::string stance = "idle";
-	std::string direction = "south";
-
-	/*
-	if (abs(vel.x) > abs(vel.y))
-	{
-		direction = vel.x <= 0.0f ? "west" : "east";
-	}
-	else
-	{
-		direction = vel.y <= 0.0f ? "south" : "north";
-	}
-
-	if (abs(vel.x) + abs(vel.y) > player_speed / 10.0f)
-	{
-		stance = "idle";
-	}
-	else
-	{
-		stance = "walk";
-	}
-	*/
-
-	change_anim = mdl[stance + "_" + direction];
 }
