@@ -24,6 +24,7 @@ namespace ecs
 #include "components/animation_component.h"
 #include "components/timer_component.h"
 
+#include "systems/base_system.h"
 #include "systems/velocity_system.h"
 #include "systems/animation_system.h"
 #include "systems/render_system.h"

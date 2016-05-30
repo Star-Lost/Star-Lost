@@ -183,6 +183,7 @@
     <ClCompile Include="components\collision_component.cpp" />
     <ClCompile Include="components\drawable_component.cpp" />
     <ClCompile Include="components\position_component.cpp" />
+    <ClCompile Include="components\timer_component.cpp" />
     <ClCompile Include="components\velocity_component.cpp" />
     <ClCompile Include="game_context.cpp" />
     <ClCompile Include="main.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="scenes\pause_scene.h" />
     <ClInclude Include="scene_director.h" />
     <ClInclude Include="systems\animation_system.h" />
+    <ClInclude Include="systems\base_system.h" />
     <ClInclude Include="systems\collision_detection_system.h" />
     <ClInclude Include="systems\collision_resolution_system.h" />
     <ClInclude Include="systems\control_system.h" />
