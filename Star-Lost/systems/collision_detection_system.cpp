@@ -38,7 +38,7 @@ void systems::collision_detection::update(
 		if (otherid == eid)
 			return;
 
-		auto obs_cls = ctx.get_component<components::collision>(otherid);
+		auto &obs_cls = ctx.get_component<components::collision>(otherid);
 		auto obstacle = obs_cls.bbox + ctx.get_component<components::position>(otherid);
 
 		if (newbox.intersects(obstacle))
