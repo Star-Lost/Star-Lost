@@ -17,9 +17,9 @@ game_scene::game_scene(scene_director &director) :
 
 	// Create a view
 	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
-		(*this).camera.setCenter(
-			(*this).ctx.get_component<components::position>(eid).x,
-			(*this).ctx.get_component<components::position>(eid).y);
+		this->camera.setCenter(
+			this->ctx.get_component<components::position>(eid).x,
+			this->ctx.get_component<components::position>(eid).y);
 	}); 
 	
 	camera.setSize(
@@ -51,9 +51,9 @@ void game_scene::update(scene_director &director, float dt)
 	ctx.get_system<ecs::systems::render>().draw(director, director.get_window());
 
 	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
-		(*this).camera.setCenter(
-			(*this).ctx.get_component<components::position>(eid).x,
-			(*this).ctx.get_component<components::position>(eid).y);
+		this->camera.move(
+			this->ctx.get_component<components::position>(eid).x,
+			this->ctx.get_component<components::position>(eid).y);
 	});
 	
 	director.get_window().display();
