@@ -67,12 +67,13 @@ void create_tent(game_context &ctx, scene_director &director)
 
 	// Create a tent entity
 	auto tnt = ctx.create_entity();
+	ctx.add_tag<ecs::tags::tent>(tnt);
+	ctx.add_component<ecs::components::timer>(tnt);
 	ctx.add_component<ecs::components::position>(tnt, 100.0f, 80.0f);
 	ctx.add_component<ecs::components::collision>(tnt, sf::FloatRect{ 0, 0, 31, 16 });
 	auto &tdrw = ctx.add_component<ecs::components::drawable>(tnt);
 	tdrw.texture = director.get_textures().get_resource("Spritesheet/roguelikeSheet_magenta.png");
 	tdrw.frame = &(*tent_model["idle"])[0];
-
 }
 
 void create_character_model(resource<sf::Texture> &textures, resource<rendering::model> &models);
