@@ -48,7 +48,7 @@ namespace ecs
 		template<typename T>
 		struct get_bit<T, false, true>
 		{
-			static constexpr signature_type value = tags::index_v<T>;
+			static constexpr signature_type value = tags::index_v<T> + components::size;
 		};
 
 		template<typename T>
