@@ -70,7 +70,10 @@
     <ClCompile Include="components\collision_component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
-    <ClCompile Include="systems\collision_system.cpp">
+    <ClCompile Include="systems\collision_detection_system.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="systems\collision_resolution_system.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -135,7 +138,10 @@
     <ClInclude Include="components\collision_component.h">
       <Filter>Source Files\components</Filter>
     </ClInclude>
-    <ClInclude Include="systems\collision_system.h">
+    <ClInclude Include="systems\collision_detection_system.h">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="systems\collision_resolution_system.h">
       <Filter>Source Files\systems</Filter>
     </ClInclude>
   </ItemGroup>

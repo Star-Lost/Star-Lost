@@ -23,11 +23,12 @@ namespace ecs
 #include "components/drawable_component.h"
 #include "components/animation_component.h"
 
-#include "systems/collision_system.h"
 #include "systems/velocity_system.h"
 #include "systems/animation_system.h"
 #include "systems/render_system.h"
 #include "systems/control_system.h"
+#include "systems/collision_detection_system.h"
+#include "systems/collision_resolution_system.h"
 
 struct game_context : public ecs::context<ecs::settings<
 	// components
@@ -47,7 +48,8 @@ struct game_context : public ecs::context<ecs::settings<
 	// systems
 	mpl::type_list<
 		ecs::systems::control,
-		ecs::systems::collision,
+		ecs::systems::collision_detection,
+		ecs::systems::collision_resolution,
 		ecs::systems::velocity,
 		ecs::systems::animation,
 		ecs::systems::render

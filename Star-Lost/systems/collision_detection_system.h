@@ -4,7 +4,7 @@ namespace ecs
 {
 	namespace systems
 	{
-		struct collision
+		struct collision_detection
 		{
 			using required = mpl::type_list<
 				components::position,
