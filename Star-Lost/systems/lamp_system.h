@@ -13,7 +13,7 @@ namespace ecs
 		{
 			using required = mpl::type_list<
 				components::collision,
-				tags::tent
+				tags::lamp
 			>;
 
 			void initialize(game_context &ctx);
