@@ -85,6 +85,7 @@ namespace ecs
 		typename Tags = mpl::type_list<>,
 		typename Systems = mpl::type_list<>
 	>
+
 	struct settings
 	{
 		using components = Components;
@@ -137,6 +138,7 @@ namespace ecs
 
 		// This will point to the last entity before an update
 		unsigned int last_entity;
+		bool is_compressed;
 
 		template<typename T>
 		auto &get_storage() {
@@ -193,9 +195,97 @@ namespace ecs
 			update_system<Head>(std::forward<Args>(args)...);
 		}
 
+		template<typename Component>
+		void swap_component(entity_index aid, entity_index bid)
+		{
+			std::swap(get_component<Component>(aid), get_component<Component>(bid));
+		}
+
+		template<typename ...>
+		struct swap_components_impl;
+
+		template<typename Component, typename ...Components>
+		struct swap_components_impl<Component, Components...>
+		{
+			static void swap(context &ctx, entity_index aid, entity_index bid)
+			{
+				ctx.swap_component<Component>(aid, bid);
+				swap_components_impl<Components...>::swap(ctx, aid, bid);
+			}
+		};
+
+		template<typename Component>
+		struct swap_components_impl<Component>
+		{
+			static void swap(context &ctx, entity_index aid, entity_index bid)
+			{
+				ctx.swap_component<Component>(aid, bid);
+			}
+		};
+
+		void swap_components(entity_index aid, entity_index bid)
+		{
+			settings::components::to_t<swap_components_impl>::swap(*this, aid, bid);
+			std::swap(entities[aid].data, entities[bid].data);
+		}
+
+		void compress_entities()
+		{
+			auto alive = 0;
+			auto dead = last_entity;
+
+			auto left = entities.begin();
+			auto right = entities.rbegin() + entities.size() - last_entity;
+
+			while (true)
+			{
+				// Find the first dead one
+				//
+				//     L
+				// AAAADAAADDADD
+				left = std::find_if(left, entities.end(), [](const entity & ent) { return !ent.alive; });
+
+				// Find the last alive one
+				//
+				//           R
+				// AAAADAAADDADD
+				right = std::find_if(right, entities.rend(), [](entity & ent)
+				{
+					if (ent.alive)
+						return true;
+
+					// If it's already dead and sorted, clear it
+					ent.id = 0;
+					ent.data = 0;
+					return false;
+				});
+
+				// If our alive iterator(L) is lower than our dead iterator(R), 
+				// then the entities have been fully sorted
+				//		 RL
+				// AAAAAAADDDDDDD
+				if (std::distance(&*entities.begin(), &*right) < std::distance(entities.begin(), left))
+					break;
+
+				// Otherwise, swap the left and right entities:
+				std::swap(*left, *right);
+
+				// Swap their IDs too
+				std::swap(left->id, right->id);
+			
+				swap_components(left->id, right->id);
+			}
+
+			last_entity = std::distance(entities.begin(), left);
+
+			is_compressed = true;
+		}
+
+
 	public:
 		context() :
-			last_entity(0)
+			last_entity(0),
+			is_compressed(true)
 		{}
 
 		entity &get_entity(entity_index eid)
@@ -207,6 +297,9 @@ namespace ecs
 		void update(Args&&... args)
 		{
 			update_systems(settings::systems{}, args...);
+
+			if (!is_compressed)
+				compress_entities();
 		}
 
 		template<typename T>
@@ -279,6 +372,10 @@ namespace ecs
 		void kill(entity_index eid) const
 		{
 			get_entity(eid).alive = false;
+
+			// If we're already compressed, and the killed entity
+			// was the last one, then we are still compressed.
+			is_compressed = is_compressed && eid == last_entity - 1;
 		}
 
 		template<typename Lambda>
