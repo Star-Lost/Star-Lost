@@ -85,7 +85,6 @@ namespace ecs
 		typename Tags = mpl::type_list<>,
 		typename Systems = mpl::type_list<>
 	>
-
 	struct settings
 	{
 		using components = Components;
@@ -281,12 +280,44 @@ namespace ecs
 			is_compressed = true;
 		}
 
+		template<typename ...>
+		struct initialize_systems_impl;
+
+		template<typename Context, typename System, typename ...Systems>
+		struct initialize_systems_impl<Context, System, Systems...>
+		{
+			static void initialize(Context &ctx)
+			{
+				// Construct in place
+				ctx.get_system<System>().initialize(ctx);
+				initialize_systems_impl<Context, Systems...>::initialize(ctx);
+			}
+		};
+
+		template<typename Context, typename System>
+		struct initialize_systems_impl<Context, System>
+		{
+			static void initialize(Context &ctx)
+			{
+				// Construct in place
+				ctx.get_system<System>().initialize(ctx);
+			}
+		};
+		
+	protected:
+		template<typename Context>
+		void initialize_systems(Context &ctx)
+		{
+			settings::systems::prepend_t<Context>::to_t<initialize_systems_impl>::initialize(ctx);
+		}
 
 	public:
 		context() :
 			last_entity(0),
 			is_compressed(true)
-		{}
+		{
+
+		}
 
 		entity &get_entity(entity_index eid)
 		{
