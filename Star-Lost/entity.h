@@ -345,6 +345,12 @@ namespace ecs
 			return get_storage<T>().at(get_entity(eid).data);
 		}
 
+		template<typename T>
+		bool has_component(entity_index eid)
+		{
+			return matches_signature<T>(eid);
+		}
+
 
 		// Tag-related functionality
 		template<typename T>
@@ -414,10 +420,10 @@ namespace ecs
 		}
 
 		// Other stuff
-		template<typename Signature>
+		template<typename Component>
 		bool matches_signature(entity_index eid) const
 		{
-			return (get_entity(eid).signature & signature::get<Signature>::value) == signature::get<Signature>::value;
+			return (get_entity(eid).signature & signature::get<Component>::value) == signature::get<Component>::value;
 		}
 
 		bool matches_signature(entity_index eid, signature_type signature) const
