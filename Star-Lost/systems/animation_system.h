@@ -4,7 +4,7 @@ namespace ecs
 {
 	namespace systems
 	{
-		struct animation
+		struct animation : public base_system
 		{
 			using required = mpl::type_list<
 				components::animation,

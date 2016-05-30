@@ -4,11 +4,10 @@ namespace ecs
 {
 	namespace systems
 	{
-		struct collision_resolution
+		struct collision_resolution : public base_system
 		{
 			using required = mpl::type_list<
 				components::position,
-				components::velocity,
 				components::collision
 			>;
 
@@ -16,7 +15,6 @@ namespace ecs
 				entity_index eid,
 				game_context &ctx,
 				components::position &pos,
-				components::velocity &vel,
 				components::collision &bbx
 			) const;
 		};

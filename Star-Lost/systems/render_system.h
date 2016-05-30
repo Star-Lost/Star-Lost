@@ -6,7 +6,7 @@ namespace ecs
 {
 	namespace systems
 	{
-		struct render
+		struct render : public base_system
 		{
 			using required = mpl::type_list<
 				components::position,

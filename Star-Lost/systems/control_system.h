@@ -12,7 +12,7 @@ namespace ecs
 {
 	namespace systems
 	{
-		struct control
+		struct control : public base_system
 		{
 			using required = mpl::type_list<
 				components::velocity,
