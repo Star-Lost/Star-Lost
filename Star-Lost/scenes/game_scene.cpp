@@ -47,15 +47,17 @@ void game_scene::update(scene_director &director, float dt)
 {
 	director.get_window().clear(sf::Color(100, 149, 237));
 
+	director.get_window().setView(camera);
+
 	ctx.update(dt);
 	ctx.get_system<ecs::systems::render>().draw(director, director.get_window());
 
 	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
-		this->camera.move(
+		this->camera.setCenter(
 			this->ctx.get_component<components::position>(eid).x,
 			this->ctx.get_component<components::position>(eid).y);
 	});
-	
+
 	director.get_window().display();
 }
 
