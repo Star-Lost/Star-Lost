@@ -204,6 +204,7 @@
     <ClInclude Include="components\collision_component.h" />
     <ClInclude Include="components\drawable_component.h" />
     <ClInclude Include="components\position_component.h" />
+    <ClInclude Include="components\timer_component.h" />
     <ClInclude Include="components\velocity_component.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game_context.h" />
