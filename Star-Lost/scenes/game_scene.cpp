@@ -34,7 +34,7 @@ void game_scene::handle_event(scene_director &director, const sf::Event &evt)
 {
 	switch (evt.type)
 	{
-	case sf::Event::Closed: director.get_window().close(); break;
+	case sf::Event::Closed: director.get_window().close(); exit(EXIT_SUCCESS); break;
 	case sf::Event::KeyPressed:
 	case sf::Event::KeyReleased:
 		ctx.get_system<ecs::systems::control>().handle_event(director, evt);
