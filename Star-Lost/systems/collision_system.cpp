@@ -57,9 +57,9 @@ void systems::collision::update(
 
 			auto oc = center(obox);
 			auto nc = center(newbox);
-
-			float signx = std::abs(oc.x - nc.x) / (oc.x - nc.x);
-			float signy = std::abs(oc.y - nc.y) / (oc.y - nc.y);
+			
+			float signx = std::copysign(1.0f, oc.x - nc.x);
+			float signy = std::copysign(1.0f, oc.y - nc.y);
 
 			if (overlap.width > overlap.height)
 			{
