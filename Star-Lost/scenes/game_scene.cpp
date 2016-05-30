@@ -6,6 +6,7 @@ using namespace ecs;
 void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models);
 void create_player(game_context &ctx, scene_director &director);
 void create_tent(game_context &ctx, scene_director &director);
+void create_lamp(game_context &ctx, scene_director &director);
 
 game_scene::game_scene(scene_director &director) :
 	ctx(director)
@@ -14,6 +15,7 @@ game_scene::game_scene(scene_director &director) :
 
 	create_player(ctx, director);
 	create_tent(ctx, director);
+	create_lamp(ctx, director);
 
 	// Create a view
 	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
@@ -40,7 +42,6 @@ void game_scene::handle_event(scene_director &director, const sf::Event &evt)
 		ctx.get_system<ecs::systems::control>().handle_event(director, evt);
 		break;
 	}
-
 }
 
 void game_scene::update(scene_director &director, float dt)
@@ -50,6 +51,16 @@ void game_scene::update(scene_director &director, float dt)
 	director.get_window().setView(camera);
 
 	ctx.update(dt);
+
+	sf::VertexArray quad(sf::Quads, 4);
+
+	quad[0].position = sf::Vector2f(0.0f, 0.0f);
+	quad[1].position = sf::Vector2f(10.0f, 0.0f);
+	quad[2].position = sf::Vector2f(10.0f, 10.0f);
+	quad[3].position = sf::Vector2f(0.0f, 10.0f);
+
+	director.get_window().draw(quad);
+
 	ctx.get_system<ecs::systems::render>().draw(director, director.get_window());
 
 	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
@@ -93,13 +104,29 @@ void create_tent(game_context &ctx, scene_director &director)
 	tdrw.frame = &(*tent_model["idle"])[0];
 }
 
+void create_lamp(game_context &ctx, scene_director &director) 
+{
+	auto &lamp_model = *director.get_models().get_resource("lamp");
+
+	// Create the lamp
+	auto lmp = ctx.create_entity();
+	ctx.add_tag<ecs::tags::lamp>(lmp);
+	ctx.add_component<ecs::components::position>(lmp, 200.0f, 200.0f);
+	ctx.add_component<ecs::components::collision>(lmp, sf::FloatRect{ 3, 3, 8, 9 });
+	auto &tdrw = ctx.add_component<ecs::components::drawable>(lmp);
+	tdrw.texture = director.get_textures().get_resource("furniture.png");
+	tdrw.frame = &(*lamp_model["idle"])[0];
+}
+
 void create_character_model(resource<sf::Texture> &textures, resource<rendering::model> &models);
 void create_tent_model(resource<sf::Texture> &textures, resource<rendering::model> &models);
+void create_lamp_model(resource<sf::Texture> &textures, resource<rendering::model> &models);
 
 void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models)
 {
 	create_character_model(textures, models);
 	create_tent_model(textures, models);
+	create_lamp_model(textures, models);
 }
 
 void create_character_model(resource<sf::Texture> &textures, resource<rendering::model> &models)
@@ -228,4 +255,31 @@ void create_tent_model(resource<sf::Texture> &textures, resource<rendering::mode
 	} };
 
 	models.set_resource("green_tent", tent_model);
+}
+
+void create_lamp_model(resource<sf::Texture> &textures, resource<rendering::model> &models)
+{
+	using namespace rendering;
+
+	auto lamp_tex = textures.load_resource("furniture.png");
+
+	auto lamp_model = rendering::model{
+		model::named_animation{
+			std::string{"idle"},
+			animation{
+				// Frame 0 - only one frame
+				frame{
+					// Layer 0 - bottom of the lamp
+					layer{
+						// Row 0 - front row
+						row{
+						sf::IntRect{0, 0, 16, 16}
+						}
+					}
+				}
+			}
+		}
+	};
+
+	models.set_resource("lamp", lamp_model);
 }

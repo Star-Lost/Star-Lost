@@ -33,6 +33,7 @@ namespace ecs
 #include "systems/collision_resolution_system.h"
 
 #include "systems/tent_system.h"
+#include "systems/lamp_system.h"
 
 struct game_context : public ecs::context<ecs::settings<
 	// components
@@ -48,7 +49,8 @@ struct game_context : public ecs::context<ecs::settings<
 	// tags
 	mpl::type_list<
 		ecs::tags::player,
-		ecs::tags::tent
+		ecs::tags::tent,
+		ecs::tags::lamp
 	>,
 
 	// systems
