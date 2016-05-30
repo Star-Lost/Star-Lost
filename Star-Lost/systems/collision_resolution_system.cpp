@@ -6,12 +6,20 @@ void systems::collision_resolution::update(
 	entity_index eid,
 	game_context &ctx,
 	components::position &pos,
-	components::velocity &vel,
 	components::collision &bbx
 ) const
 {
+	// If we don't have a velocity component, we're static
+	// So just do nothing
+	if (!ctx.has_component<components::velocity>(eid))
+	{
+		bbx.collisions.clear();
+		return;
+	}
+
 	using coledge = components::collision::collision_edge;
 
+	auto vel = ctx.get_component<components::velocity>(eid);
 	auto dt = ctx.get_delta();
 
 	for (auto &evt : bbx.collisions)

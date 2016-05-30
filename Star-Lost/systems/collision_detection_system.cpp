@@ -38,9 +38,8 @@ void systems::collision_detection::update(
 		if (otherid == eid)
 			return;
 
-		auto obstacle =
-			ctx.get_component<components::collision>(otherid).bbox
-			+ ctx.get_component<components::position>(otherid);
+		auto obs_cls = ctx.get_component<components::collision>(otherid);
+		auto obstacle = obs_cls.bbox + ctx.get_component<components::position>(otherid);
 
 		if (newbox.intersects(obstacle))
 		{
@@ -83,6 +82,14 @@ void systems::collision_detection::update(
 				edge,
 				overlap
 			);
+			
+			obs_cls.collisions.emplace_back(
+				eid,
+				otherid,
+				edge,
+				overlap
+			);
+
 		}
 	});	
 
