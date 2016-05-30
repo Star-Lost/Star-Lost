@@ -1,5 +1,7 @@
 #include "game_scene.h"
 
+using namespace ecs;
+
 // Prototypes
 void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models);
 void create_player(game_context &ctx, scene_director &director);
@@ -14,11 +16,18 @@ game_scene::game_scene(scene_director &director) :
 	create_tent(ctx, director);
 
 	// Create a view
-	//camera.setCenter(ctx.get_entity(ply));
+	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
+		(*this).camera.setCenter(
+			(*this).ctx.get_component<components::position>(eid).x,
+			(*this).ctx.get_component<components::position>(eid).y);
+	}); 
+	
 	camera.setSize(
 		static_cast<float>(director.get_window().getSize().x),
 		static_cast<float>(director.get_window().getSize().y)
 	);
+
+	director.get_window().setView(camera);
 }
 
 void game_scene::handle_event(scene_director &director, const sf::Event &evt)
@@ -41,6 +50,12 @@ void game_scene::update(scene_director &director, float dt)
 	ctx.update(dt);
 	ctx.get_system<ecs::systems::render>().draw(director, director.get_window());
 
+	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
+		(*this).camera.setCenter(
+			(*this).ctx.get_component<components::position>(eid).x,
+			(*this).ctx.get_component<components::position>(eid).y);
+	});
+	
 	director.get_window().display();
 }
 
