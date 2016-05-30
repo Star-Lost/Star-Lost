@@ -3,7 +3,7 @@
 game_context::game_context(scene_director &dir) :
 	director(dir)
 {
-
+	initialize_systems(*this);
 }
 
 void game_context::update(float dt)
