@@ -207,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="attributes.h" />
     <ClInclude Include="components\animation_component.h" />
     <ClInclude Include="components\collision_component.h" />
     <ClInclude Include="components\color_component.h" />
