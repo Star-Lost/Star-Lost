@@ -9,7 +9,7 @@ namespace ecs
 		{
 			using required = mpl::type_list<
 				components::collision,
-				tags::lamp
+				tags::furniture
 			>;
 
 			void initialize(game_context &ctx);
