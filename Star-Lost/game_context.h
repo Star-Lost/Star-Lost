@@ -46,8 +46,8 @@ struct game_context : public ecs::context<ecs::settings<
 	// tags
 	mpl::type_list<
 		ecs::tags::player,
-		ecs::tags::tent,
-		ecs::tags::lamp
+		ecs::tags::structure,
+		ecs::tags::furniture
 	>,
 
 	// systems

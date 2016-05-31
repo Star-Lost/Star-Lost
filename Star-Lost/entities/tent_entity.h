@@ -5,13 +5,13 @@ namespace ecs
 {
 	namespace tags
 	{
-		struct tent {};
+		struct structure {};
 	}
 
 	namespace entities
 	{
 		using tent_requirements = mpl::type_list<
-			tags::tent,
+			tags::structure,
 			components::position,
 			components::collision,
 			components::drawable

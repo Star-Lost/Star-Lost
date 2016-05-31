@@ -5,13 +5,13 @@ namespace ecs
 {
 	namespace tags
 	{
-		struct lamp {};
+		struct furniture {};
 	}
 
 	namespace entities
 	{
 		using lamp_requirements = mpl::type_list<
-			tags::lamp,
+			tags::furniture,
 			components::position,
 			components::velocity,
 			components::collision,

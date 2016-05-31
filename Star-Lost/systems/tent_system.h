@@ -10,7 +10,7 @@ namespace ecs
 			using required = mpl::type_list<
 				components::collision,
 				components::timer,
-				tags::tent
+				tags::structure
 			>;
 
 			sf::Sound sound;
