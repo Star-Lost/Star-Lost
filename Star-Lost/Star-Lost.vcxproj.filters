@@ -85,6 +85,9 @@
     <ClCompile Include="systems\lamp_system.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
+    <ClCompile Include="components\color_component.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="lamp_system.h">
       <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="components\color_component.h">
+      <Filter>Source Files\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

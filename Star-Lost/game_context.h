@@ -24,6 +24,7 @@ namespace ecs
 #include "components/drawable_component.h"
 #include "components/animation_component.h"
 #include "components/timer_component.h"
+#include "components/color_component.h"
 
 #include "systems/base_system.h"
 #include "systems/velocity_system.h"
@@ -39,6 +40,7 @@ namespace ecs
 struct game_context : public ecs::context<ecs::settings<
 	// components
 	mpl::type_list<
+		ecs::components::color,
 		ecs::components::timer,
 		ecs::components::collision,
 		ecs::components::position,
