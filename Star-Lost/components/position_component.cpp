@@ -1,3 +1,4 @@
+#include <SFML/System/Vector2.hpp>
 #include "position_component.h"
 
 using namespace ecs::components;
