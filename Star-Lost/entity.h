@@ -400,6 +400,12 @@ namespace ecs
 			eid.signature &= ~signature::get<T>::value;
 		}
 
+		template<typename T>
+		bool has_tag(entity_index eid)
+		{
+			return matches_signature<T>(eid);
+		}
+
 		// Entity related functionality
 		bool is_alive(entity_index eid) const
 		{
