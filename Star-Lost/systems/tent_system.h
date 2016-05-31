@@ -1,12 +1,8 @@
 #pragma once
+#include "../entities/tent_entity.h"
 
 namespace ecs
 {
-	namespace tags
-	{
-		struct tent {};
-	}
-
 	namespace systems
 	{
 		struct tent : public base_system

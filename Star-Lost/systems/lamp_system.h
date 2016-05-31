@@ -1,12 +1,8 @@
 #pragma once
+#include "../entities/lamp_entity.h"
 
 namespace ecs
 {
-	namespace tags
-	{
-		struct lamp {};
-	}
-
 	namespace systems
 	{
 		struct lamp : public base_system

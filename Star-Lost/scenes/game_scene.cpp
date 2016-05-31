@@ -1,28 +1,33 @@
 #include "game_scene.h"
 
+#include "../entities/player_entity.h"
+#include "../entities/tent_entity.h"
+#include "../entities/lamp_entity.h"
+
 using namespace ecs;
 
-// Prototypes
 void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models);
-void create_player(game_context &ctx, scene_director &director);
-void create_tent(game_context &ctx, scene_director &director);
-void create_lamp(game_context &ctx, scene_director &director);
 
 game_scene::game_scene(scene_director &director) :
 	ctx(director)
 {
 	create_models(director.get_textures(), director.get_models());
 
-	create_player(ctx, director);
-	create_tent(ctx, director);
-	create_lamp(ctx, director);
+	// Create a new player entity
+	entities::player pl{ ctx };
+	entities::tent tn{ ctx };
+	entities::lamp lmp{ ctx };
 
+	camera.setCenter(pl.get_position());
+
+	/*
 	// Create a view
 	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
 		this->camera.setCenter(
 			this->ctx.get_component<components::position>(eid).x,
 			this->ctx.get_component<components::position>(eid).y);
 	}); 
+	*/
 	
 	camera.setSize(
 		static_cast<float>(director.get_window().getSize().x),
@@ -70,52 +75,6 @@ void game_scene::update(scene_director &director, float dt)
 	});
 
 	director.get_window().display();
-}
-
-void create_player(game_context &ctx, scene_director &director)
-{
-	auto &char_model = *director.get_models().get_resource("character");
-
-	// Set up the character entity
-	auto ply = ctx.create_entity();
-	ctx.add_tag<ecs::tags::player>(ply);
-
-	ctx.add_component<ecs::components::position>(ply, 50.0f, 50.0f);
-	ctx.add_component<ecs::components::velocity>(ply);
-	ctx.add_component<ecs::components::collision>(ply, sf::FloatRect{ 2, 8, 12, 8 });
-	auto &draw = ctx.add_component<ecs::components::drawable>(ply);
-	auto &anim = (ctx.add_component<ecs::components::animation>(ply).anim);
-	draw.texture = director.get_textures().get_resource("character.png");
-	anim = char_model["idle_south"];
-}
-
-void create_tent(game_context &ctx, scene_director &director)
-{
-	auto &tent_model = *director.get_models().get_resource("green_tent");
-
-	// Create a tent entity
-	auto tnt = ctx.create_entity();
-	ctx.add_tag<ecs::tags::tent>(tnt);
-	ctx.add_component<ecs::components::timer>(tnt);
-	ctx.add_component<ecs::components::position>(tnt, 100.0f, 80.0f);
-	ctx.add_component<ecs::components::collision>(tnt, sf::FloatRect{ 0, 0, 31, 16 });
-	auto &tdrw = ctx.add_component<ecs::components::drawable>(tnt);
-	tdrw.texture = director.get_textures().get_resource("Spritesheet/roguelikeSheet_magenta.png");
-	tdrw.frame = &(*tent_model["idle"])[0];
-}
-
-void create_lamp(game_context &ctx, scene_director &director) 
-{
-	auto &lamp_model = *director.get_models().get_resource("lamp");
-
-	// Create the lamp
-	auto lmp = ctx.create_entity();
-	ctx.add_tag<ecs::tags::lamp>(lmp);
-	ctx.add_component<ecs::components::position>(lmp, 200.0f, 200.0f);
-	ctx.add_component<ecs::components::collision>(lmp, sf::FloatRect{ 3, 3, 8, 9 });
-	auto &tdrw = ctx.add_component<ecs::components::drawable>(lmp);
-	tdrw.texture = director.get_textures().get_resource("furniture.png");
-	tdrw.frame = &(*lamp_model["idle"])[0];
 }
 
 void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models)

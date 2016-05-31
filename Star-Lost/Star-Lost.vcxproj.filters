@@ -20,6 +20,9 @@
     <Filter Include="Source Files\models">
       <UniqueIdentifier>{a56758a5-6a2a-416e-ba89-fc6ea5b3869d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities">
+      <UniqueIdentifier>{b9006d9f-f3cf-48c5-bda4-475a2c77a499}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -99,6 +102,15 @@
     </ClCompile>
     <ClCompile Include="models\lamp_model.cpp">
       <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\player_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\tent_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\lamp_entity.cpp">
+      <Filter>Source Files\entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +194,21 @@
     </ClInclude>
     <ClInclude Include="components\color_component.h">
       <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\player_entity.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="attributes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\base_entity.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\tent_entity.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\lamp_entity.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

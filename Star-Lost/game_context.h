@@ -10,14 +10,6 @@ struct game_context;
 #include "entity.h"
 #include "scene_director.h"
 
-namespace ecs
-{
-	namespace tags
-	{
-		struct player {};
-	}
-}
-
 #include "components/collision_component.h"
 #include "components/position_component.h"
 #include "components/velocity_component.h"
@@ -25,6 +17,8 @@ namespace ecs
 #include "components/animation_component.h"
 #include "components/timer_component.h"
 #include "components/color_component.h"
+
+#include "entities/player_entity.h"
 
 #include "systems/base_system.h"
 #include "systems/velocity_system.h"

@@ -186,6 +186,9 @@
     <ClCompile Include="components\position_component.cpp" />
     <ClCompile Include="components\timer_component.cpp" />
     <ClCompile Include="components\velocity_component.cpp" />
+    <ClCompile Include="entities\lamp_entity.cpp" />
+    <ClCompile Include="entities\player_entity.cpp" />
+    <ClCompile Include="entities\tent_entity.cpp" />
     <ClCompile Include="game_context.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="models\lamp_model.cpp" />
@@ -215,6 +218,10 @@
     <ClInclude Include="components\position_component.h" />
     <ClInclude Include="components\timer_component.h" />
     <ClInclude Include="components\velocity_component.h" />
+    <ClInclude Include="entities\base_entity.h" />
+    <ClInclude Include="entities\lamp_entity.h" />
+    <ClInclude Include="entities\player_entity.h" />
+    <ClInclude Include="entities\tent_entity.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game_context.h" />
     <ClInclude Include="lamp_system.h" />
