@@ -188,6 +188,9 @@
     <ClCompile Include="components\velocity_component.cpp" />
     <ClCompile Include="game_context.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="models\lamp_model.cpp" />
+    <ClCompile Include="models\player_model.cpp" />
+    <ClCompile Include="models\tent_model.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="scenes\game_scene.cpp" />
     <ClCompile Include="scenes\pause_scene.cpp" />

@@ -39,7 +39,7 @@ void systems::control::update(
 	vel += (target_vel - vel) * 0.1f;
 
 	// Update the direction we're facing based on velocity
-	auto &mdl = *ctx.get_director().get_models().get_resource("char_model");
+	auto &mdl = *ctx.get_director().get_models().get_resource("character");
 
 	float angle = std::atan2f(vel.y, vel.x);
 	// Get a range of [0..1] instead of [-pi..pi]

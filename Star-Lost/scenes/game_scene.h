@@ -2,6 +2,10 @@
 #include "../scene_director.h"
 #include "../game_context.h"
 
+rendering::model create_player_model(resource<sf::Texture> &textures);
+rendering::model create_tent_model(resource<sf::Texture> &textures);
+rendering::model create_lamp_model(resource<sf::Texture> &textures);
+
 class game_scene : public scene
 {
 public:
