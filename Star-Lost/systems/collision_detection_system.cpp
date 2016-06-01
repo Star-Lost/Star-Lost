@@ -33,7 +33,7 @@ void systems::collision_detection::update(
 	auto newbox = bbx.bbox + newpos;
 
 	// Check if our boxes will intersect
-	ctx.for_entities<collideable>([&bbx, &ctx, eid, newbox](entity_index otherid)
+	ctx.for_entities<collideable>([&bbx, &ctx, eid, vel, newbox](entity_index otherid)
 	{
 		if (otherid == eid)
 			return;
@@ -80,14 +80,17 @@ void systems::collision_detection::update(
 				eid,
 				otherid,
 				edge,
-				overlap
+				overlap,
+				vel
+				
 			);
 			
 			obs_cls.collisions.emplace_back(
 				eid,
 				otherid,
 				edge,
-				overlap
+				overlap,
+				vel
 			);
 
 		}

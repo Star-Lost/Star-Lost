@@ -20,17 +20,20 @@ namespace ecs
 				entity_index bid;
 				collision_edge edge;
 				sf::FloatRect overlap;
+				sf::Vector2f force;
 
 				collision_event(
 					entity_index aid, 
 					entity_index bid, 
 					collision_edge edge, 
-					sf::FloatRect overlap) 
+					sf::FloatRect overlap,
+					sf::Vector2f force)
 				:
 					aid(aid),
 					bid(bid),
 					edge(edge),
-					overlap(overlap)					
+					overlap(overlap),
+					force(force)
 				{
 
 				}
