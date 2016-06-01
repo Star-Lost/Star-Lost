@@ -16,7 +16,7 @@ entities::tent::tent(game_context &ctx) :
 	ctx.add_tag<ecs::tags::structure>(id);
 	ctx.add_component<ecs::components::timer>(id);
 	ctx.add_component<ecs::components::position>(id, 100.0f, 80.0f);
-	ctx.add_component<ecs::components::collision>(id, sf::FloatRect{ 0, 0, 31, 16 });
+	ctx.add_component<ecs::components::collision>(id, components::collision::static_mass, sf::FloatRect{ 0, 0, 31, 16 });
 	auto &tdrw = ctx.add_component<ecs::components::drawable>(id);
 	tdrw.texture = ctx.get_director().get_textures().get_resource("Spritesheet/roguelikeSheet_magenta.png");
 	tdrw.frame = &(*tent_model["idle"])[0];

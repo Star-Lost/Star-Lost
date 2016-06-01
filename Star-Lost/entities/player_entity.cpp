@@ -17,7 +17,7 @@ entities::player::player(game_context &ctx) :
 	ctx.add_tag<ecs::tags::player>(id);
 	ctx.add_component<ecs::components::position>(id, 50.0f, 50.0f);
 	ctx.add_component<ecs::components::velocity>(id);
-	ctx.add_component<ecs::components::collision>(id, sf::FloatRect{ 2, 8, 12, 8 });
+	ctx.add_component<ecs::components::collision>(id, 80.0f, sf::FloatRect{ 2, 8, 12, 8 });
 	auto &draw = ctx.add_component<ecs::components::drawable>(id);
 	auto &anim = (ctx.add_component<ecs::components::animation>(id).anim);
 	draw.texture = ctx.get_director().get_textures().get_resource("character.png");

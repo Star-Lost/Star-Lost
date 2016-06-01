@@ -15,7 +15,8 @@ entities::lamp::lamp(game_context &ctx) :
 
 	ctx.add_tag<ecs::tags::furniture>(id);
 	ctx.add_component<ecs::components::position>(id, 200.0f, 200.0f);
-	ctx.add_component<ecs::components::collision>(id, sf::FloatRect{ 3, 3, 8, 9 });
+	ctx.add_component<ecs::components::velocity>(id);
+	ctx.add_component<ecs::components::collision>(id, 5.0f, sf::FloatRect{ 3, 3, 8, 9 });
 	auto &tdrw = ctx.add_component<ecs::components::drawable>(id);
 	tdrw.texture = ctx.get_director().get_textures().get_resource("furniture.png");
 	tdrw.frame = &(*lamp_model["idle"])[0];
