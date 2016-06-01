@@ -19,15 +19,6 @@ game_scene::game_scene(scene_director &director) :
 	entities::lamp lmp{ ctx };
 
 	camera.setCenter(pl.get_position());
-
-	/*
-	// Create a view
-	ctx.for_entities<ecs::tags::player>([this](ecs::entity_index eid) {
-		this->camera.setCenter(
-			this->ctx.get_component<components::position>(eid).x,
-			this->ctx.get_component<components::position>(eid).y);
-	}); 
-	*/
 	
 	camera.setSize(
 		static_cast<float>(director.get_window().getSize().x),
@@ -52,7 +43,6 @@ void game_scene::handle_event(scene_director &director, const sf::Event &evt)
 void game_scene::update(scene_director &director, float dt)
 {
 	director.get_window().clear(sf::Color(100, 149, 237));
-
 	director.get_window().setView(camera);
 
 	ctx.update(dt);
