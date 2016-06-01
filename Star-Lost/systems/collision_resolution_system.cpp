@@ -17,41 +17,39 @@ void systems::collision_resolution::update(
 		return;
 	}
 
-	using coledge = components::collision::collision_edge;
+	using col_edge = components::collision::collision_edge;
 
-	auto vel = ctx.get_component<components::velocity>(eid);
+	auto &vel = ctx.get_component<components::velocity>(eid);
 	auto dt = ctx.get_delta();
 
 	for (auto &evt : bbx.collisions)
 	{
-		switch (evt.edge)
-		{
-		case coledge::north:
-		{
-			pos.y += vel.y * dt - evt.overlap.height;
-			vel.y = 0;
-			break;
+		float mass_ratio = ctx.get_component<components::collision>(evt.aid).mass / ctx.get_component<components::collision>(evt.bid).mass;
+
+		if (evt.aid == eid)
+		{				
+			if (mass_ratio == 0) // we've hit a static object
+			{
+				switch (evt.edge)
+				{
+				case col_edge::south: 
+				case col_edge::north: vel.y = 0; break;
+				case col_edge::west:
+				case col_edge::east: vel.x = 0; break;
+				}
+			}
+			else
+			{
+				vel.x += (evt.force.x) * (1.0f/mass_ratio);
+				vel.y += (evt.force.y) * (1.0f/mass_ratio);
+			}
 		}
-		case coledge::south:
+		else
 		{
-			pos.y += vel.y * dt + evt.overlap.height;
-			vel.y = 0;
-			break;
-		}
-		case coledge::west:
-		{
-			pos.x += vel.x * dt - evt.overlap.width;
-			vel.x = 0;
-			break;
-		}
-		case coledge::east:
-		{
-			pos.x += vel.x * dt + evt.overlap.width;
-			vel.x = 0;
-			break;
+			vel.x += evt.force.x;
+			vel.y += evt.force.y;
 		}
 
-		}
 	}
 
 	bbx.collisions.clear();
