@@ -6,14 +6,14 @@ namespace ecs
 	{
 		struct collision
 		{
+			static constexpr float static_mass = std::numeric_limits<float>::infinity();
+
 			enum collision_edge : int {
 				north,
 				south,
 				east,
 				west
 			};
-
-			sf::FloatRect bbox;
 
 			struct collision_event {
 				entity_index aid;
@@ -36,6 +36,8 @@ namespace ecs
 				}
 			};
 
+			float mass;
+			sf::FloatRect bbox;
 			std::vector<collision_event> collisions;
 		};
 	}
