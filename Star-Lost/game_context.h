@@ -21,6 +21,7 @@ struct game_context;
 #include "entities/player_entity.h"
 
 #include "systems/base_system.h"
+#include "systems/friction_system.h"
 #include "systems/velocity_system.h"
 #include "systems/animation_system.h"
 #include "systems/render_system.h"
@@ -57,6 +58,7 @@ struct game_context : public ecs::context<ecs::settings<
 		ecs::systems::tent,
 		ecs::systems::collision_resolution,
 		ecs::systems::velocity,
+		ecs::systems::friction,
 		ecs::systems::animation,
 		ecs::systems::render
 	>

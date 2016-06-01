@@ -112,6 +112,9 @@
     <ClCompile Include="entities\lamp_entity.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="systems\friction_system.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="entities\lamp_entity.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="systems\friction_system.h">
+      <Filter>Source Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
