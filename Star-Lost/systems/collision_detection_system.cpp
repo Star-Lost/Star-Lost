@@ -83,7 +83,6 @@ void systems::collision_detection::update(
 				edge,
 				overlap,
 				vel
-				
 			);
 			
 			obs_cls.collisions.emplace_back(
