@@ -1,0 +1,8 @@
+Components hold data, e.g. position, velocity.
+Systems perform logic, e.g. collisition detection, velocity
+
+For events we want a "state" component which holds what is happening to an entity, e.g. it's being clicked on with LMB.
+
+We then want a system which, at the beginning of each tick, goes through all entities containing the state component and update it depending on what's happening (being clicked on with LMB)
+
+Then in each system we can check the entity's state component and perform the relevant logic on it. For example if we have a "lamp" system we can check if the lamp is clicked and toggle the power on/off.
