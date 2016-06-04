@@ -43,10 +43,10 @@ void systems::collision_detection::update(
 
 		if (newbox.intersects(obstacle))
 		{
+			// Calculate the union of the two boxes (the overlapping area)
 			float x = std::max(newbox.left, obstacle.left);
 			float y = std::max(newbox.top, obstacle.top);
 
-			// Calculate the union of the two boxes (the overlapping area)
 			sf::FloatRect overlap{
 				x,
 				y,
@@ -62,13 +62,14 @@ void systems::collision_detection::update(
 
 			components::collision::collision_edge edge;
 
-			// up/do
+			// up/down
 			if (overlap.width > overlap.height)
 			{
 				edge = (signy > 0.0f)
 					? components::collision::collision_edge::north
 					: components::collision::collision_edge::south;
 			}
+			// left/right
 			else
 			{
 				edge = (signx > 0.0f)

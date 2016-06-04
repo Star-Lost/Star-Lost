@@ -53,7 +53,8 @@ struct game_context : public ecs::context<ecs::settings<
 	mpl::type_list<
 		ecs::systems::control,
 		ecs::systems::collision_detection,
-		ecs::systems::collision_resolution,
+		ecs::systems::dynamic_collision_resolution,
+		ecs::systems::static_collision_resolution,
 		ecs::systems::velocity,
 		ecs::systems::friction,
 		ecs::systems::animation,
