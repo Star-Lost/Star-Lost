@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
+#include <fstream>
 
 #include "resource_loader.h"
 #include "texture_loader.h"
@@ -19,6 +20,11 @@ class resource
 	bool load_internally(const std::string &name, ResourceType &out) const
 	{
 		return resource_loader<ResourceType>::load(name, out);
+	}
+
+	bool file_exists(const std::string &filename) const
+	{
+		return std::ifstream(filename).good();
 	}
 
 public:
@@ -50,21 +56,29 @@ public:
 		if (cache != nullptr)
 			return cache;
 
+		// Prepend the type-specific resource path like Images\\ for sf::Textures
+		auto specific_path = resource_loader<ResourceType>::path + name;
+
 		// Create our new entry and get the iterator to it
 		// so we can delete it later, if we have to, and also
 		// load resources directly into it
 		auto new_entry = resources.emplace(name, ResourceType{}).first;
 
-		// Prepend the type-specific resource path like Images\\ for sf::Textures
-		auto specific_path = resource_loader<ResourceType>::path + name;
-
 		// Try to load from our internal resources
-		if (load_internally(internal_resource_path + specific_path, new_entry->second))
-			return &new_entry->second;
-
+		if (file_exists(internal_resource_path + specific_path))
+		{
+			if (load_internally(internal_resource_path + specific_path, new_entry->second))
+				return &new_entry->second;
+		}
 		// .. If that fails, try third party resources
-		if (load_internally(thirdparty_resource_path + specific_path, new_entry->second))
-			return &new_entry->second;
+		else if (file_exists(thirdparty_resource_path + specific_path))
+		{
+			if (load_internally(thirdparty_resource_path + specific_path, new_entry->second))
+				return &new_entry->second;
+		}
+
+		// We didn't load anything, so remove the entry
+		resources.erase(new_entry);
 
 		// Didn't find nothin
 		return nullptr;
