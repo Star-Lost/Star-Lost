@@ -16,4 +16,5 @@ public:
 
 	game_context ctx;
 	sf::View camera;
+	sf::Font font;
 };

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "game_scene.h"
 
 #include "../entities/player_entity.h"
@@ -25,6 +27,8 @@ game_scene::game_scene(scene_director &director) :
 		static_cast<float>(director.get_window().getSize().y)
 	);
 
+	director.get_fonts().load_resource("PIXEARG_.TTF");
+
 	director.get_window().setView(camera);
 }
 
@@ -44,6 +48,14 @@ void game_scene::update(scene_director &director, float dt)
 {
 	director.get_window().clear(sf::Color(100, 149, 237));
 	director.get_window().setView(camera);
+
+	sf::Text text;
+	text.setFont(*director.get_fonts().get_resource("PIXEARG_.TTF"));
+	text.setString("Hello");
+	text.setCharacterSize(24);
+	text.setColor(sf::Color::Red);
+	text.setPosition(10.0f, 10.0f);
+	director.get_window().draw(text);
 
 	ctx.update(dt);
 
