@@ -29,7 +29,6 @@ struct game_context;
 #include "systems/collision_detection_system.h"
 #include "systems/collision_resolution_system.h"
 
-#include "systems/tent_system.h"
 #include "systems/lamp_system.h"
 
 struct game_context : public ecs::context<ecs::settings<
@@ -47,7 +46,6 @@ struct game_context : public ecs::context<ecs::settings<
 	// tags
 	mpl::type_list<
 		ecs::tags::player,
-		ecs::tags::structure,
 		ecs::tags::furniture
 	>,
 
@@ -55,7 +53,6 @@ struct game_context : public ecs::context<ecs::settings<
 	mpl::type_list<
 		ecs::systems::control,
 		ecs::systems::collision_detection,
-		ecs::systems::tent,
 		ecs::systems::collision_resolution,
 		ecs::systems::velocity,
 		ecs::systems::friction,

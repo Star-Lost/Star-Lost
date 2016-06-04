@@ -85,9 +85,6 @@
     <ClCompile Include="components\timer_component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
-    <ClCompile Include="systems\tent_system.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
     <ClCompile Include="systems\lamp_system.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
@@ -185,9 +182,6 @@
     </ClInclude>
     <ClInclude Include="components\timer_component.h">
       <Filter>Source Files\components</Filter>
-    </ClInclude>
-    <ClInclude Include="systems\tent_system.h">
-      <Filter>Source Files\systems</Filter>
     </ClInclude>
     <ClInclude Include="systems\base_system.h">
       <Filter>Source Files\systems</Filter>
