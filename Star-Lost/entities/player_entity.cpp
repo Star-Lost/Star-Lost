@@ -15,7 +15,7 @@ entities::player::player(game_context &ctx) :
 
 	// Set up the character entity
 	ctx.add_tag<ecs::tags::player>(id);
-	ctx.add_component<ecs::components::position>(id, 50.0f, 50.0f);
+	ctx.add_component<ecs::components::position>(id, 0.0f, 80.0f);
 	ctx.add_component<ecs::components::velocity>(id);
 	ctx.add_component<ecs::components::collision>(id, 80.0f, sf::FloatRect{ 2, 8, 12, 8 });
 	auto &draw = ctx.add_component<ecs::components::drawable>(id);

@@ -14,7 +14,7 @@ entities::lamp::lamp(game_context &ctx) :
 	auto &lamp_model = *ctx.get_director().get_models().get_resource("lamp");
 
 	ctx.add_tag<ecs::tags::furniture>(id);
-	ctx.add_component<ecs::components::position>(id, 0.0f, 50.0f);
+	ctx.add_component<ecs::components::position>(id, 50.0f, 80.0f);
 	ctx.add_component<ecs::components::velocity>(id);
 	ctx.add_component<ecs::components::collision>(id, 5.0f, sf::FloatRect{ 3, 3, 8, 9 });
 	auto &tdrw = ctx.add_component<ecs::components::drawable>(id);
