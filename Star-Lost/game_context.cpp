@@ -9,6 +9,7 @@ game_context::game_context(scene_director &dir) :
 void game_context::update(float dt)
 {
 	delta_time = dt;
+
 	context::update(*this);
 }
 

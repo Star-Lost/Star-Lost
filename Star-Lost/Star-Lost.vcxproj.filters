@@ -112,6 +112,9 @@
     <ClCompile Include="systems\friction_system.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
+    <ClCompile Include="components\state_component.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="systems\friction_system.h">
       <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="components\state_component.h">
+      <Filter>Source Files\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

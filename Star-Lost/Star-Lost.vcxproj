@@ -184,6 +184,7 @@
     <ClCompile Include="components\color_component.cpp" />
     <ClCompile Include="components\drawable_component.cpp" />
     <ClCompile Include="components\position_component.cpp" />
+    <ClCompile Include="components\state_component.cpp" />
     <ClCompile Include="components\timer_component.cpp" />
     <ClCompile Include="components\velocity_component.cpp" />
     <ClCompile Include="entities\lamp_entity.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="components\color_component.h" />
     <ClInclude Include="components\drawable_component.h" />
     <ClInclude Include="components\position_component.h" />
+    <ClInclude Include="components\state_component.h" />
     <ClInclude Include="components\timer_component.h" />
     <ClInclude Include="components\velocity_component.h" />
     <ClInclude Include="entities\base_entity.h" />

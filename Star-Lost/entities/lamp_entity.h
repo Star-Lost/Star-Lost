@@ -16,7 +16,8 @@ namespace ecs
 			components::velocity,
 			components::collision,
 			components::drawable,
-			components::animation
+			components::animation,
+			components::state
 		>;
 
 		struct lamp : public entities::base<lamp_requirements>

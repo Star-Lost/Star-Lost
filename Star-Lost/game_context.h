@@ -17,6 +17,7 @@ struct game_context;
 #include "components/animation_component.h"
 #include "components/timer_component.h"
 #include "components/color_component.h"
+#include "components/state_component.h"
 
 #include "entities/player_entity.h"
 
