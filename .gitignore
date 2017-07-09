@@ -253,4 +253,5 @@ paket-files/
 *.sln.iml
 
 # Project Specific
-Third\ Party/*
+Third\ Party/x64
+Third\ Party/x86
