@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Star-Lost", "Star-Lost\Star-Lost.vcxproj", "{CB9A1157-52A3-4786-A856-D38C5A636B01}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EBC78D94-884F-4B52-A910-3D16C5C2C949}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

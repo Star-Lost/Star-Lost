@@ -71,9 +71,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
-    <ReferencePath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\bin;$(VC_ReferencesPath_x86);</ReferencePath>
+    <IncludePath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <ReferencePath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\bin;$(VC_ReferencesPath_x86);</ReferencePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)-$(PlatformShortName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -85,16 +85,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
-    <ReferencePath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\bin;$(VC_ReferencesPath_x86);</ReferencePath>
+    <IncludePath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <ReferencePath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\bin;$(VC_ReferencesPath_x86);</ReferencePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)-$(PlatformShortName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
-    <ReferencePath>..\Third Party\$(PlatformShortName)\SFML-2.3.2\bin;$(VC_ReferencesPath_x64);</ReferencePath>
+    <IncludePath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <ReferencePath>..\Third Party\$(PlatformShortName)\SFML-2.4.2\bin;$(VC_ReferencesPath_x64);</ReferencePath>
     <OutDir>$(SolutionDir)Build\$(Configuration)-$(PlatformShortName)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
