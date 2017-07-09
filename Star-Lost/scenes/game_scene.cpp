@@ -53,7 +53,7 @@ void game_scene::update(scene_director &director, float dt)
 	text.setFont(*director.get_fonts().get_resource("PIXEARG_.TTF"));
 	text.setString("Hello");
 	text.setCharacterSize(24);
-	text.setColor(sf::Color::Red);
+	text.setFillColor(sf::Color::Red);
 	text.setPosition(10.0f, 10.0f);
 	director.get_window().draw(text);
 

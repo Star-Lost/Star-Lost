@@ -2,7 +2,7 @@
 set configuration=%1
 set platform=%2
 set outputPath=%3
-set sfmlBinPath=..\Third Party\%platform%\SFML-2.3.2\bin
+set sfmlBinPath=..\Third Party\%platform%\SFML-2.4.2\bin
 
 if %configuration% == "Debug" (
 	xcopy /D "%sfmlBinPath%\sfml-audio-d-2.dll" %outputPath%
