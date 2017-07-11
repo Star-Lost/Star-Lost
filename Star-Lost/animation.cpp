@@ -33,6 +33,12 @@ layer::layer(const std::initializer_list<row> &rows) :
 
 }
 
+layer::layer(const std::initializer_list<tile> &tiles) :
+	rows{ row{ tiles } }
+{
+
+}
+
 auto layer::get_rows() const -> const std::vector<row>&
 {
 	return rows;
@@ -43,6 +49,18 @@ auto layer::get_rows() const -> const std::vector<row>&
 // Frame
 frame::frame(const std::initializer_list<layer> &layers) :
 	layers(layers)
+{
+
+}
+
+frame::frame(const std::initializer_list<row> &rows) :
+	layers{ layer{ rows } }
+{
+
+}
+
+frame::frame(const std::initializer_list<tile> &tiles) :
+	layers{ layer{ row{ tiles} } }
 {
 
 }

@@ -32,6 +32,8 @@ namespace rendering
 	{
 	public:
 		layer(const std::initializer_list<row> &rows);
+		layer(const std::initializer_list<tile> &tiles);
+
 		const std::vector<row> &get_rows() const;
 
 	private:
@@ -44,6 +46,8 @@ namespace rendering
 	{
 	public:
 		frame(const std::initializer_list<layer> &layers);
+		frame(const std::initializer_list<row> &rows);
+		frame(const std::initializer_list<tile> &tiles);
 
 		frame(const sf::Texture *tex, const sf::IntRect &rect);
 		const sf::Texture *get_texture() const;
