@@ -15,18 +15,13 @@ rendering::model create_tent_model(resource<sf::Texture> &textures)
 				frame{
 				// Layer 0 - bottom of the tent
 					layer{
-						// Row 0 - front row
-						row{
-							sf::IntRect{ 783, 187, 15, 16 },
-							sf::IntRect{ 799, 187, 16, 16 }
-						}
+						sf::IntRect{ 783, 187, 15, 16 },
+						sf::IntRect{ 799, 187, 16, 16 }
 					},
 					// Layer 1 - top of the tent 
 					layer{
-						row{
-							sf::IntRect{ 783, 170, 15, 16 },
-							sf::IntRect{ 799, 170, 16, 16 }
-						}
+						sf::IntRect{ 783, 170, 15, 16 },
+						sf::IntRect{ 799, 170, 16, 16 }
 					}
 				}
 			}

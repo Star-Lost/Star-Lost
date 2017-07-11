@@ -115,6 +115,12 @@
     <ClCompile Include="components\state_component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
+    <ClCompile Include="models\wall_model.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\wall_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resources.h">
@@ -215,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="components\state_component.h">
       <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\wall_entity.h">
+      <Filter>Source Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

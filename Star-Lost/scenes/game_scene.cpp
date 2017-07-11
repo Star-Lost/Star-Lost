@@ -5,6 +5,7 @@
 #include "../entities/player_entity.h"
 #include "../entities/tent_entity.h"
 #include "../entities/lamp_entity.h"
+#include "../entities/wall_entity.h"
 
 using namespace ecs;
 
@@ -19,6 +20,32 @@ game_scene::game_scene(scene_director &director) :
 	entities::player pl{ ctx };
 	entities::tent tn{ ctx };
 	entities::lamp lmp{ ctx };
+
+
+	std::array<std::array<const char *, 5>, 5> room = { {
+		{ "0110", "0101", "0101", "0101", "0011" },
+		{ "1010", "0000", "0000", "0000", "1010" },
+		{ "1010", "0000", "0000", "0000", "1010" },
+		{ "1010", "0000", "0000", "0000", "1010" },
+		{ "1100", "0101", "0101", "0101", "1001" },
+	} };
+
+	auto empty = std::string{ "0000" };
+
+	auto y = 0u;
+	for (const auto &line : room)
+	{
+		auto x = 0u;
+		for (const auto &wall : line)
+		{
+			if (empty != wall)
+				entities::wall wl{ ctx, wall, (float)x * 16, (float)y * 16 };
+
+			++x;
+		}
+		
+		++y;
+	}
 
 	camera.setCenter(pl.get_position());
 	
@@ -84,4 +111,5 @@ void create_models(resource<sf::Texture> &textures, resource<rendering::model> &
 	models.set_resource("character", create_player_model(textures));
 	models.set_resource("green_tent", create_tent_model(textures));
 	models.set_resource("lamp", create_lamp_model(textures));
+	models.set_resource("wall", create_wall_model(textures));
 }

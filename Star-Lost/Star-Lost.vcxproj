@@ -190,11 +190,13 @@
     <ClCompile Include="entities\lamp_entity.cpp" />
     <ClCompile Include="entities\player_entity.cpp" />
     <ClCompile Include="entities\tent_entity.cpp" />
+    <ClCompile Include="entities\wall_entity.cpp" />
     <ClCompile Include="game_context.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="models\lamp_model.cpp" />
     <ClCompile Include="models\player_model.cpp" />
     <ClCompile Include="models\tent_model.cpp" />
+    <ClCompile Include="models\wall_model.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="scenes\game_scene.cpp" />
     <ClCompile Include="scenes\pause_scene.cpp" />
@@ -224,6 +226,7 @@
     <ClInclude Include="entities\lamp_entity.h" />
     <ClInclude Include="entities\player_entity.h" />
     <ClInclude Include="entities\tent_entity.h" />
+    <ClInclude Include="entities\wall_entity.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game_context.h" />
     <ClInclude Include="lamp_system.h" />
