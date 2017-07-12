@@ -249,6 +249,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\post-build.bat" />
+    <None Include="..\Tools\Models\generate_walls.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

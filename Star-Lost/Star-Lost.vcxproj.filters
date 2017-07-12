@@ -23,6 +23,12 @@
     <Filter Include="Source Files\entities">
       <UniqueIdentifier>{b9006d9f-f3cf-48c5-bda4-475a2c77a499}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{44f0b12a-cf64-4bc4-aeef-7086ea878169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Models">
+      <UniqueIdentifier>{f9f3ba7e-88f0-429b-a7c5-775ede9b19e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -229,6 +235,9 @@
   <ItemGroup>
     <None Include="..\post-build.bat">
       <Filter>Build Files</Filter>
+    </None>
+    <None Include="..\Tools\Models\generate_walls.py">
+      <Filter>Tools\Models</Filter>
     </None>
   </ItemGroup>
 </Project>
