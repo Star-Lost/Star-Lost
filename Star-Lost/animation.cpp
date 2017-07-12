@@ -64,8 +64,6 @@ const frame &animation::operator[](int index) const
 }
 
 
-
-
 // Model
 model::model(const sf::Texture *sheet, const std::initializer_list<named_animation> &animlist) :
 	sheet(sheet),
