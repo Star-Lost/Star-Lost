@@ -136,7 +136,7 @@ namespace ecs
 		std::array<entity, settings::max_entities> entities;
 
 		// This will point to the last entity before an update
-		unsigned int last_entity;
+		std::size_t last_entity;
 		bool is_compressed;
 
 		template<typename T>
