@@ -1,6 +1,6 @@
 #pragma once
-#include "../entities/base_entity.h"
-#include "../entities/tent_entity.h"
+#include "base_entity.h"
+#include "tent_entity.h"
 
 namespace ecs
 {

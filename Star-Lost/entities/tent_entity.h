@@ -1,5 +1,5 @@
 #pragma once
-#include "../entities/base_entity.h"
+#include "base_entity.h"
 
 namespace ecs
 {
