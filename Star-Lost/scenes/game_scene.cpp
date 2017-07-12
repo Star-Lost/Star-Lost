@@ -10,42 +10,18 @@
 using namespace ecs;
 
 void create_models(resource<sf::Texture> &textures, resource<rendering::model> &models);
+void create_world(game_context &ctx);
 
 game_scene::game_scene(scene_director &director) :
 	ctx(director)
 {
 	create_models(director.get_textures(), director.get_models());
+	create_world(ctx);
 
 	// Create a new player entity
 	entities::player pl{ ctx };
 	entities::tent tn{ ctx };
 	entities::lamp lmp{ ctx };
-
-
-	std::array<std::array<const char *, 5>, 5> room = { {
-		{ "0110", "0101", "0101", "0101", "0011" },
-		{ "1010", "0000", "0000", "0000", "1010" },
-		{ "1010", "0000", "0000", "0000", "1010" },
-		{ "1010", "0000", "0000", "0000", "1010" },
-		{ "1100", "0101", "0101", "0101", "1001" },
-	} };
-
-	auto empty = std::string{ "0000" };
-
-	auto y = 0u;
-	for (const auto &line : room)
-	{
-		auto x = 0u;
-		for (const auto &wall : line)
-		{
-			if (empty != wall)
-				entities::wall wl{ ctx, wall, (float)x * 16, (float)y * 16 };
-
-			++x;
-		}
-		
-		++y;
-	}
 
 	camera.setCenter(pl.get_position());
 	
@@ -112,4 +88,33 @@ void create_models(resource<sf::Texture> &textures, resource<rendering::model> &
 	models.set_resource("green_tent", create_tent_model(textures));
 	models.set_resource("lamp", create_lamp_model(textures));
 	models.set_resource("wall", create_wall_model(textures));
+}
+
+void create_world(game_context &ctx)
+{
+	std::array<std::array<const char *, 5>, 5> room = { 
+		{
+			{ "0110", "0101", "0101", "0101", "0011" },
+			{ "1010", "0000", "0000", "0000", "1010" },
+			{ "1010", "0000", "0000", "0000", "1010" },
+			{ "1010", "0000", "0000", "0000", "1010" },
+			{ "1100", "0101", "0101", "0101", "1001" }
+		} 
+	};
+
+	auto empty = std::string{ "0000" };
+
+	auto y = 0u;
+	for (const auto &line : room)
+	{
+		auto x = 0u;
+		for (const auto &wall : line)
+		{
+			if (empty != wall)
+				entities::wall wl{ ctx, wall, (float)x * 16, (float)y * 16 };
+
+			++x;
+		}
+		++y;
+	}
 }
