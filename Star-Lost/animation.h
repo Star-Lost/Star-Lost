@@ -65,6 +65,10 @@ namespace rendering
 		friend class model;
 	public:
 		animation(const std::initializer_list<frame> &framelist);
+		animation(const std::initializer_list<layer> &layers);
+		animation(const std::initializer_list<row> &rows);
+		animation(const std::initializer_list<tile> &tiles);
+
 		const frame &operator[](int index) const;
 
 	private:
