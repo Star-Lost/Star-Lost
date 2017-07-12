@@ -149,6 +149,9 @@ namespace ecs
 			return entities[eid];
 		}
 
+		// Expand call basically takes a context, and entity id, and a system and
+		// extracts the components required by the system from the entity, and calls
+		// the system with only the relevant components, in order.
 		template<typename ...Ts>
 		struct expand_call;
 
@@ -170,10 +173,14 @@ namespace ecs
 		template<typename Sys, typename ...Args>
 		void update_system(Args&& ...args)
 		{
+			// Remove the tags from the list of components required by the system
+			// since tags are void types they can't be instantiated so it doesn't
+			// make sense to supply them as real arguments to the system
 			using components_only = Sys::required::filter_t<settings::is_component>;
 
 			for (auto i = 0u; i < last_entity; ++i)
 			{
+				// Tags are still gonna be matched against the system's requirements though
 				if (matches_signature<Sys::required>(i))
 				{
 					expand_call<components_only>::call<Sys>(*this, i, std::forward<Args>(args)...);
@@ -181,6 +188,7 @@ namespace ecs
 			}
 		}
 
+		// This function calls update on the systems supplied by the type_list<Systems...> argument
 		template<typename Head, typename ...Rest, typename ...Args>
 		void update_systems(mpl::type_list<Head, Rest...>, Args&&... args)
 		{
@@ -200,6 +208,10 @@ namespace ecs
 			std::swap(get_component<Component>(aid), get_component<Component>(bid));
 		}
 
+
+		// Swaps the components supplied as template arguments between the two entities.
+		// This function is primarily called by the compress_entities function with
+		// the full list of components within this context to swap them entirely.
 		template<typename ...>
 		struct swap_components_impl;
 
@@ -224,10 +236,17 @@ namespace ecs
 
 		void swap_components(entity_index aid, entity_index bid)
 		{
+			// Swap all the components of the entities first
 			settings::components::to_t<swap_components_impl>::swap(*this, aid, bid);
+
+			// Then swap their data pointers
 			std::swap(entities[aid].data, entities[bid].data);
 		}
 
+
+		// This function just sorts the entity list from alive to dead
+		// so the array is contiguous, and no gaps have to be to jumped
+		// when looping through it.
 		void compress_entities()
 		{
 			auto alive = 0;
@@ -238,13 +257,13 @@ namespace ecs
 
 			while (true)
 			{
-				// Find the first dead one
+				// Find the first (left) dead one
 				//
 				//     L
 				// AAAADAAADDADD
 				left = std::find_if(left, entities.end(), [](const entity & ent) { return !ent.alive; });
 
-				// Find the last alive one
+				// Find the last (right) alive one
 				//
 				//           R
 				// AAAADAAADDADD
@@ -333,77 +352,77 @@ namespace ecs
 				compress_entities();
 		}
 
-		template<typename T>
+		template<typename System>
 		auto &get_system() {
-			return std::get<T>(systems);
+			return std::get<System>(systems);
 		}
 
 		// Component-related functions
-		template<typename T, typename ... Args>
+		template<typename Component, typename ... Args>
 		auto &add_component(entity_index eid, Args&&... args)
 		{
 			auto &ent = get_entity(eid);
 			
 			// Add the signature to the entities signatures
-			ent.signature |= signature::get<T>::value;
+			ent.signature |= signature::get<Component>::value;
 
 			// Construct in place
-			return *new (&get_storage<T>()[ent.data]) T{ std::forward<Args>(args)... };
+			return *new (&get_storage<Component>()[ent.data]) Component{ std::forward<Args>(args)... };
 		}
 
-		template<typename T>
+		template<typename Component>
 		auto &add_component(entity_index eid)
 		{
 			auto &ent = get_entity(eid);
 
 			// Add the signature to the entities signatures
-			ent.signature |= signature::get<T>::value;
+			ent.signature |= signature::get<Component>::value;
 
 			// Construct in place
-			return *new (&get_storage<T>()[ent.data]) T{};
+			return *new (&get_storage<Component>()[ent.data]) Component{};
 		}
 
-		template<typename T>
+		template<typename Component>
 		auto &delete_component(entity_index eid)
 		{
 			// Just remove the signature from the entity
-			eid.signature &= ~signature::get<T>::value;
+			eid.signature &= ~signature::get<Component>::value;
 		}
 
-		template<typename T>
+		template<typename Component>
 		auto &get_component(entity_index eid)
 		{
-			return get_storage<T>().at(get_entity(eid).data);
+			return get_storage<Component>().at(get_entity(eid).data);
 		}
 
-		template<typename T>
+		template<typename Component>
 		bool has_component(entity_index eid)
 		{
-			return matches_signature<T>(eid);
+			return matches_signature<Component>(eid);
 		}
 
 
 		// Tag-related functionality
-		template<typename T>
+		template<typename Tag>
 		void add_tag(entity_index eid)
 		{
 			auto &ent = get_entity(eid);
 
 			// Add the signature to the entities signatures
-			ent.signature |= signature::get<T>::value;
+			ent.signature |= signature::get<Tag>::value;
 		}
 
-		template<typename T>
+		template<typename Tag>
 		auto &delete_tag(entity_index eid)
 		{
 			// Just remove the signature from the entity
-			eid.signature &= ~signature::get<T>::value;
+			eid.signature &= ~signature::get<Tag>::value;
 		}
 
-		template<typename T>
+		template<typename Tag>
 		bool has_tag(entity_index eid)
 		{
-			return matches_signature<T>(eid);
+			return matches_signature<Tag>(eid);
 		}
 
 		// Entity related functionality
