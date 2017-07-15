@@ -91,9 +91,6 @@
     <ClCompile Include="components\timer_component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
-    <ClCompile Include="systems\lamp_system.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
     <ClCompile Include="components\color_component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
@@ -126,6 +123,15 @@
     </ClCompile>
     <ClCompile Include="entities\wall_entity.cpp">
       <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="models\wood_door_model.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\wood_door_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="systems\interaction_system.cpp">
+      <Filter>Source Files\systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +207,6 @@
     <ClInclude Include="systems\base_system.h">
       <Filter>Source Files\systems</Filter>
     </ClInclude>
-    <ClInclude Include="lamp_system.h">
-      <Filter>Source Files\systems</Filter>
-    </ClInclude>
     <ClInclude Include="components\color_component.h">
       <Filter>Source Files\components</Filter>
     </ClInclude>
@@ -230,6 +233,12 @@
     </ClInclude>
     <ClInclude Include="entities\wall_entity.h">
       <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\wood_door_entity.h">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="systems\interaction_system.h">
+      <Filter>Source Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

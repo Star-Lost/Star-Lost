@@ -191,10 +191,12 @@
     <ClCompile Include="entities\player_entity.cpp" />
     <ClCompile Include="entities\tent_entity.cpp" />
     <ClCompile Include="entities\wall_entity.cpp" />
+    <ClCompile Include="entities\wood_door_entity.cpp" />
     <ClCompile Include="game_context.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="models\lamp_model.cpp" />
     <ClCompile Include="models\player_model.cpp" />
+    <ClCompile Include="models\wood_door_model.cpp" />
     <ClCompile Include="models\tent_model.cpp" />
     <ClCompile Include="models\wall_model.cpp" />
     <ClCompile Include="resources.cpp" />
@@ -206,7 +208,7 @@
     <ClCompile Include="systems\collision_resolution_system.cpp" />
     <ClCompile Include="systems\control_system.cpp" />
     <ClCompile Include="systems\friction_system.cpp" />
-    <ClCompile Include="systems\lamp_system.cpp" />
+    <ClCompile Include="systems\interaction_system.cpp" />
     <ClCompile Include="systems\render_system.cpp" />
     <ClCompile Include="systems\velocity_system.cpp" />
     <ClCompile Include="texture_loader.cpp" />
@@ -227,9 +229,9 @@
     <ClInclude Include="entities\player_entity.h" />
     <ClInclude Include="entities\tent_entity.h" />
     <ClInclude Include="entities\wall_entity.h" />
+    <ClInclude Include="entities\wood_door_entity.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game_context.h" />
-    <ClInclude Include="lamp_system.h" />
     <ClInclude Include="mpl.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="resource_loader.h" />
@@ -242,6 +244,7 @@
     <ClInclude Include="systems\collision_resolution_system.h" />
     <ClInclude Include="systems\control_system.h" />
     <ClInclude Include="systems\friction_system.h" />
+    <ClInclude Include="systems\interaction_system.h" />
     <ClInclude Include="systems\render_system.h" />
     <ClInclude Include="systems\velocity_system.h" />
     <ClInclude Include="texture_loader.h" />

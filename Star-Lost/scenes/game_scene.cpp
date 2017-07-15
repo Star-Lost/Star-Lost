@@ -6,6 +6,7 @@
 #include "../entities/tent_entity.h"
 #include "../entities/lamp_entity.h"
 #include "../entities/wall_entity.h"
+#include "../entities/wood_door_entity.h"
 
 using namespace ecs;
 
@@ -88,6 +89,7 @@ void create_models(resource<sf::Texture> &textures, resource<rendering::model> &
 	models.set_resource("green_tent", create_tent_model(textures));
 	models.set_resource("lamp", create_lamp_model(textures));
 	models.set_resource("wall", create_wall_model(textures));
+	models.set_resource("wood_door", create_wood_door_model(textures));
 }
 
 void create_world(game_context &ctx)
@@ -117,4 +119,6 @@ void create_world(game_context &ctx)
 		}
 		++y;
 	}
+
+	entities::wood_door wd{ ctx, "closed", -32, -32 };
 }

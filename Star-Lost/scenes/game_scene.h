@@ -6,6 +6,7 @@ rendering::model create_player_model(resource<sf::Texture> &textures);
 rendering::model create_tent_model(resource<sf::Texture> &textures);
 rendering::model create_lamp_model(resource<sf::Texture> &textures);
 rendering::model create_wall_model(resource<sf::Texture> &textures);
+rendering::model create_wood_door_model(resource<sf::Texture> &textures);
 
 class game_scene : public scene
 {

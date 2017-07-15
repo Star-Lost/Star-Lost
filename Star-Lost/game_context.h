@@ -29,8 +29,7 @@ struct game_context;
 #include "systems/control_system.h"
 #include "systems/collision_detection_system.h"
 #include "systems/collision_resolution_system.h"
-
-#include "systems/lamp_system.h"
+#include "systems/interaction_system.h"
 
 struct game_context : public ecs::context<ecs::settings<
 	// components
@@ -47,12 +46,13 @@ struct game_context : public ecs::context<ecs::settings<
 	// tags
 	mpl::type_list<
 		ecs::tags::player,
-		ecs::tags::furniture
+		ecs::tags::interact
 	>,
 
 	// systems
 	mpl::type_list<
 		ecs::systems::control,
+		ecs::systems::interaction,
 		ecs::systems::collision_detection,
 		ecs::systems::dynamic_collision_resolution,
 		ecs::systems::static_collision_resolution,
