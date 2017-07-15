@@ -13,7 +13,6 @@ entities::tent::tent(game_context &ctx) :
 {
 	auto &tent_model = *ctx.get_director().get_models().get_resource("green_tent");
 
-	ctx.add_tag<ecs::tags::structure>(id);
 	ctx.add_component<ecs::components::timer>(id);
 	ctx.add_component<ecs::components::position>(id, 100.0f, 80.0f);
 	ctx.add_component<ecs::components::collision>(id, components::collision::static_mass, sf::FloatRect{ 0, 0, 31, 16 });

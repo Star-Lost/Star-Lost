@@ -13,7 +13,6 @@ entities::wall::wall(game_context &ctx, const char *frame, float x, float y) :
 {
 	auto &wall_model = *ctx.get_director().get_models().get_resource("wall");
 
-	ctx.add_tag<ecs::tags::structure>(id);
 	ctx.add_component<ecs::components::position>(id, x, y);
 	ctx.add_component<ecs::components::collision>(id, components::collision::static_mass, sf::FloatRect{ 0, 0, 16, 16 });
 

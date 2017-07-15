@@ -7,12 +7,14 @@ render::draw_order::draw_order(
 	float depth,
 	sf::Vector2f position,
 	const sf::Texture *texture,
-	sf::IntRect subtexture
+	sf::IntRect subtexture,
+	sf::Color color
 ) :
 	depth(depth),
 	position(position),
 	texture(texture),
-	subtexture(subtexture)
+	subtexture(subtexture),
+	color(color)
 {
 
 }
@@ -28,11 +30,14 @@ void render::update(
 	components::position &pos,
 	components::drawable &drw
 ) {
-	sf::Sprite temp;
-	temp.setTexture(*drw.texture);
-
 	float depth = 0.0f;
 	sf::Vector2f offset{ 0, 0 };
+
+	sf::Color color{ 255, 255, 255, 255 };
+
+	if (ctx.has_component<components::color>(eid))
+		color = ctx.get_component<components::color>(eid);
+
 	for (auto &layer : drw.frame->get_layers())
 	{
 		for (auto &row : layer.get_rows())
@@ -40,10 +45,11 @@ void render::update(
 			for (auto &tile : row.get_tiles())
 			{
 				draw_orders.emplace_back(
-					pos.y - offset.y + depth, 
-					offset + pos, 
-					drw.texture, 
-					tile.rect
+					pos.y - offset.y + depth,
+					offset + pos,
+					drw.texture,
+					tile.rect,
+					color
 				);
 
 				offset.x += tile.rect.width;
@@ -67,6 +73,7 @@ void render::draw(scene_director &director, sf::RenderTarget &target)
 		temp.setPosition(order.position);
 		temp.setTexture(*order.texture);
 		temp.setTextureRect(order.subtexture);
+		temp.setColor(order.color);
 
 		target.draw(temp);
 	}

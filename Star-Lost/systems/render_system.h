@@ -16,12 +16,13 @@ namespace ecs
 			struct draw_order
 			{
 				draw_order() = default;
-				draw_order(float depth, sf::Vector2f position, const sf::Texture *texture, sf::IntRect subtexture);
+				draw_order(float depth, sf::Vector2f position, const sf::Texture *texture, sf::IntRect subtexture, sf::Color color);
 
 				float depth;
 				sf::Vector2f position;
 				const sf::Texture *texture;
 				sf::IntRect subtexture;
+				sf::Color color;
 
 				bool operator<(const draw_order &other) const;
 			};

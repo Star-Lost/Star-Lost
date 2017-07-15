@@ -7,7 +7,6 @@ namespace ecs
 	namespace entities
 	{
 		using wall_requirements = mpl::type_list<
-			tags::structure,
 			components::position,
 			components::collision,
 			components::drawable
